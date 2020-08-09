@@ -12,6 +12,8 @@
 		2B2FD80B24DEABB40042BF6D /* MainScreenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2FD80924DEABB40042BF6D /* MainScreenCollectionViewCell.swift */; };
 		2B2FD80C24DEABB40042BF6D /* MainScreenCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2FD80A24DEABB40042BF6D /* MainScreenCollectionViewCell.xib */; };
 		2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A35D424DF1A630014FF4B /* TimeAgo.swift */; };
+		2B3A35D924E042150014FF4B /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A35D724E042150014FF4B /* UserProfileViewController.swift */; };
+		2B3A35DA24E042150014FF4B /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3A35D824E042150014FF4B /* UserProfileViewController.xib */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -41,6 +43,8 @@
 		2B2FD80924DEABB40042BF6D /* MainScreenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B2FD80A24DEABB40042BF6D /* MainScreenCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainScreenCollectionViewCell.xib; sourceTree = "<group>"; };
 		2B3A35D424DF1A630014FF4B /* TimeAgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
+		2B3A35D724E042150014FF4B /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		2B3A35D824E042150014FF4B /* UserProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -88,6 +92,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2B3A35D624E041E80014FF4B /* UserProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				2B3A35D724E042150014FF4B /* UserProfileViewController.swift */,
+				2B3A35D824E042150014FF4B /* UserProfileViewController.xib */,
+			);
+			path = UserProfileView;
+			sourceTree = "<group>";
+		};
 		2B9E97E024C6FBDA00ED7A68 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 				2B9E980024C6FC4500ED7A68 /* Classes */,
 				2B9E980A24C6FC6C00ED7A68 /* Utilities */,
 				2B9E980524C6FC5B00ED7A68 /* SignUpLogin */,
+				2B3A35D624E041E80014FF4B /* UserProfileView */,
 				2B9E981124C7056900ED7A68 /* MainAppScreen */,
 				2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */,
 				2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */,
@@ -254,6 +268,7 @@
 				2B9E980924C6FC6300ED7A68 /* SignUpViewController.xib in Resources */,
 				2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */,
 				2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */,
+				2B3A35DA24E042150014FF4B /* UserProfileViewController.xib in Resources */,
 				2B2FD80824C8D99E0042BF6D /* LoginViewController.xib in Resources */,
 				2B9E982B24C7614100ED7A68 /* SignUpSecondViewController.xib in Resources */,
 			);
@@ -315,6 +330,7 @@
 				2B9E980424C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift in Sources */,
 				2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */,
 				2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */,
+				2B3A35D924E042150014FF4B /* UserProfileViewController.swift in Sources */,
 				2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */,
 				2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */,
 				2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */,

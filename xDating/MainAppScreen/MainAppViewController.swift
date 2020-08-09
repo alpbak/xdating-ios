@@ -115,5 +115,15 @@ class MainAppViewController: UIViewController, UICollectionViewDelegate, UIColle
         let width  = (collectionView.frame.width)
         return CGSize(width: width, height: width+20)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let x:NSDictionary = feedArray[indexPath.row]  as! NSDictionary
+        
+        let vc = UserProfileViewController()
+        vc.cellDict = x
+        self.present(vc, animated: true) {
+            
+        }
+    }
 
 }

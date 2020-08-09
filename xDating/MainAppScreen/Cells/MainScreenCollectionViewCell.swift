@@ -102,4 +102,5 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
            print("Load more data & reload your collection view")
          }
     }
+    
 }
