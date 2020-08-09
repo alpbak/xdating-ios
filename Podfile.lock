@@ -1,0 +1,44 @@
+PODS:
+  - Bolts/Tasks (1.9.1)
+  - CommonKeyboard (1.0.4)
+  - Kingfisher (5.14.0):
+    - Kingfisher/Core (= 5.14.0)
+  - Kingfisher/Core (5.14.0)
+  - Parse (1.18.0):
+    - Parse/Core (= 1.18.0)
+  - Parse/Core (1.18.0):
+    - Bolts/Tasks (= 1.9.1)
+  - PryntTrimmerView (4.0.0)
+  - SteviaLayout (4.7.3)
+  - YPImagePicker (4.2.1):
+    - PryntTrimmerView (~> 4.0.0)
+    - SteviaLayout (~> 4.7.3)
+
+DEPENDENCIES:
+  - CommonKeyboard
+  - Kingfisher (~> 5.0)
+  - Parse
+  - YPImagePicker
+
+SPEC REPOS:
+  trunk:
+    - Bolts
+    - CommonKeyboard
+    - Kingfisher
+    - Parse
+    - PryntTrimmerView
+    - SteviaLayout
+    - YPImagePicker
+
+SPEC CHECKSUMS:
+  Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
+  CommonKeyboard: ed9c85e008ff5788a3207c10e366566dd7cb80b2
+  Kingfisher: 7b64389a43139c903ec434788344c288217c792d
+  Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
+  PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
+  SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  YPImagePicker: 3b88ca0c50134af2856c48c481572c98a8b8b65b
+
+PODFILE CHECKSUM: 621e2a643e90910caaf79e51ad4ea47ec6e501c2
+
+COCOAPODS: 1.8.4

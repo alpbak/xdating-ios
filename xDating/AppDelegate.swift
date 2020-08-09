@@ -7,29 +7,117 @@
 //
 
 import UIKit
+import Parse
+import CommonKeyboard
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
+    var mApplication: UIApplication!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        CommonKeyboard.shared.enabled = true
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        mApplication = application
+        connectParse()
+        
+        //setRootViewController(MainAppViewController())
+        openMainScreen()
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    
+    func openMainScreen(){
+        let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        assert(rootController != nil, "no user interface, must be the D day")
+//        self.window?.rootViewController = rootController
+//        self.window?.makeKeyAndVisible()
+        setRootViewController(rootController!)
     }
+    
+    func setRootViewController(_ vc: UIViewController, animated: Bool = true) {
+        guard animated, let window = self.window else {
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            return
+        }
 
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        window.rootViewController = vc
+        window.makeKeyAndVisible()
+        UIView.transition(with: window,
+                          duration: 0.3,
+                          options: .transitionFlipFromLeft,
+                          animations: nil,
+                          completion: nil)
+    }
+    
+    func openSignUpScreen(){
+        print("openSignUpScreen")
+        setRootViewController(SignUpViewController())
+    }
+    
+    func openSignUpSecondScreen(){
+        print("openSignUpScreen")
+        setRootViewController(SignUpSecondViewController())
+    }
+    
+    func openLoginScreen(){
+        print("openLoginScreen")
+        setRootViewController(LoginViewController())
+    }
+    
+    func connectParse(){
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = "Er4D5b5gWUWuwSkKp3BL3olrJaIlE4kNxNqzoIU8"
+            $0.clientKey = "0Sh5MFlkJlCP0bafUnuoYqlfdchDHPZSLJnYe7Vp"
+            $0.server = "https://parseapi.back4app.com"
+        }
+        Parse.initialize(with: configuration)
+        
+        saveInstallationObject()
+        print("isUserLoggedIn(): ", isUserLoggedIn())
+        checkAnonymousUser()
+    }
+    
+    func saveInstallationObject(){
+            if let installation = PFInstallation.current(){
+                installation.saveInBackground {
+                    (success: Bool, error: Error?) in
+                    if (success) {
+                        //print("You have successfully connected your app to Back4App!")
+                    } else {
+                        if let myError = error{
+                            print(myError.localizedDescription)
+                        }else{
+                            print("Uknown error")
+                        }
+                    }
+                }
+            }
+    }
+    
+    func checkAnonymousUser(){
+        if PFUser.current() == nil{
+            createAnonymousUser()
+        }
+        else{
+            print("ANONYMOUS USER ALREADY CREATED")
+            print("USER OBJECT ID: ", PFUser.current()?.objectId ?? "aa3")
+        }
+    }
+    
+    func createAnonymousUser(){
+        PFAnonymousUtils.logIn { (user, error) in
+            if (error != nil){
+                print("createAnonymousUser - create error: ", error?.localizedDescription ?? "aa1")
+            }
+            else{
+                print("ANONYMOUS USER CREATED")
+                print("USER OBJECT ID: ", PFUser.current()?.objectId ?? "aa2")
+            }
+        }
     }
 
 

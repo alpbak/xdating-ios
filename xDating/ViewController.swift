@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController {
-
+    
+    @IBAction func signUpButtonAction(_ sender: Any) {
+        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.openSignUpScreen()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
     }
 
 
