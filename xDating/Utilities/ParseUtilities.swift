@@ -51,7 +51,8 @@ func login(emailStr:String, passwordStr:String, completion: @escaping(_ success:
 
 func getLocation(str:String, completion: @escaping(_ success: Bool, _ objects: [PFObject]?) -> Void){
     let query = PFQuery(className:"Continentscountriescities_City")
-    query.whereKey("name", contains: str)
+    //query.whereKey("name", contains: str)
+    query.whereKey("name", hasPrefix: str)
     //query.whereKey("name", matchesText: str)
     query.includeKey("country")
     query.limit = 10
