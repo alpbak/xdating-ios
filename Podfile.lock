@@ -8,8 +8,43 @@ PODS:
     - Parse/Core (= 1.18.0)
   - Parse/Core (1.18.0):
     - Bolts/Tasks (= 1.9.1)
+  - PINCache (3.0.1-beta.6):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
+    - PINCache/Core (= 3.0.1-beta.6)
+  - PINCache/Arc-exception-safe (3.0.1-beta.6):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.6):
+    - PINOperation (~> 1.1.0)
+  - PINOperation (1.1.2)
+  - PINRemoteImage/Core (3.0.0-beta.13):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.0-beta.13):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.0-beta.13):
+    - PINCache (= 3.0.1-beta.6)
+    - PINRemoteImage/Core
   - PryntTrimmerView (4.0.0)
   - SteviaLayout (4.7.3)
+  - Texture (2.8.1):
+    - Texture/AssetsLibrary (= 2.8.1)
+    - Texture/Core (= 2.8.1)
+    - Texture/MapKit (= 2.8.1)
+    - Texture/Photos (= 2.8.1)
+    - Texture/PINRemoteImage (= 2.8.1)
+    - Texture/Video (= 2.8.1)
+  - Texture/AssetsLibrary (2.8.1):
+    - Texture/Core
+  - Texture/Core (2.8.1)
+  - Texture/MapKit (2.8.1):
+    - Texture/Core
+  - Texture/Photos (2.8.1):
+    - Texture/Core
+  - Texture/PINRemoteImage (2.8.1):
+    - PINRemoteImage/iOS (= 3.0.0-beta.13)
+    - PINRemoteImage/PINCache
+    - Texture/Core
+  - Texture/Video (2.8.1):
+    - Texture/Core
   - YPImagePicker (4.2.1):
     - PryntTrimmerView (~> 4.0.0)
     - SteviaLayout (~> 4.7.3)
@@ -18,6 +53,7 @@ DEPENDENCIES:
   - CommonKeyboard
   - Kingfisher (~> 5.0)
   - Parse
+  - Texture
   - YPImagePicker
 
 SPEC REPOS:
@@ -26,8 +62,12 @@ SPEC REPOS:
     - CommonKeyboard
     - Kingfisher
     - Parse
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
     - PryntTrimmerView
     - SteviaLayout
+    - Texture
     - YPImagePicker
 
 SPEC CHECKSUMS:
@@ -35,10 +75,14 @@ SPEC CHECKSUMS:
   CommonKeyboard: ed9c85e008ff5788a3207c10e366566dd7cb80b2
   Kingfisher: 7b64389a43139c903ec434788344c288217c792d
   Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
+  PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
+  PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
+  PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   YPImagePicker: 3b88ca0c50134af2856c48c481572c98a8b8b65b
 
-PODFILE CHECKSUM: 621e2a643e90910caaf79e51ad4ea47ec6e501c2
+PODFILE CHECKSUM: baf08aac0da2b6f65bb6038e65ccf96e23c2cf41
 
 COCOAPODS: 1.8.4

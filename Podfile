@@ -10,4 +10,5 @@ target 'xDating' do
   pod 'CommonKeyboard'
   pod 'YPImagePicker'
   pod 'Kingfisher', '~> 5.0'
+  pod "Texture"
 end

@@ -176,6 +176,6 @@ func sendProfileView(viewedUser:PFUser){
     
     PFCloud.callFunction(inBackground: "sendProfileView", withParameters: params) { (result, error) in
         //print("sendProfileView ERROR: ", error)
-        print("PROFILE VIEW SAVED")
+        //print("PROFILE VIEW SAVED")
     }
 }

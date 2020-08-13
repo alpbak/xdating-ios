@@ -94,10 +94,18 @@ class PlayerView: UIView {
         }
     }
     
-    func play(with url: URL) {
+    func setupAsset(with url: URL) {
         setUpAsset(with: url) { [weak self] (asset: AVAsset) in
             self?.setUpPlayerItem(with: asset)
         }
+    }
+    
+    func play() {
+        self.player?.play()
+    }
+    
+    func pause() {
+        self.player?.pause()
     }
 
     deinit {

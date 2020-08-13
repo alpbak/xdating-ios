@@ -125,5 +125,73 @@ class MainAppViewController: UIViewController, UICollectionViewDelegate, UIColle
             
         }
     }
-
+    
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        print("willDisplay: ", indexPath.row)
+//        //let mCell:MainScreenCollectionViewCell = cell as! MainScreenCollectionViewCell
+//
+//
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        print("didEndDisplaying: ", indexPath.row)
+//        //let mCell:MainScreenCollectionViewCell = cell as! MainScreenCollectionViewCell
+//    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if collectionView.centerMostCell != nil {
+//            let centerCell:MainScreenCollectionViewCell = collectionView.centerMostCell as! MainScreenCollectionViewCell
+//            centerCell.startVideos()
+//
+//            //print("WHAT: ", centerCell.cellUser?["name"])
+//
+//
+//            for cell in collectionView.visibleCells as [UICollectionViewCell]    {
+//                //let indexPath = collectionView.indexPath(for: cell as UICollectionViewCell)
+//                let invisibleCell:MainScreenCollectionViewCell = cell as! MainScreenCollectionViewCell
+//                invisibleCell.stopVideos()
+//            }
+//
+//        }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        //print("scrollViewWillBeginDragging")
+        handleVideos()
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        //print("scrollViewDidEndDecelerating")
+        handleVideos()
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        //print("scrollViewWillEndDragging-velocity. ", velocity)
+        if velocity.y == 0{
+            handleVideos()
+        }
+        
+    }
+    
+    func handleVideos(){
+        if collectionView.centerMostCell != nil {
+            let centerCell:MainScreenCollectionViewCell = collectionView.centerMostCell as! MainScreenCollectionViewCell
+            centerCell.startVideos()
+            
+            //print("WHAT: ", centerCell.cellUser?["name"])
+            
+            
+            for cell in collectionView.visibleCells as [UICollectionViewCell]    {
+                //let indexPath = collectionView.indexPath(for: cell as UICollectionViewCell)
+                let invisibleCell:MainScreenCollectionViewCell = cell as! MainScreenCollectionViewCell
+                if invisibleCell != centerCell {
+                    invisibleCell.stopVideos()
+                }
+                
+            }
+            
+        }
+    }
 }
+
+

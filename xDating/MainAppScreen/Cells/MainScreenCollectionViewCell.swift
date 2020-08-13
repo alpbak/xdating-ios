@@ -48,10 +48,17 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         
         cellPhotos.forEach({ (object) in
             let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object as! PFObject)
-            self.userPhotosArray.append(temp)
+            if temp.isVideo{
+                self.userPhotosArray.insert(temp, at: 0)
+            }
+            else{
+                self.userPhotosArray.append(temp)
+            }
+            
         })
-        
+        collectionView.setContentOffset(CGPoint.zero, animated: true)
         collectionView.reloadData()
+        collectionView.setContentOffset(CGPoint.zero, animated: true)
         setupCellTexts()
     }
     
@@ -76,6 +83,18 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         
     }
     
+    func stopVideos(){
+        //print("stopVideos: ", cellUser?["name"] ?? "")
+        let centerCell:MyProfileGalleryCollectionViewCell = collectionView.centerMostCell as! MyProfileGalleryCollectionViewCell
+        centerCell.stopVideo()
+    }
+    
+    func startVideos(){
+        //print("startVideos: ", cellUser?["name"] ?? "")
+        let centerCell:MyProfileGalleryCollectionViewCell = collectionView.centerMostCell as! MyProfileGalleryCollectionViewCell
+        centerCell.startVideo()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         cellPhotos.count
     }
@@ -93,14 +112,27 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         return CGSize(width: width, height: width)
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {        
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //print("willDisplay: ", indexPath.row)
+        let mCell:MyProfileGalleryCollectionViewCell = cell as! MyProfileGalleryCollectionViewCell
+        mCell.startVideo()
+        
         if indexPath.row > 0 {
             sendProfileView(viewedUser: cellUser!)
         }
         
-         if (indexPath.row == cellPhotos.count - 1 ) { //it's your last cell
-           print("Load more data & reload your collection view")
-         }
+//         if (indexPath.row == cellPhotos.count - 1 ) { //it's your last cell
+//           print("Load more data & reload your collection view")
+//         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //print("didEndDisplaying: ", indexPath.row)
+        
+        let mCell:MyProfileGalleryCollectionViewCell = cell as! MyProfileGalleryCollectionViewCell
+        mCell.stopVideo()
+    }
+    
+
     
 }

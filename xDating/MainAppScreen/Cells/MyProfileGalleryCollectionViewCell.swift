@@ -10,16 +10,26 @@ import UIKit
 import Kingfisher
 import AVFoundation
 import Parse
+import AsyncDisplayKit
 
-class MyProfileGalleryCollectionViewCell: UICollectionViewCell {
+class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDelegate {
     
     @IBOutlet weak var playerView: PlayerView!
     @IBOutlet weak var userImageView: UIImageView!
+    
+    var isVideoCell:Bool = false
+    var videoUrl:String = ""
     var mCellUser:PFUser?
+    var rootNode:ASDisplayNode?
+    var alpVideoNode:ASVideoNode?
+    var isVideoPlaying:Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        rootNode = nil
+        alpVideoNode = nil
+        playerView.pause()
     }
     
 //    override func prepareForReuse() {
@@ -28,8 +38,39 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell {
 //        print("prepareForReuse()")
 //    }
     
+    func stopVideo(){
+        if isVideoCell {
+            
+            
+            if isVideoPlaying {
+                isVideoPlaying = false
+                print("STOP VIDEO: ", mCellUser?["name"] ?? "")
+                playerView.pause()
+                
+            }
+            
+        }
+    }
+    
+    func startVideo(){
+        if isVideoCell {
+            
+            if !isVideoPlaying {
+                isVideoPlaying = true
+                print("START VIDEO: ", mCellUser?["name"] ?? "")
+                guard let url = URL(string: videoUrl) else { return }
+                playerView.play()
+                
+            }
+            
+        }
+    }
+    
     
     func handleCell(userPhotoObject:UserPhotoObject, cellUser:PFUser){
+        playerView.pause()
+        alpVideoNode?.pause()
+        alpVideoNode = nil
         mCellUser = cellUser
         //print("userPhotoObject: ", userPhotoObject.imageFile.url)
         guard let photoUrl:String = userPhotoObject.imageFile.url else {
@@ -37,11 +78,14 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell {
         }
         
         if userPhotoObject.isVideo {
+            isVideoCell = true
             playerView.isHidden = false
             userImageView.isHidden = true
             loadVideo(urlString: photoUrl)
+            //loadVideoNode(urlString: photoUrl)
         }
         else{
+            isVideoCell = false
             playerView.isHidden = true
             userImageView.isHidden = false
             loadImage(urlString: photoUrl)
@@ -75,9 +119,36 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell {
     
     func loadVideo(urlString:String){
         print("LOAD VIDEO: ", urlString)
+        
         guard let url = URL(string: urlString) else { return }
-        playerView.play(with: url)
+        videoUrl = urlString
+        playerView.setupAsset(with: url)
     }
+    
+    func loadVideoNode(urlString:String){
+        rootNode = ASDisplayNode()
+        rootNode?.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+        rootNode?.backgroundColor = UIColor.red
+        
+        playerView.addSubnode(rootNode!)
+        
+        self.alpVideoNode = ASVideoNode()
+        self.alpVideoNode?.frame = CGRect(x: 0, y: 0, width: playerView.frame.size.width, height: playerView.frame.size.height)
+        let mUrl:URL = URL.init(string: urlString)!
+        let mAsset:AVAsset = AVAsset.init(url:mUrl)
+        
+        alpVideoNode?.asset = mAsset
+        alpVideoNode?.delegate = self
+        alpVideoNode?.shouldAutoplay = true
+        alpVideoNode?.shouldAutorepeat = true
+        
+        rootNode?.addSubnode(alpVideoNode!)
+        
+        alpVideoNode?.play()
+        
+    }
+    
+    
     
     
     
