@@ -11,6 +11,8 @@ import Parse
 
 class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var swipeForMoreView: UIView!
+    @IBOutlet weak var swipeForMoreLabel: UILabel!
     @IBOutlet weak var lastOnlineLbel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
@@ -21,6 +23,8 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        swipeForMoreLabel.text = NSLocalizedString("Swipe for more", comment: "")
         
     }
 
@@ -36,9 +40,16 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         userPhotosArray = []
         self.locationLabel.text = ""
         self.nameLabel.text = ""
-        
         setupCollectionView()
         collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0),at: .top, animated: false)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+            self.swipeForMoreView.isHidden = false
+            self.swipeForMoreView.fadeIn(duration: 0.1) { (finished) in
+                
+            }
+        })
+        
         
         cellUser = cellDict["user"] as? PFUser
         cellPhotos = cellDict["photos"] as! NSArray
@@ -114,6 +125,10 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         //print("willDisplay: ", indexPath.row)
+        if indexPath.row == 1 {
+            swipeForMoreView.fadeOut()
+        }
+        
         let mCell:MyProfileGalleryCollectionViewCell = cell as! MyProfileGalleryCollectionViewCell
         mCell.startVideo()
         
@@ -127,8 +142,7 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        //print("didEndDisplaying: ", indexPath.row)
-        
+        //print("didEndDisplaying00: ", indexPath.row)
         let mCell:MyProfileGalleryCollectionViewCell = cell as! MyProfileGalleryCollectionViewCell
         mCell.stopVideo()
     }
