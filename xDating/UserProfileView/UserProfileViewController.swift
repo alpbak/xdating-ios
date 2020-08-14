@@ -12,11 +12,17 @@ import Parse
 class UserProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var bioView: UIView!
     var cellDict:NSDictionary?
     var cellPhotos:NSArray = []
     var cellUser:PFUser?
     var userPhotosArray:[UserPhotoObject] = []
-
+    @IBOutlet weak var headerNameLabel: UILabel!
+    @IBOutlet weak var bioLAbel: UILabel!
+    
+    @IBAction func closeButtonAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,6 +36,11 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegate, UIC
         
         setupCollectionView()
         collectionView.reloadData()
+        print("USERID: ", cellUser?.objectId ?? "")
+        headerNameLabel.text = (cellUser?["name"] ?? "") as? String
+        bioLAbel.text = (cellUser?["bio"] ?? "") as? String
+        
+        bioView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
     }
     
     func setupCollectionView(){

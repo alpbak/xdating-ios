@@ -43,7 +43,8 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
             if isVideoPlaying {
                 isVideoPlaying = false
                 //print("STOP VIDEO: ", mCellUser?["name"] ?? "")
-                playerView.pause()
+                //playerView.pause()
+                alpVideoNode?.pause()
             }
         }
     }
@@ -55,6 +56,7 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
                 //print("START VIDEO: ", mCellUser?["name"] ?? "")
                 //guard let url = URL(string: videoUrl) else { return }
                 playerView.play()
+                alpVideoNode?.play()
             }
         }
     }
@@ -74,8 +76,8 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
             isVideoCell = true
             playerView.isHidden = false
             userImageView.isHidden = true
-            loadVideo(urlString: photoUrl)
-            //loadVideoNode(urlString: photoUrl)
+            //loadVideo(urlString: photoUrl)
+            loadVideoNode(urlString: photoUrl)
         }
         else{
             isVideoCell = false
@@ -111,7 +113,7 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
     }
     
     func loadVideo(urlString:String){
-        print("LOAD VIDEO: ", urlString)
+        //print("LOAD VIDEO: ", urlString)
         
         guard let url = URL(string: urlString) else { return }
         videoUrl = urlString
@@ -122,7 +124,7 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
     func loadVideoNode(urlString:String){
         rootNode = ASDisplayNode()
         rootNode?.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
-        rootNode?.backgroundColor = UIColor.red
+        rootNode?.backgroundColor = UIColor.white
         
         playerView.addSubnode(rootNode!)
         
