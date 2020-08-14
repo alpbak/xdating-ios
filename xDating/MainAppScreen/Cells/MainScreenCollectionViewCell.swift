@@ -43,14 +43,6 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         setupCollectionView()
         collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0),at: .top, animated: false)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-            self.swipeForMoreView.isHidden = false
-            self.swipeForMoreView.fadeIn(duration: 0.1) { (finished) in
-                
-            }
-        })
-        
-        
         cellUser = cellDict["user"] as? PFUser
         cellPhotos = cellDict["photos"] as! NSArray
         
@@ -71,6 +63,21 @@ class MainScreenCollectionViewCell: UICollectionViewCell, UICollectionViewDelega
         collectionView.reloadData()
         collectionView.setContentOffset(CGPoint.zero, animated: true)
         setupCellTexts()
+        handleSwipeForMoreView()
+    }
+    
+    func handleSwipeForMoreView(){
+        if self.userPhotosArray.count > 1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                self.swipeForMoreView.isHidden = false
+                self.swipeForMoreView.fadeIn(duration: 0.1) { (finished) in
+                    
+                }
+            })
+        }
+        else{
+            self.swipeForMoreView.isHidden = true
+        }
     }
     
     func setupCellTexts(){

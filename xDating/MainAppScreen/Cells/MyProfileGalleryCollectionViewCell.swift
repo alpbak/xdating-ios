@@ -40,34 +40,27 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
     
     func stopVideo(){
         if isVideoCell {
-            
-            
             if isVideoPlaying {
                 isVideoPlaying = false
-                print("STOP VIDEO: ", mCellUser?["name"] ?? "")
+                //print("STOP VIDEO: ", mCellUser?["name"] ?? "")
                 playerView.pause()
-                
             }
-            
         }
     }
     
     func startVideo(){
         if isVideoCell {
-            
             if !isVideoPlaying {
                 isVideoPlaying = true
-                print("START VIDEO: ", mCellUser?["name"] ?? "")
-                guard let url = URL(string: videoUrl) else { return }
+                //print("START VIDEO: ", mCellUser?["name"] ?? "")
+                //guard let url = URL(string: videoUrl) else { return }
                 playerView.play()
-                
             }
-            
         }
     }
     
-    
     func handleCell(userPhotoObject:UserPhotoObject, cellUser:PFUser){
+        playerView.isHidden = true
         playerView.pause()
         alpVideoNode?.pause()
         alpVideoNode = nil
@@ -123,6 +116,7 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
         guard let url = URL(string: urlString) else { return }
         videoUrl = urlString
         playerView.setupAsset(with: url)
+        playerView.isHidden = false
     }
     
     func loadVideoNode(urlString:String){
