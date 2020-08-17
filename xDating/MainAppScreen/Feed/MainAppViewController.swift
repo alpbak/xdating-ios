@@ -14,7 +14,6 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
-//    let layoutInspector = MosaicCollectionViewLayoutInspector()
     
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
@@ -94,17 +93,11 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
-        
-//        let layout = MosaicCollectionViewLayout()
-//        layout.numberOfColumns = 1;
-//        layout.headerHeight = 44;
-//        layout.delegate = self
-        
+                
         collectionNodeMain = ASCollectionNode(frame: asCollectionView.frame, collectionViewLayout: flowLayout)
         collectionNodeMain?.backgroundColor = UIColor.systemBackground
         collectionNodeMain?.dataSource = self
         collectionNodeMain?.delegate = self
-//        collectionNodeMain?.layoutInspector = layoutInspector
         collectionNodeMain?.registerSupplementaryNode(ofKind: UICollectionView.elementKindSectionHeader)
         collectionNodeMain?.view.isScrollEnabled = true
         self.view.addSubnode(collectionNodeMain!)
@@ -136,15 +129,18 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         return feedArray.count
     }
     
-//    internal func collectionView(_ collectionView: UICollectionView, layout: MosaicCollectionViewLayout, originalItemSizeAtIndexPath: IndexPath) -> CGSize {
-//        let width  = (collectionView.frame.width)
-//        return CGSize(width: width, height: width+90)
-//        //return sections[originalItemSizeAtIndexPath.section][originalItemSizeAtIndexPath.item].size
-//    }
-    
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         let width  = (collectionNode.frame.width)
         return ASSizeRange(min: CGSize(width: width, height: width+90), max: CGSize(width: width, height: width+90))
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let x:NSDictionary = feedArray[indexPath.row]  as! NSDictionary
+        let vc = UserProfileViewController()
+        vc.cellDict = x
+        self.present(vc, animated: true) {
+            
+        }
     }
 }
 

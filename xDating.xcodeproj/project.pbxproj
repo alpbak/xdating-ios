@@ -31,7 +31,6 @@
 		2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */; };
 		2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E982824C7614100ED7A68 /* SignUpSecondViewController.swift */; };
 		2B9E982B24C7614100ED7A68 /* SignUpSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E982924C7614100ED7A68 /* SignUpSecondViewController.xib */; };
-		2BAA937624E936540022338A /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA937424E936540022338A /* MosaicCollectionViewLayout.swift */; };
 		2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */; };
 		2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */; };
 		2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */; };
@@ -67,7 +66,6 @@
 		2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppViewController.swift; sourceTree = "<group>"; };
 		2B9E982824C7614100ED7A68 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
 		2B9E982924C7614100ED7A68 /* SignUpSecondViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpSecondViewController.xib; sourceTree = "<group>"; };
-		2BAA937424E936540022338A /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
 		2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyProfileGalleryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 				2B76135E24EA688400063465 /* ImageCellNode.swift */,
 				2BE1896624C8B32700CFFA7A /* UserPhotoObject.swift */,
 				2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */,
-				2BAA937424E936540022338A /* MosaicCollectionViewLayout.swift */,
 				2B76135A24E96A5400063465 /* FeedCellNode.swift */,
 			);
 			path = Feed;
@@ -348,7 +345,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BAA937624E936540022338A /* MosaicCollectionViewLayout.swift in Sources */,
 				2B9E980824C6FC6300ED7A68 /* SignUpViewController.swift in Sources */,
 				2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */,
 				2B9E981024C6FC7300ED7A68 /* Extensions.swift in Sources */,

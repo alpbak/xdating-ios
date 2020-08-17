@@ -188,7 +188,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return {
-            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!, image: UIImage.init(named: "image_1")!)
+            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!)
         }
     }
     

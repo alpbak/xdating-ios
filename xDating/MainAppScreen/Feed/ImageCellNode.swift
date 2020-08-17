@@ -19,7 +19,7 @@ class ImageCellNode: ASCellNode, ASVideoNodeDelegate {
     var mUserPhotoObject:UserPhotoObject?
     var isForVideo = false
     
-    required init(userPhotoObject:UserPhotoObject, cellUser:PFUser, image:UIImage) {
+    required init(userPhotoObject:UserPhotoObject, cellUser:PFUser) {
         super.init()
         
         mCellUser = cellUser
@@ -30,8 +30,6 @@ class ImageCellNode: ASCellNode, ASVideoNodeDelegate {
         }
 
         if userPhotoObject.isVideo {
-//            print("USER: ", cellUser["name"] ?? "")
-//            print("VIDEO URL:", photoUrl)
             let screenSize = UIScreen.main.bounds
             isForVideo = true
             
