@@ -32,8 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func openMainScreen(){
         let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
         assert(rootController != nil, "no user interface, must be the D day")
-//        self.window?.rootViewController = rootController
-//        self.window?.makeKeyAndVisible()
         setRootViewController(rootController!)
     }
     
@@ -61,6 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func openSignUpSecondScreen(){
         print("openSignUpScreen")
         setRootViewController(SignUpSecondViewController())
+    }
+    
+    func getRootVC() -> UIViewController {
+        return (self.window?.rootViewController)!
     }
     
     func openLoginScreen(){

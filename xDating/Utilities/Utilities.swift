@@ -12,6 +12,7 @@ import YPImagePicker
 import AVFoundation
 import AVKit
 import Photos
+import Parse
 
 func displayAlert(alertTitle:String, alertMessage:String, parent:UIViewController){
     
@@ -239,3 +240,32 @@ func handleSelectedMedia(selectedItems:[YPMediaItem]){
     }
     print("ITEMS ARE UPLOADING")
 }
+
+func openUserProfile(cellDict:NSDictionary){
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    let vc = UserProfileViewController()
+    vc.cellDict = cellDict
+    let rootVC = appDelegate?.getRootVC()
+    rootVC?.present(vc, animated: true, completion: nil)
+}
+
+func getUserNameAndAge(user:PFUser) -> String {
+    let name:String = user["name"] as? String ?? ""
+    let age:Int = user["age"] as? Int ?? 18
+    return "\(name), \(age)"
+}
+
+func getUserLocation(user:PFUser, completion: @escaping(_ str: String?) -> Void){
+    guard let locationObject:PFObject = user["location"] as? PFObject else{ return }
+    locationObject.fetchIfNeededInBackground { (object, error) in
+        let countryObject:PFObject = locationObject["country"] as! PFObject
+        countryObject.fetchIfNeededInBackground { (cObject, error) in
+            let location:String = locationObject["name"] as? String ?? ""
+            let country:String = cObject?["name"] as? String ?? ""
+            let locationString:String = "\(location), \(country)"
+            completion(locationString)
+        }
+    }
+}
+
+

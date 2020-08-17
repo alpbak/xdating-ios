@@ -69,27 +69,19 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     func setupTextNodes(){
         let lastOnline:Date = (cellUser?["lastOnline"] as? Date)!
         let los:String = timeAgoSince(lastOnline) as String
-        let name:String = cellUser?["name"] as? String ?? ""
-        let age:Int = cellUser?["age"] as? Int ?? 18
+        
         
         let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 16.0)]
         let locationStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0)]
         let lastOnlineStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0), NSAttributedString.Key.foregroundColor: UIColor.gray]
         
-        let nameString = NSAttributedString(string: "\(name), \(age)", attributes: nameStringAttribute as [NSAttributedString.Key : Any])
+        let nameString = NSAttributedString(string: getUserNameAndAge(user: cellUser!), attributes: nameStringAttribute as [NSAttributedString.Key : Any])
         let lastOnlineString = NSAttributedString(string: los, attributes: lastOnlineStringAttribute as [NSAttributedString.Key : Any])
         userNameNode.attributedText = nameString
-                
-        guard let locationObject:PFObject = cellUser?["location"] as? PFObject else{ return }
-        locationObject.fetchIfNeededInBackground { (object, error) in
-            let countryObject:PFObject = locationObject["country"] as! PFObject
-            countryObject.fetchIfNeededInBackground { (cObject, error) in
-                let location:String = locationObject["name"] as? String ?? ""
-                let country:String = cObject?["name"] as? String ?? ""
-                let locationString:String = "\(location), \(country)"
-                let str = NSAttributedString(string: locationString, attributes: locationStringAttribute as [NSAttributedString.Key : Any])
-                self.postLocationNode.attributedText = str
-            }
+        
+        getUserLocation(user: cellUser!) { (locationString) in
+            let str = NSAttributedString(string: locationString!, attributes: locationStringAttribute as [NSAttributedString.Key : Any])
+            self.postLocationNode.attributedText = str
         }
         
         lastOnlineNode.attributedText = lastOnlineString

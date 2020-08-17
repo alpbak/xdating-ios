@@ -136,11 +136,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let x:NSDictionary = feedArray[indexPath.row]  as! NSDictionary
-        let vc = UserProfileViewController()
-        vc.cellDict = x
-        self.present(vc, animated: true) {
-            
-        }
+        openUserProfile(cellDict: x)
     }
 }
 

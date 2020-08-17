@@ -19,6 +19,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegate, UIC
     var userPhotosArray:[UserPhotoObject] = []
     @IBOutlet weak var headerNameLabel: UILabel!
     @IBOutlet weak var bioLAbel: UILabel!
+    @IBOutlet weak var headerLocationLabel: UILabel!
     
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -37,7 +38,11 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegate, UIC
         setupCollectionView()
         collectionView.reloadData()
         print("USERID: ", cellUser?.objectId ?? "")
-        headerNameLabel.text = (cellUser?["name"] ?? "") as? String
+        
+        headerNameLabel.text = getUserNameAndAge(user: cellUser!)
+        getUserLocation(user: cellUser!) { (locStr) in
+            self.headerLocationLabel.text = locStr
+        }
         bioLAbel.text = (cellUser?["bio"] ?? "") as? String
         
         bioView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
