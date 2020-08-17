@@ -14,6 +14,8 @@
 		2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A35D424DF1A630014FF4B /* TimeAgo.swift */; };
 		2B3A35D924E042150014FF4B /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A35D724E042150014FF4B /* UserProfileViewController.swift */; };
 		2B3A35DA24E042150014FF4B /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3A35D824E042150014FF4B /* UserProfileViewController.xib */; };
+		2B76135B24E96A5400063465 /* FeedCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76135A24E96A5400063465 /* FeedCellNode.swift */; };
+		2B76135F24EA688500063465 /* ImageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76135E24EA688400063465 /* ImageCellNode.swift */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -29,6 +31,7 @@
 		2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */; };
 		2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E982824C7614100ED7A68 /* SignUpSecondViewController.swift */; };
 		2B9E982B24C7614100ED7A68 /* SignUpSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E982924C7614100ED7A68 /* SignUpSecondViewController.xib */; };
+		2BAA937624E936540022338A /* MosaicCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAA937424E936540022338A /* MosaicCollectionViewLayout.swift */; };
 		2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */; };
 		2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */; };
 		2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */; };
@@ -45,6 +48,8 @@
 		2B3A35D424DF1A630014FF4B /* TimeAgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		2B3A35D724E042150014FF4B /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		2B3A35D824E042150014FF4B /* UserProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
+		2B76135A24E96A5400063465 /* FeedCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellNode.swift; sourceTree = "<group>"; };
+		2B76135E24EA688400063465 /* ImageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellNode.swift; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +67,7 @@
 		2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppViewController.swift; sourceTree = "<group>"; };
 		2B9E982824C7614100ED7A68 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
 		2B9E982924C7614100ED7A68 /* SignUpSecondViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpSecondViewController.xib; sourceTree = "<group>"; };
+		2BAA937424E936540022338A /* MosaicCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MosaicCollectionViewLayout.swift; sourceTree = "<group>"; };
 		2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyProfileGalleryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -125,7 +131,6 @@
 				2B9E980024C6FC4500ED7A68 /* Classes */,
 				2B9E980A24C6FC6C00ED7A68 /* Utilities */,
 				2B9E980524C6FC5B00ED7A68 /* SignUpLogin */,
-				2B3A35D624E041E80014FF4B /* UserProfileView */,
 				2B9E981124C7056900ED7A68 /* MainAppScreen */,
 				2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */,
 				2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */,
@@ -174,12 +179,32 @@
 		2B9E981124C7056900ED7A68 /* MainAppScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2B3A35D624E041E80014FF4B /* UserProfileView */,
+				2BAA937B24E939260022338A /* MyProfile */,
 				2BE1896124C8B19E00CFFA7A /* Cells */,
-				2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */,
-				2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */,
-				2BE1896624C8B32700CFFA7A /* UserPhotoObject.swift */,
+				2BAA937224E9363E0022338A /* Feed */,
 			);
 			path = MainAppScreen;
+			sourceTree = "<group>";
+		};
+		2BAA937224E9363E0022338A /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				2B76135E24EA688400063465 /* ImageCellNode.swift */,
+				2BE1896624C8B32700CFFA7A /* UserPhotoObject.swift */,
+				2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */,
+				2BAA937424E936540022338A /* MosaicCollectionViewLayout.swift */,
+				2B76135A24E96A5400063465 /* FeedCellNode.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		2BAA937B24E939260022338A /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */,
+			);
+			path = MyProfile;
 			sourceTree = "<group>";
 		};
 		2BE1896124C8B19E00CFFA7A /* Cells */ = {
@@ -323,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BAA937624E936540022338A /* MosaicCollectionViewLayout.swift in Sources */,
 				2B9E980824C6FC6300ED7A68 /* SignUpViewController.swift in Sources */,
 				2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */,
 				2B9E981024C6FC7300ED7A68 /* Extensions.swift in Sources */,
@@ -341,6 +367,8 @@
 				2B9E980F24C6FC7300ED7A68 /* Utilities.swift in Sources */,
 				2B9E980324C6FC4C00ED7A68 /* SKActivityIndicatorView.swift in Sources */,
 				2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */,
+				2B76135B24E96A5400063465 /* FeedCellNode.swift in Sources */,
+				2B76135F24EA688500063465 /* ImageCellNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

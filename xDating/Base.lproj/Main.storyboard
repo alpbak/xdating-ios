@@ -311,20 +311,20 @@
                                     <constraint firstItem="xa7-AV-sbh" firstAttribute="centerY" secondItem="3eY-N7-HRb" secondAttribute="centerY" id="xJg-g1-Kiw"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f8L-jv-bif">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="R2P-Kp-SV5" customClass="ASCollectionView">
                                 <rect key="frame" x="0.0" y="94" width="414" height="649"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="20" minimumInteritemSpacing="10" id="sP1-1K-gsa">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="fsw-2I-5eY">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4Gr-Vr-7iI">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aaG-XI-qrI">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="HGw-BB-urK">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8rG-p7-deu">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
@@ -357,21 +357,21 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="3eY-N7-HRb" firstAttribute="leading" secondItem="Gnb-io-gkv" secondAttribute="leading" id="0D5-AH-HqR"/>
-                            <constraint firstItem="f8L-jv-bif" firstAttribute="leading" secondItem="Gnb-io-gkv" secondAttribute="leading" id="59a-8z-Pp3"/>
-                            <constraint firstItem="Gnb-io-gkv" firstAttribute="trailing" secondItem="f8L-jv-bif" secondAttribute="trailing" id="78Z-Rt-K9c"/>
-                            <constraint firstItem="f8L-jv-bif" firstAttribute="top" secondItem="3eY-N7-HRb" secondAttribute="bottom" id="9fP-Wt-IVI"/>
+                            <constraint firstItem="R2P-Kp-SV5" firstAttribute="leading" secondItem="Gnb-io-gkv" secondAttribute="leading" id="0vG-YA-iWa"/>
+                            <constraint firstItem="Y39-mM-dUb" firstAttribute="top" secondItem="R2P-Kp-SV5" secondAttribute="bottom" id="99U-u7-5tR"/>
+                            <constraint firstItem="R2P-Kp-SV5" firstAttribute="trailing" secondItem="Gnb-io-gkv" secondAttribute="trailing" id="AVO-uj-ZUM"/>
                             <constraint firstItem="Y39-mM-dUb" firstAttribute="bottom" secondItem="Gnb-io-gkv" secondAttribute="bottom" id="AeX-zM-pNe"/>
                             <constraint firstItem="Gnb-io-gkv" firstAttribute="trailing" secondItem="3eY-N7-HRb" secondAttribute="trailing" id="IZR-lV-lXx"/>
                             <constraint firstItem="3eY-N7-HRb" firstAttribute="top" secondItem="Gnb-io-gkv" secondAttribute="top" id="Naj-7P-BCm"/>
+                            <constraint firstItem="R2P-Kp-SV5" firstAttribute="top" secondItem="3eY-N7-HRb" secondAttribute="bottom" id="V7d-qC-RV7"/>
                             <constraint firstItem="Gnb-io-gkv" firstAttribute="trailing" secondItem="Y39-mM-dUb" secondAttribute="trailing" constant="20" id="ajY-KE-rGN"/>
-                            <constraint firstItem="Y39-mM-dUb" firstAttribute="top" secondItem="f8L-jv-bif" secondAttribute="bottom" id="reN-q8-LhR"/>
                             <constraint firstItem="Y39-mM-dUb" firstAttribute="leading" secondItem="Gnb-io-gkv" secondAttribute="leading" constant="20" id="yF3-oW-iik"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Gnb-io-gkv"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon-home" id="Gis-GW-7BZ"/>
                     <connections>
-                        <outlet property="collectionView" destination="f8L-jv-bif" id="JZL-Bg-Hiy"/>
+                        <outlet property="asCollectionView" destination="R2P-Kp-SV5" id="K15-YC-HEJ"/>
                         <outlet property="loginButton" destination="zop-BZ-xpn" id="anR-4T-ax6"/>
                         <outlet property="regisrationStackView" destination="Y39-mM-dUb" id="edm-aU-cFe"/>
                         <outlet property="registerButton" destination="Wi1-vx-4do" id="ul4-Nc-AFL"/>

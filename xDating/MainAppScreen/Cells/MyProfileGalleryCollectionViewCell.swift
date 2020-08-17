@@ -32,11 +32,14 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
         playerView.pause()
     }
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        //hide or reset anything you want hereafter, for example
-//        print("prepareForReuse()")
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        print("prepareForReuse: ", mCellUser?["name"] ?? "")
+        alpVideoNode?.pause()
+        alpVideoNode = nil
+        playerView.pause()
+    }
     
     func stopVideo(){
         if isVideoCell {
@@ -53,9 +56,9 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
         if isVideoCell {
             if !isVideoPlaying {
                 isVideoPlaying = true
-                //print("START VIDEO: ", mCellUser?["name"] ?? "")
+                print("START VIDEO: ", mCellUser?["name"] ?? "")
                 //guard let url = URL(string: videoUrl) else { return }
-                playerView.play()
+                //playerView.play()
                 alpVideoNode?.play()
             }
         }
@@ -67,7 +70,8 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
         alpVideoNode?.pause()
         alpVideoNode = nil
         mCellUser = cellUser
-        //print("userPhotoObject: ", userPhotoObject.imageFile.url)
+        print("handleCell: ", mCellUser?["name"] ?? "")
+        
         guard let photoUrl:String = userPhotoObject.imageFile.url else {
             return
         }
@@ -122,14 +126,16 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
     }
     
     func loadVideoNode(urlString:String){
+        let screenSize = UIScreen.main.bounds
+        
         rootNode = ASDisplayNode()
-        rootNode?.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+        rootNode?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width)
         rootNode?.backgroundColor = UIColor.white
         
         playerView.addSubnode(rootNode!)
         
         self.alpVideoNode = ASVideoNode()
-        self.alpVideoNode?.frame = CGRect(x: 0, y: 0, width: playerView.frame.size.width, height: playerView.frame.size.height)
+        self.alpVideoNode?.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width)
         let mUrl:URL = URL.init(string: urlString)!
         let mAsset:AVAsset = AVAsset.init(url:mUrl)
         
@@ -137,11 +143,16 @@ class MyProfileGalleryCollectionViewCell: UICollectionViewCell, ASVideoNodeDeleg
         alpVideoNode?.delegate = self
         alpVideoNode?.shouldAutoplay = true
         alpVideoNode?.shouldAutorepeat = true
+        alpVideoNode?.muted = true
         
         rootNode?.addSubnode(alpVideoNode!)
         
         alpVideoNode?.play()
-        
+    }
+    
+    func didTap(_ videoNode: ASVideoNode) {
+        print("TAP: ", mCellUser?["name"] ?? "")
+        alpVideoNode?.muted = !(alpVideoNode?.muted ?? true)
     }
     
     
