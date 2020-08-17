@@ -71,9 +71,12 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         let los:String = timeAgoSince(lastOnline) as String
         
         
-        let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 16.0)]
-        let locationStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0)]
-        let lastOnlineStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0), NSAttributedString.Key.foregroundColor: UIColor.gray]
+        let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 16.0),
+                                   NSAttributedString.Key.foregroundColor: UIColor.label]
+        let locationStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0),
+                                       NSAttributedString.Key.foregroundColor: UIColor.label]
+        let lastOnlineStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0),
+                                         NSAttributedString.Key.foregroundColor: UIColor.gray]
         
         let nameString = NSAttributedString(string: getUserNameAndAge(user: cellUser!), attributes: nameStringAttribute as [NSAttributedString.Key : Any])
         let lastOnlineString = NSAttributedString(string: los, attributes: lastOnlineStringAttribute as [NSAttributedString.Key : Any])
@@ -124,7 +127,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     func getButtonsStack() -> ASStackLayoutSpec {
         let sendMessageTextNode = ASTextNode()
         let videoTextNode = ASTextNode()
-        let buttonStringsAttr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0), NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+        let buttonStringsAttr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0), NSAttributedString.Key.foregroundColor: UIColor.label]
         
         let messageString = NSAttributedString(string: "Message", attributes: buttonStringsAttr as [NSAttributedString.Key : Any])
         let videoString = NSAttributedString(string: "Approved", attributes: buttonStringsAttr as [NSAttributedString.Key : Any])
@@ -183,15 +186,6 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
             return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!)
         }
     }
-    
-//    func collectionNode(_ collectionNode: ASCollectionNode, nodeForItemAt indexPath: IndexPath) -> ASCellNode {
-//        let cell = ASCellNode()
-//        cell.style.width = ASDimension(unit: .points, value: 140)
-//        cell.style.height = ASDimension(unit: .points, value: 140)
-//        cell.backgroundColor = .blue
-//        cell.accessoryType = .checkmark
-//        return cell
-//    }
     
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         let width = UIScreen.main.bounds.width

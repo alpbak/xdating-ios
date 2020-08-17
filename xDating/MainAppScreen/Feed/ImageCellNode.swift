@@ -49,12 +49,9 @@ class ImageCellNode: ASCellNode, ASVideoNodeDelegate {
             self.addSubnode(self.videoNode)
         }
         else{
-//            print("USER: ", cellUser["name"] ?? "")
-//            print("IMAGE URL:", photoUrl)
             isForVideo = false
             imageNode.contentMode = .scaleAspectFill
             imageNode.url = URL(string: photoUrl)
-            //imageNode.image = image
             self.addSubnode(self.imageNode)
         }
     }

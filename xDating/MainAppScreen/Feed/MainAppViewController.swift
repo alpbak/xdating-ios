@@ -45,7 +45,16 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         super.viewWillAppear(animated)
         setLastOnline()
         handleStartup()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        print("traitCollectionDidChange")
+        collectionNodeMain?.view.overrideUserInterfaceStyle = .dark
         
+    }
+
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        print("willTransition")
     }
     
     @objc

@@ -16,6 +16,9 @@
 		2B3A35DA24E042150014FF4B /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3A35D824E042150014FF4B /* UserProfileViewController.xib */; };
 		2B76135B24E96A5400063465 /* FeedCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76135A24E96A5400063465 /* FeedCellNode.swift */; };
 		2B76135F24EA688500063465 /* ImageCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76135E24EA688400063465 /* ImageCellNode.swift */; };
+		2B76136124EAF75F00063465 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76136024EAF75F00063465 /* ImageScrollView.swift */; };
+		2B76136424EAF78900063465 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76136224EAF78900063465 /* ImageViewerViewController.swift */; };
+		2B76136524EAF78900063465 /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B76136324EAF78900063465 /* ImageViewerViewController.xib */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -49,6 +52,9 @@
 		2B3A35D824E042150014FF4B /* UserProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileViewController.xib; sourceTree = "<group>"; };
 		2B76135A24E96A5400063465 /* FeedCellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellNode.swift; sourceTree = "<group>"; };
 		2B76135E24EA688400063465 /* ImageCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCellNode.swift; sourceTree = "<group>"; };
+		2B76136024EAF75F00063465 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
+		2B76136224EAF78900063465 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
+		2B76136324EAF78900063465 /* ImageViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageViewerViewController.xib; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 		2B9E980024C6FC4500ED7A68 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2B76136024EAF75F00063465 /* ImageScrollView.swift */,
 				2BE1896824C8C7AC00CFFA7A /* PlayerView.swift */,
 				2B9E980124C6FC4C00ED7A68 /* SKActivityIndicatorView.swift */,
 				2B9E980224C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift */,
@@ -170,6 +177,8 @@
 				2B9E980D24C6FC7200ED7A68 /* Extensions.swift */,
 				2B9E980B24C6FC7200ED7A68 /* ParseUtilities.swift */,
 				2B9E980C24C6FC7200ED7A68 /* Utilities.swift */,
+				2B76136224EAF78900063465 /* ImageViewerViewController.swift */,
+				2B76136324EAF78900063465 /* ImageViewerViewController.xib */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -286,6 +295,7 @@
 			files = (
 				2B9E97F924C6FBDA00ED7A68 /* LaunchScreen.storyboard in Resources */,
 				2B9E97F624C6FBDA00ED7A68 /* Assets.xcassets in Resources */,
+				2B76136524EAF78900063465 /* ImageViewerViewController.xib in Resources */,
 				2B2FD80C24DEABB40042BF6D /* MainScreenCollectionViewCell.xib in Resources */,
 				2B9E980924C6FC6300ED7A68 /* SignUpViewController.xib in Resources */,
 				2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */,
@@ -349,6 +359,7 @@
 				2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */,
 				2B9E981024C6FC7300ED7A68 /* Extensions.swift in Sources */,
 				2B2FD80724C8D99E0042BF6D /* LoginViewController.swift in Sources */,
+				2B76136424EAF78900063465 /* ImageViewerViewController.swift in Sources */,
 				2B9E980424C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift in Sources */,
 				2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */,
 				2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */,
@@ -360,6 +371,7 @@
 				2B9E980E24C6FC7300ED7A68 /* ParseUtilities.swift in Sources */,
 				2BE1896724C8B32700CFFA7A /* UserPhotoObject.swift in Sources */,
 				2B2FD80B24DEABB40042BF6D /* MainScreenCollectionViewCell.swift in Sources */,
+				2B76136124EAF75F00063465 /* ImageScrollView.swift in Sources */,
 				2B9E980F24C6FC7300ED7A68 /* Utilities.swift in Sources */,
 				2B9E980324C6FC4C00ED7A68 /* SKActivityIndicatorView.swift in Sources */,
 				2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */,

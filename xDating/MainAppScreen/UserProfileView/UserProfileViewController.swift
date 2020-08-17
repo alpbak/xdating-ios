@@ -8,34 +8,68 @@
 
 import UIKit
 import Parse
+import AsyncDisplayKit
 
-class UserProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowLayout, ASCollectionDataSource, ASCollectionDelegate {
     
+    @IBOutlet weak var messageButton: UIButton!
+    @IBOutlet weak var videoButton: UIButton!
+    @IBOutlet weak var reportButton: UIButton!
+    @IBOutlet weak var blockButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bioView: UIView!
+    @IBOutlet weak var headerNameLabel: UILabel!
+    @IBOutlet weak var bioLAbel: UILabel!
+    @IBOutlet weak var headerLocationLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var videoLabel: UILabel!
+    @IBOutlet weak var reportLabel: UILabel!
+    @IBOutlet weak var blockLabel: UILabel!
+    
     var cellDict:NSDictionary?
     var cellPhotos:NSArray = []
     var cellUser:PFUser?
     var userPhotosArray:[UserPhotoObject] = []
-    @IBOutlet weak var headerNameLabel: UILabel!
-    @IBOutlet weak var bioLAbel: UILabel!
-    @IBOutlet weak var headerLocationLabel: UILabel!
+    var collectionNodeMain: ASCollectionNode?
+    
+    @IBAction func messageAction(_ sender: Any) {
+        print("MESSAGE")
+    }
+    
+    @IBAction func videoAction(_ sender: Any) {
+        print("VIDEO")
+    }
+    
+    @IBAction func reportAction(_ sender: Any) {
+        print("REPORT")
+    }
+    
+    @IBAction func blockAction(_ sender: Any) {
+        print("BLOCK")
+    }
+    
     
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         cellUser = cellDict?["user"] as? PFUser
         cellPhotos = cellDict?["photos"] as! NSArray
+        
+        messageLabel.text = NSLocalizedString("Message", comment: "")
+        videoLabel.text = NSLocalizedString("Video", comment: "")
+        reportLabel.text = NSLocalizedString("Report", comment: "")
+        blockLabel.text = NSLocalizedString("Block", comment: "")
         
         cellPhotos.forEach({ (object) in
             let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object as! PFObject)
             self.userPhotosArray.append(temp)
         })
         
-        setupCollectionView()
+        setupNode()
+        
         collectionView.reloadData()
         print("USERID: ", cellUser?.objectId ?? "")
         
@@ -48,40 +82,55 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegate, UIC
         bioView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
     }
     
-    func setupCollectionView(){
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(UINib.init(nibName: "MyProfileGalleryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MyProfileGalleryCollectionViewCell")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cellPhotos.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyProfileGalleryCollectionViewCell", for: indexPath) as! MyProfileGalleryCollectionViewCell
+    func setupNode(){
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         
-        cell.handleCell(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: cellUser!)
-        
-        return cell
+        collectionNodeMain = ASCollectionNode(frame: CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: collectionView.frame.size.height), collectionViewLayout: flowLayout)
+        collectionNodeMain?.backgroundColor = UIColor.systemBackground
+        collectionNodeMain?.dataSource = self
+        collectionNodeMain?.delegate = self
+        //collectionNodeMain?.registerSupplementaryNode(ofKind: UICollectionView.elementKindSectionHeader)
+        collectionNodeMain?.view.isScrollEnabled = true
+        self.collectionView.addSubnode(collectionNodeMain!)
+        collectionNodeMain?.view.isPagingEnabled = true
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        //let width  = (self.view.frame.width)
-        let width  = (self.collectionView.frame.width)
-        let height  = (self.collectionView.frame.height)
-        return CGSize(width: width, height: height)
+    
+    
+    ///NODE
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+        return cellPhotos.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row > 0 {
+    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return {
+            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!)
+        }
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+        let width = UIScreen.main.bounds.width
+        return ASSizeRange(min: CGSize(width: width, height: width*1.1), max: CGSize(width: width, height: width*1.1))
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+        if node.indexPath!.row > 0 {
             sendProfileView(viewedUser: cellUser!)
         }
         
-         if (indexPath.row == cellPhotos.count - 1 ) { //it's your last cell
-           print("Load more data & reload your collection view")
-         }
+        if (node.indexPath!.row == cellPhotos.count - 1 ) { //it's your last cell
+            print("Load more data & reload your collection view")
+        }
     }
-
-
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let w:UserPhotoObject = self.userPhotosArray[indexPath.row]
+        let vc = ImageViewerViewController()
+        vc.imageUrl = w.imageFile.url ?? ""
+        self.present(vc, animated: true, completion: nil)
+    }
 }
