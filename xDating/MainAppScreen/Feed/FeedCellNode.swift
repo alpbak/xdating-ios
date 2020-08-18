@@ -18,11 +18,16 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     let userNameNode = ASTextNode()
     let postLocationNode = ASTextNode()
     let lastOnlineNode = ASTextNode()
+    let topSeparator = ASImageNode()
+    let bottomSeparator = ASImageNode()
+    var morePhotosTextNode = ASTextNode()
     var _collectionNode:ASCollectionNode?
+    var shouldHideMorePhotoNode:Bool = false
     
     required init(with cellDict:NSDictionary) {
         super.init()
         
+        shouldHideMorePhotoNode = false
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 0
@@ -32,9 +37,6 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         _collectionNode?.delegate = self
         _collectionNode?.dataSource = self
         _collectionNode?.backgroundColor = .lightGray
-        //_collectionNode?.view.isPagingEnabled = true
-        
-        
         
         automaticallyManagesSubnodes = true
         cellUser = nil
@@ -101,6 +103,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         relativeSpec.style.maxWidth = ASDimensionMakeWithPoints(UIScreen.main.bounds.width)
         relativeSpec.style.minHeight = ASDimensionMakeWithPoints(60.0)
         
+        
         let headerLayoutSpec = ASBackgroundLayoutSpec(child: relativeSpec, background: getNameLocationStack())
         
         let insets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
@@ -113,14 +116,49 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         stackLayout.lineSpacing = 0
         stackLayout.children = [headerWithInset, imagePlace]
         
-        return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+        
+        if cellPhotos.count > 1 {
+            if shouldHideMorePhotoNode {
+                return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+            }
+            else{
+                return ASBackgroundLayoutSpec(child: getMorePhotosStack(), background: stackLayout)
+            }
+            
+        }
+        else{
+          return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+        }
+
+    }
+    
+    func getMorePhotosStack() -> ASInsetLayoutSpec {
+        let bColor:UIColor = UIColor.black.withAlphaComponent(0.2)
+        let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 12.0),
+        NSAttributedString.Key.foregroundColor: UIColor.white]
+        let str:String = "   " + NSLocalizedString("Swipe For More", comment: "") + " ➤  "
+        let nameString = NSAttributedString(string: str, attributes: nameStringAttribute as [NSAttributedString.Key : Any])
+        //let textNode = ASTextNode()
+        morePhotosTextNode.attributedText = nameString
+        morePhotosTextNode.style.alignSelf = .center
+        morePhotosTextNode.backgroundColor = bColor
+        
+        topSeparator.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: .black, fill: bColor)
+        bottomSeparator.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: .black, fill: bColor)
+        
+        let verticalStackSpec = ASStackLayoutSpec.vertical()
+        verticalStackSpec.spacing = 0
+        verticalStackSpec.justifyContent = .center
+        verticalStackSpec.children = [topSeparator, morePhotosTextNode, bottomSeparator]
+
+        return ASInsetLayoutSpec(insets:UIEdgeInsets(top: CGFloat.infinity, left: CGFloat.infinity, bottom: 40, right: 10), child: verticalStackSpec)
+
     }
     
     func getNameLocationStack() -> ASStackLayoutSpec {
         let nameLocationStack = ASStackLayoutSpec.vertical()
         nameLocationStack.spacing = 5
         nameLocationStack.children = [userNameNode, postLocationNode, lastOnlineNode]
-        //nameLocationStack.style.minWidth = ASDimensionMakeWithPoints(160.0)
         return nameLocationStack
     }
     
@@ -190,5 +228,14 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
         let width = UIScreen.main.bounds.width
         return ASSizeRange(min: CGSize(width: width, height: width), max: CGSize(width: width, height: width))
+    }
+            
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        handleSwipeForMore()
+    }
+        
+    func handleSwipeForMore(){
+        shouldHideMorePhotoNode = true
+        self.setNeedsLayout()
     }
 }
