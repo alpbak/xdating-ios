@@ -157,6 +157,28 @@ func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) ->
     }
 }
 
+func getProfileViewers(completion: @escaping(_ success: Bool, _ objects: Any?) -> Void){
+    let uid:String = PFUser.current()?.objectId ?? "-1"
+    let params: [AnyHashable: Any] = [
+        "userId" : uid
+    ]
+    
+    print("getProfileViewers-params: ", params)
+    
+    PFCloud.callFunction(inBackground: "getProfileViewers", withParameters: params) { (result, error) in
+//        print("getProfileViewers ERROR: ", error)
+//        print("getProfileViewers RESULT: ", result)
+        
+        if error == nil{
+            completion(true, result)
+        }
+        else{
+            completion(false, nil)
+        }
+        
+    }
+}
+
 func setLastOnline(){
     guard let user = PFUser.current() else { return }
     user["lastOnline"] = Date()

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B23E8C324EBF96100EC89AB /* WhoViewedYourProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B23E8C224EBF96100EC89AB /* WhoViewedYourProfileViewController.swift */; };
 		2B2FD80724C8D99E0042BF6D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2FD80524C8D99E0042BF6D /* LoginViewController.swift */; };
 		2B2FD80824C8D99E0042BF6D /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B2FD80624C8D99E0042BF6D /* LoginViewController.xib */; };
 		2B2FD80B24DEABB40042BF6D /* MainScreenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2FD80924DEABB40042BF6D /* MainScreenCollectionViewCell.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B23E8C224EBF96100EC89AB /* WhoViewedYourProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoViewedYourProfileViewController.swift; sourceTree = "<group>"; };
 		2B2FD80524C8D99E0042BF6D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2B2FD80624C8D99E0042BF6D /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		2B2FD80924DEABB40042BF6D /* MainScreenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -100,6 +102,14 @@
 				E70DFBCD6D8972180E9707D7 /* Pods_xDating.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B23E8C424EBF97B00EC89AB /* WhoViewedYourProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2B23E8C224EBF96100EC89AB /* WhoViewedYourProfileViewController.swift */,
+			);
+			path = WhoViewedYourProfile;
 			sourceTree = "<group>";
 		};
 		2B3A35D624E041E80014FF4B /* UserProfileView */ = {
@@ -186,6 +196,7 @@
 		2B9E981124C7056900ED7A68 /* MainAppScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2B23E8C424EBF97B00EC89AB /* WhoViewedYourProfile */,
 				2B3A35D624E041E80014FF4B /* UserProfileView */,
 				2BAA937B24E939260022338A /* MyProfile */,
 				2BE1896124C8B19E00CFFA7A /* Cells */,
@@ -362,6 +373,7 @@
 				2B76136424EAF78900063465 /* ImageViewerViewController.swift in Sources */,
 				2B9E980424C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift in Sources */,
 				2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */,
+				2B23E8C324EBF96100EC89AB /* WhoViewedYourProfileViewController.swift in Sources */,
 				2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */,
 				2B3A35D924E042150014FF4B /* UserProfileViewController.swift in Sources */,
 				2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */,

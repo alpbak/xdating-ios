@@ -1,42 +1,33 @@
 //
-//  MainAppViewController.swift
+//  WhoViewedYourProfileViewController.swift
 //  xDating
 //
-//  Created by Alpaslan Bak on 21.07.2020.
+//  Created by Alpaslan Bak on 18.08.2020.
 //  Copyright © 2020 Alpaslan Bak. All rights reserved.
 //
 
 import UIKit
-import Parse
 import AsyncDisplayKit
 
-class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate {
+class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate {
     
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
-    
-    @IBOutlet weak var registerButton: UIButton!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var regisrationStackView: UIStackView!
-    @IBOutlet weak var registrationStackViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
     var feedArray:NSArray = []
     private let refreshControl = UIRefreshControl()
+    @IBOutlet weak var noViewersLabel: UILabel!
     
-    @IBAction func loginButtonAction(_ sender: Any) {
-        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.openLoginScreen()
-    }
-    
-    @IBAction func signUp(_ sender: Any) {
-        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.openSignUpScreen()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.overrideUserInterfaceStyle = .dark
+        
+        print("WhoViewedYourProfileViewController")
+        noViewersLabel.text = NSLocalizedString("You have no profile viewers at this time", comment: "")
+        noViewersLabel.isHidden = true
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        setupNode()
         getFeed()
     }
     
@@ -49,19 +40,8 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-    }
-    
-    override func viewDidLayoutSubviews() {
-        handleStartup()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        print("traitCollectionDidChange")
-        collectionNodeMain?.view.overrideUserInterfaceStyle = .dark
-    }
-
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        print("willTransition")
+        print("WhoViewedYourProfileViewController - viewDidAppear")
+        getFeed()
     }
     
     @objc
@@ -70,15 +50,14 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         refreshControl.endRefreshing()
     }
     
-    @objc func getFeed(){
-        setLastOnline()
-        refreshControl.beginRefreshing()
-        getFeedFromCloud { (success, results) in
+    func getFeed(){
+        indicator.isHidden = false
+        getProfileViewers { (success, results) in
             if success{
                 self.handleResults(results: results as Any)
             }
             else{
-                print("GET FEED FROM CLOUD ERROR")
+                print("GET WHO VIEWED FROM CLOUD ERROR")
             }
         }
     }
@@ -87,22 +66,13 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         feedArray = results as! NSArray
         collectionNodeMain?.reloadData()
         refreshControl.endRefreshing()
-    }
-    
-    func handleStartup(){
-        if isUserLoggedIn() {
-            registerButton.isHidden = true
-            loginButton.isHidden = true
-            regisrationStackView.isHidden = true
-            registrationStackViewHeight.constant = 0
+        indicator.isHidden = true
+        if feedArray.count == 0 {
+            noViewersLabel.isHidden = false
         }
         else{
-            registerButton.isHidden = false
-            loginButton.isHidden = false
-            regisrationStackView.isHidden = false
-            registrationStackViewHeight.constant = 70
+            noViewersLabel.isHidden = true
         }
-        setupNode()
     }
     
     func setupNode(){
@@ -110,7 +80,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
-                
+        
         collectionNodeMain = ASCollectionNode(frame: asCollectionView.frame, collectionViewLayout: flowLayout)
         collectionNodeMain?.backgroundColor = UIColor.systemBackground
         collectionNodeMain?.dataSource = self
@@ -119,6 +89,8 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         collectionNodeMain?.view.isScrollEnabled = true
         self.view.addSubnode(collectionNodeMain!)
         collectionNodeMain?.view.refreshControl = refreshControl
+        self.view.bringSubviewToFront(indicator)
+        self.view.bringSubviewToFront(noViewersLabel)
     }
     
     
@@ -133,11 +105,11 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         }
     }
     
-//    func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-//        let textCellNode = ASTextCellNode()
-//        textCellNode.frame = CGRect.zero
-//        return textCellNode
-//    }
+    //    func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+    //        let textCellNode = ASTextCellNode()
+    //        textCellNode.frame = CGRect.zero
+    //        return textCellNode
+    //    }
     
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
@@ -157,4 +129,3 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         openUserProfile(cellDict: x)
     }
 }
-
