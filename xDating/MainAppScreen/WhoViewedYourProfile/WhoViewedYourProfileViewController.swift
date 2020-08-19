@@ -14,10 +14,9 @@ class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCol
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
     @IBOutlet weak var indicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var noViewersLabel: UILabel!
     var feedArray:NSArray = []
     private let refreshControl = UIRefreshControl()
-    @IBOutlet weak var noViewersLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -105,12 +104,6 @@ class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCol
         }
     }
     
-    //    func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-    //        let textCellNode = ASTextCellNode()
-    //        textCellNode.frame = CGRect.zero
-    //        return textCellNode
-    //    }
-    
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }
@@ -127,5 +120,10 @@ class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCol
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let x:NSDictionary = feedArray[indexPath.row]  as! NSDictionary
         openUserProfile(cellDict: x)
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+        let displayedCell:FeedCellNode = node as! FeedCellNode
+        setProfileObjectSeen(profileObject: displayedCell.profileViewObject!)
     }
 }

@@ -35,6 +35,7 @@
 		2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */; };
 		2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E982824C7614100ED7A68 /* SignUpSecondViewController.swift */; };
 		2B9E982B24C7614100ED7A68 /* SignUpSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E982924C7614100ED7A68 /* SignUpSecondViewController.xib */; };
+		2BC589CF24ECFCD300EB3DB2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC589CE24ECFCD300EB3DB2 /* SearchViewController.swift */; };
 		2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */; };
 		2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */; };
 		2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */; };
@@ -74,6 +75,7 @@
 		2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppViewController.swift; sourceTree = "<group>"; };
 		2B9E982824C7614100ED7A68 /* SignUpSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondViewController.swift; sourceTree = "<group>"; };
 		2B9E982924C7614100ED7A68 /* SignUpSecondViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpSecondViewController.xib; sourceTree = "<group>"; };
+		2BC589CE24ECFCD300EB3DB2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyProfileGalleryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		2B9E981124C7056900ED7A68 /* MainAppScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2BC589CD24ECFCC400EB3DB2 /* Search */,
 				2B23E8C424EBF97B00EC89AB /* WhoViewedYourProfile */,
 				2B3A35D624E041E80014FF4B /* UserProfileView */,
 				2BAA937B24E939260022338A /* MyProfile */,
@@ -222,6 +225,14 @@
 				2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */,
 			);
 			path = MyProfile;
+			sourceTree = "<group>";
+		};
+		2BC589CD24ECFCC400EB3DB2 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				2BC589CE24ECFCD300EB3DB2 /* SearchViewController.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		2BE1896124C8B19E00CFFA7A /* Cells */ = {
@@ -384,6 +395,7 @@
 				2BE1896724C8B32700CFFA7A /* UserPhotoObject.swift in Sources */,
 				2B2FD80B24DEABB40042BF6D /* MainScreenCollectionViewCell.swift in Sources */,
 				2B76136124EAF75F00063465 /* ImageScrollView.swift in Sources */,
+				2BC589CF24ECFCD300EB3DB2 /* SearchViewController.swift in Sources */,
 				2B9E980F24C6FC7300ED7A68 /* Utilities.swift in Sources */,
 				2B9E980324C6FC4C00ED7A68 /* SKActivityIndicatorView.swift in Sources */,
 				2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */,

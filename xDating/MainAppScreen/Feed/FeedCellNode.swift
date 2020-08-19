@@ -14,15 +14,14 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     var cellPhotos:NSArray = []
     var cellUser:PFUser?
     var userPhotosArray:[UserPhotoObject] = []
+    var profileViewObject:PFObject?
     
     let userNameNode = ASTextNode()
     let postLocationNode = ASTextNode()
     let lastOnlineNode = ASTextNode()
-    let topSeparator = ASImageNode()
-    let bottomSeparator = ASImageNode()
-    var morePhotosTextNode = ASTextNode()
     var _collectionNode:ASCollectionNode?
     var shouldHideMorePhotoNode:Bool = false
+    var isForProfileView:Bool = false
     
     required init(with cellDict:NSDictionary) {
         super.init()
@@ -45,6 +44,14 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         
         cellUser = cellDict["user"] as? PFUser
         cellPhotos = cellDict["photos"] as! NSArray
+        profileViewObject = cellDict["profile"] as? PFObject
+        
+        if profileViewObject != nil {
+            isForProfileView = true
+        }
+        else{
+            isForProfileView = false
+        }
         
         cellPhotos.forEach({ (object) in
             let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object as! PFObject)
@@ -116,33 +123,42 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         stackLayout.lineSpacing = 0
         stackLayout.children = [headerWithInset, imagePlace]
         
-        
+        var stackToReturn:ASLayoutSpec
         if cellPhotos.count > 1 {
             if shouldHideMorePhotoNode {
-                return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+                stackToReturn =  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
             }
             else{
-                return ASBackgroundLayoutSpec(child: getMorePhotosStack(), background: stackLayout)
+                stackToReturn = ASBackgroundLayoutSpec(child: getMorePhotosStack(), background: stackLayout)
             }
-            
         }
         else{
-          return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+          stackToReturn =  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+        }
+        
+        if isForProfileView {
+            return ASBackgroundLayoutSpec(child: getProfileViewStack(), background: stackToReturn)
+        }
+        else{
+            return stackToReturn
         }
 
+        
     }
     
     func getMorePhotosStack() -> ASInsetLayoutSpec {
         let bColor:UIColor = UIColor.black.withAlphaComponent(0.2)
-        let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 12.0),
+        let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 10.0),
         NSAttributedString.Key.foregroundColor: UIColor.white]
         let str:String = "   " + NSLocalizedString("Swipe For More", comment: "") + " ➤  "
         let nameString = NSAttributedString(string: str, attributes: nameStringAttribute as [NSAttributedString.Key : Any])
-        //let textNode = ASTextNode()
+        let morePhotosTextNode = ASTextNode()
         morePhotosTextNode.attributedText = nameString
         morePhotosTextNode.style.alignSelf = .center
         morePhotosTextNode.backgroundColor = bColor
         
+        let topSeparator = ASImageNode()
+        let bottomSeparator = ASImageNode()
         topSeparator.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: .black, fill: bColor)
         bottomSeparator.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: .black, fill: bColor)
         
@@ -152,7 +168,59 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         verticalStackSpec.children = [topSeparator, morePhotosTextNode, bottomSeparator]
 
         return ASInsetLayoutSpec(insets:UIEdgeInsets(top: CGFloat.infinity, left: CGFloat.infinity, bottom: 40, right: 10), child: verticalStackSpec)
+    }
+    
+    func getProfileViewStack() -> ASInsetLayoutSpec {
+        let bColor:UIColor = UIColor.black.withAlphaComponent(0.7)
+        let strAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 10.0),
+        NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let newStrAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 12.0),
+        NSAttributedString.Key.foregroundColor: UIColor.white]
+        
+        let newString = NSAttributedString(string: NSLocalizedString("NEW", comment: ""), attributes: newStrAttribute as [NSAttributedString.Key : Any])
+        
+        let profileViewCountInt:Int = profileViewObject?["views"] as! Int
+        let profileViewCountStr:String = "\(profileViewCountInt)"
+        
+        var xStr:String = ""
+        if profileViewCountInt == 1 {
+            xStr = NSLocalizedString("view", comment: "")
+        }
+        else{
+            xStr = NSLocalizedString("views", comment: "")
+        }
+        
+        let str:String = "   " + profileViewCountStr + " " + xStr + " 👁  "
+        let nameString = NSAttributedString(string: str, attributes: strAttribute as [NSAttributedString.Key : Any])
+        let stringToDisplay:NSMutableAttributedString
+        
+        let notSeen:Bool = profileViewObject?["notSeen"] as! Bool
+        if notSeen {
+            stringToDisplay = NSMutableAttributedString.init(attributedString: nameString)
+            stringToDisplay.append(newString)
+        }
+        else{
+            stringToDisplay = NSMutableAttributedString.init(attributedString: nameString)
+        }
+        
+        
+        let profileTextNode = ASTextNode()
+        profileTextNode.attributedText = stringToDisplay
+        profileTextNode.style.alignSelf = .center
+        profileTextNode.backgroundColor = bColor
+        
+        let topSeparator2 = ASImageNode()
+        let bottomSeparator2 = ASImageNode()
+        topSeparator2.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: .black, fill: bColor)
+        bottomSeparator2.image = UIImage.as_resizableRoundedImage(withCornerRadius: 0, cornerColor: .black, fill: bColor)
+        
+        let verticalStackSpec = ASStackLayoutSpec.vertical()
+        verticalStackSpec.spacing = 0
+        verticalStackSpec.justifyContent = .center
+        verticalStackSpec.children = [topSeparator2, profileTextNode, bottomSeparator2]
 
+        return ASInsetLayoutSpec(insets:UIEdgeInsets(top: 60, left: CGFloat.infinity, bottom: CGFloat.infinity, right: 0), child: verticalStackSpec)
     }
     
     func getNameLocationStack() -> ASStackLayoutSpec {

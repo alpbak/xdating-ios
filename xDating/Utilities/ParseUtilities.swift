@@ -50,9 +50,12 @@ func login(emailStr:String, passwordStr:String, completion: @escaping(_ success:
 }
 
 func getLocation(str:String, completion: @escaping(_ success: Bool, _ objects: [PFObject]?) -> Void){
+    
+    let capStr = str.capitalized
+    
     let query = PFQuery(className:"Continentscountriescities_City")
     //query.whereKey("name", contains: str)
-    query.whereKey("name", hasPrefix: str)
+    query.whereKey("name", hasPrefix: capStr)
     //query.whereKey("name", matchesText: str)
     query.includeKey("country")
     query.limit = 10
@@ -179,6 +182,29 @@ func getProfileViewers(completion: @escaping(_ success: Bool, _ objects: Any?) -
     }
 }
 
+func getSearchResuts(locationId:String, completion: @escaping(_ success: Bool, _ objects: Any?) -> Void){
+    let uid:String = PFUser.current()?.objectId ?? "-1"
+    let params: [AnyHashable: Any] = [
+        "userId" : uid,
+        "locationId" : locationId
+    ]
+    
+    print("getSearchResuts-params: ", params)
+    
+    PFCloud.callFunction(inBackground: "searchUsers", withParameters: params) { (result, error) in
+        print("getSearchResuts ERROR: ", error)
+        print("getSearchResuts RESULT: ", result)
+        
+        if error == nil{
+            completion(true, result)
+        }
+        else{
+            completion(false, nil)
+        }
+        
+    }
+}
+
 func setLastOnline(){
     guard let user = PFUser.current() else { return }
     user["lastOnline"] = Date()
@@ -199,5 +225,12 @@ func sendProfileView(viewedUser:PFUser){
     PFCloud.callFunction(inBackground: "sendProfileView", withParameters: params) { (result, error) in
         //print("sendProfileView ERROR: ", error)
         //print("PROFILE VIEW SAVED")
+    }
+}
+
+func setProfileObjectSeen(profileObject:PFObject){
+    profileObject["notSeen"] = false
+    profileObject.saveInBackground { (success, error) in
+        //print("PROFILE OBJECT SET AS SEEN: error: ", error)
     }
 }
