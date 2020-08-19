@@ -55,8 +55,12 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         cellUser = cellDict?["user"] as? PFUser
         cellPhotos = cellDict?["photos"] as! NSArray
+        
+        sendProfileView(viewedUser: cellUser!)
         
         messageLabel.text = NSLocalizedString("Message", comment: "")
         videoLabel.text = NSLocalizedString("Video", comment: "")

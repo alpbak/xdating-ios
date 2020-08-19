@@ -192,8 +192,8 @@ func getSearchResuts(locationId:String, completion: @escaping(_ success: Bool, _
     print("getSearchResuts-params: ", params)
     
     PFCloud.callFunction(inBackground: "searchUsers", withParameters: params) { (result, error) in
-        print("getSearchResuts ERROR: ", error)
-        print("getSearchResuts RESULT: ", result)
+//        print("getSearchResuts ERROR: ", error)
+//        print("getSearchResuts RESULT: ", result)
         
         if error == nil{
             completion(true, result)
@@ -214,6 +214,10 @@ func setLastOnline(){
 }
 
 func sendProfileView(viewedUser:PFUser){
+    if !isUserLoggedIn() {
+        return
+    }
+    
     let uid:String = PFUser.current()?.objectId ?? "-1"
     let params: [AnyHashable: Any] = [
         "viewerId": uid,

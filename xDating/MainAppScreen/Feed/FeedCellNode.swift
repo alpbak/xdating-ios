@@ -297,7 +297,15 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         let width = UIScreen.main.bounds.width
         return ASSizeRange(min: CGSize(width: width, height: width), max: CGSize(width: width, height: width))
     }
-            
+     
+    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+        print("willDisplayItemWith: ", node.indexPath)
+        
+        if node.indexPath!.row > 0 {
+            sendProfileView(viewedUser: cellUser!)
+        }
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleSwipeForMore()
     }
