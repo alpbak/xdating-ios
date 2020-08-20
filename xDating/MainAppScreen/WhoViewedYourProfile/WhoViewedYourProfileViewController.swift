@@ -11,6 +11,10 @@ import AsyncDisplayKit
 
 class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate {
     
+    
+    
+    
+    @IBOutlet weak var notLoggedInView: NotLoggedInView!
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
     @IBOutlet weak var indicator: UIActivityIndicatorView!
@@ -23,6 +27,7 @@ class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCol
         super.viewDidLoad()
         
         print("WhoViewedYourProfileViewController")
+        notLoggedInView.isHidden = false
         noViewersLabel.text = NSLocalizedString("You have no profile viewers at this time", comment: "")
         noViewersLabel.isHidden = true
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
@@ -40,7 +45,23 @@ class WhoViewedYourProfileViewController: ASViewController<ASDisplayNode>, ASCol
         super.viewDidAppear(animated)
         
         print("WhoViewedYourProfileViewController - viewDidAppear")
-        getFeed()
+        
+        
+        checkForLoggedIn()
+        if isUserLoggedIn(){
+            getFeed()
+        }
+    }
+    
+    func checkForLoggedIn(){
+        if isUserLoggedIn(){
+            notLoggedInView.isHidden = true
+        }
+        else{
+            notLoggedInView.isHidden = false
+            self.view.bringSubviewToFront(notLoggedInView)
+            collectionNodeMain?.reloadData()
+        }
     }
     
     @objc

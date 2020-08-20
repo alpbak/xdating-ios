@@ -22,11 +22,11 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var addMediaButton: UIButton!
     @IBOutlet weak var addMediaLabel: UILabel!
-    @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var profilePhotoContainer: UIView!
     @IBOutlet weak var profilePhotoLabel: UILabel!
     @IBOutlet weak var setDefaultPhotoButton: UIButton!
+    @IBOutlet weak var notLoggedInView: NotLoggedInView!
+    
     
     @IBAction func setDefaultPhotoButtonAction(_ sender: Any) {
         let selectedCell:ImageCellNode = currentDisplayedCell as! ImageCellNode
@@ -48,8 +48,6 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
             displayDeleteAlert(image: (selectedCell.imageNode.image ?? UIImage.init(named: "delete"))!, objectToDelete: object)
         }
     }
-    
-    
     
     var userPhotosArray:[UserPhotoObject] = []
     var userPhotoObjectsArray:[PFObject] = []
@@ -80,13 +78,15 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         super.viewDidLoad()
         
         setupNode()
+        
+        notLoggedInView.isHidden = false
+        
         editLabel.text = NSLocalizedString("Edit", comment: "")
         addMediaLabel.text = NSLocalizedString("Add", comment: "")
-        loadingLabel.text = NSLocalizedString("Loading media", comment: "")
         profilePhotoLabel.text = NSLocalizedString("This is your profile photo", comment: "")
         setDefaultPhotoButton.setTitle(NSLocalizedString("Make this your pfofile photo", comment: ""), for: .normal)
-        loadingView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
-        loadingView.isHidden = false
+        
+        
         profilePhotoContainer.isHidden = true
         
         let nc = NotificationCenter.default
@@ -121,19 +121,15 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     }
     
     func checkForLoggedIn(){
-//        if isUserLoggedIn(){
-//            addPhotoButton.isHidden = false
-//            refreshButton.isHidden = false
-//        }
-//        else{
-//            addPhotoButton.isHidden = true
-//            refreshButton.isHidden = true
-//            nameLabel.text = "REGISTER OR LOGIN!!"
-//            locationLabel.text = "REGISTER OR LOGIN!!"
-//            bioLabel.text = "REGISTER OR LOGIN!!"
-//            self.userPhotosArray.removeAll()
-//            collectionView.reloadData()
-//        }
+        if isUserLoggedIn(){
+            notLoggedInView.isHidden = true
+        }
+        else{
+            notLoggedInView.isHidden = false
+            self.view.bringSubviewToFront(notLoggedInView)
+            self.userPhotosArray.removeAll()
+            collectionNodeMain?.reloadData()
+        }
     }
     
     func getUserDetails(){
@@ -265,7 +261,7 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     }
     
     func deleteImage(objectToDelete:PFObject){
-        displayWaitIndicator(message: NSLocalizedString("Deleteing", comment: ""))
+        displayWaitIndicator(message: NSLocalizedString("Deleting", comment: ""))
         deletePhotoObject(objectToDelete: objectToDelete) { (success) in
             hideWaitIndicator()
             self.getUserDetails()
@@ -274,7 +270,7 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     
     func displayChangePhotoAlert(image:UIImage, objectToDelete:PFObject){
         let alert = NewYorkAlertController(title: NSLocalizedString("Change?", comment: ""),
-                                           message: NSLocalizedString("Are you sure you want to change yoır profile photo?", comment: ""), style: .alert)
+                                           message: NSLocalizedString("Are you sure you want to change your profile photo?", comment: ""), style: .alert)
         alert.addImage(image)
 
         let ok = NewYorkButton(title: "OK", style: .default) { _ in
