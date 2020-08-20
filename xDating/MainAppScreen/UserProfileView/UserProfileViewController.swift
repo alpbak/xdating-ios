@@ -46,7 +46,11 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     }
     
     @IBAction func blockAction(_ sender: Any) {
-        displayBlockAlert()
+        displayBlockAlert(parent: self) { (success) in
+            if success{
+                self.doBlock()
+            }
+        }
     }
     
     
@@ -136,25 +140,6 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         let vc = ImageViewerViewController()
         vc.imageUrl = w.imageFile.url ?? ""
         self.present(vc, animated: true, completion: nil)
-    }
-    
-    func displayBlockAlert(){
-        let alert = NewYorkAlertController(title: NSLocalizedString("Block", comment: ""),
-                                           message: NSLocalizedString("Are you sure you want to block this user", comment: ""),
-                                           style: .alert)
-
-        let ok = NewYorkButton(title: NSLocalizedString("YES", comment: ""), style: .default) { _ in
-            self.doBlock()
-        }
-        
-        let no = NewYorkButton(title: NSLocalizedString("NO", comment: ""), style: .cancel) { _ in
-            
-        }
-        
-        alert.addButton(ok)
-        alert.addButton(no)
-        
-        self.present(alert, animated: true)
     }
     
     func doBlock(){

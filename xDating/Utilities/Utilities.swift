@@ -169,6 +169,13 @@ func getUserLocation(user:PFUser, completion: @escaping(_ str: String?) -> Void)
 }
 
 func reportUser(user:PFUser, parent:UIViewController?){
+    var mParent = UIViewController()
+    
+    if parent == nil {
+        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+        mParent = appDelegate?.getRootVC() as! UIViewController
+    }
+    
     let actionSheet = NewYorkAlertController(title: NSLocalizedString("REPORT USER", comment: ""),
                                              message: NSLocalizedString("Please select the subject for your report.", comment: ""),
                                              style: .actionSheet)
@@ -193,18 +200,22 @@ func reportUser(user:PFUser, parent:UIViewController?){
             reportUser(userToReport: user, reason: ReportReason.harrasment) { (success) in
                 displayReportAlert(parent: parent)
             }
+        }),
+        NewYorkButton(title: NSLocalizedString("BLOCK USER", comment: ""), style: .destructive, handler: { (button) in
+            reportUser(userToReport: user, reason: ReportReason.harrasment) { (success) in
+                displayBlockAlert(parent: mParent) { (success) in
+                    
+                    blockUser(userToBlock: user) { (success) in
+                        print("USER BLOCKED FROM MAIN FEED")
+                    }
+                }
+            }
         })
     ]
     actionSheet.addButtons(buttons)
     
-    if parent == nil {
-        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-        let rootVC = appDelegate?.getRootVC()
-        rootVC?.present(actionSheet, animated: true)
-    }
-    else{
-        parent?.present(actionSheet, animated: true)
-    }
+    mParent.present(actionSheet, animated: true)
+    
     
 }
 
@@ -214,5 +225,22 @@ func displayReportAlert(parent:UIViewController?){
     parent: parent)
 }
 
+func displayBlockAlert(parent:UIViewController, completion: @escaping(_ success: Bool) -> Void){
+    let alert = NewYorkAlertController(title: NSLocalizedString("Block", comment: ""),
+                                       message: NSLocalizedString("Are you sure you want to block this user", comment: ""),
+                                       style: .alert)
 
+    let ok = NewYorkButton(title: NSLocalizedString("YES", comment: ""), style: .default) { _ in
+        completion(true)
+    }
+    
+    let no = NewYorkButton(title: NSLocalizedString("NO", comment: ""), style: .cancel) { _ in
+        completion(false)
+    }
+    
+    alert.addButton(ok)
+    alert.addButton(no)
+    
+    parent.present(alert, animated: true)
+}
 
