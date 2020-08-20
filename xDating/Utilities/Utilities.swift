@@ -43,6 +43,26 @@ func displayAlert(alertTitle:String, alertMessage:String, parent:UIViewControlle
     }
 }
 
+func displayAlertWithCompletion(alertTitle:String, alertMessage:String, parent:UIViewController?, completion: @escaping(_ success: Bool) -> Void){
+    let alert = NewYorkAlertController(title: alertTitle,
+                                       message: alertMessage,
+                                       style: .alert)
+
+    let ok = NewYorkButton(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
+        completion(true)
+    }
+    
+    alert.addButton(ok)
+    if parent == nil {
+        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+        let rootVC = appDelegate?.getRootVC()
+        rootVC?.present(alert, animated: true)
+    }
+    else{
+        parent?.present(alert, animated: true)
+    }
+}
+
 func displayWaitIndicator(message:String?){
     if (message != nil) {
         SKActivityIndicator.show(message ?? "", userInteractionStatus: false)
@@ -193,3 +213,6 @@ func displayReportAlert(parent:UIViewController?){
     alertMessage: NSLocalizedString("We have received your report.", comment: ""),
     parent: parent)
 }
+
+
+

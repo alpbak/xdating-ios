@@ -103,6 +103,8 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         checkForLoggedIn()
     }
     
+
+    
     func setupNode(){
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal

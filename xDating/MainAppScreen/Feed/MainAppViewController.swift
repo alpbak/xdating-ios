@@ -40,6 +40,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(newUserBlock), name: Notification.Name("UserBlockedNotification"), object: nil)
+        
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         setupNode()
         
@@ -67,6 +71,12 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         print("willTransition")
+    }
+    
+    @objc func newUserBlock(){
+        print("NEW BLOCK")
+        feedArray = cleanUpBlockedUsers(arrayToCheck: feedArray) as NSArray
+        collectionNodeMain?.reloadData()
     }
     
     @objc

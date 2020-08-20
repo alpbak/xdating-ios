@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import AsyncDisplayKit
+import NewYorkAlert
 
 class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowLayout, ASCollectionDataSource, ASCollectionDelegate {
     
@@ -45,7 +46,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     }
     
     @IBAction func blockAction(_ sender: Any) {
-        print("BLOCK")
+        displayBlockAlert()
     }
     
     
@@ -135,5 +136,34 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         let vc = ImageViewerViewController()
         vc.imageUrl = w.imageFile.url ?? ""
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    func displayBlockAlert(){
+        let alert = NewYorkAlertController(title: NSLocalizedString("Block", comment: ""),
+                                           message: NSLocalizedString("Are you sure you want to block this user", comment: ""),
+                                           style: .alert)
+
+        let ok = NewYorkButton(title: NSLocalizedString("YES", comment: ""), style: .default) { _ in
+            self.doBlock()
+        }
+        
+        let no = NewYorkButton(title: NSLocalizedString("NO", comment: ""), style: .cancel) { _ in
+            
+        }
+        
+        alert.addButton(ok)
+        alert.addButton(no)
+        
+        self.present(alert, animated: true)
+    }
+    
+    func doBlock(){
+        blockUser(userToBlock: cellUser!) { (success) in
+            displayAlertWithCompletion(alertTitle: NSLocalizedString("User Blocked", comment: ""),
+                                       alertMessage: NSLocalizedString("The user has been blocked succesfully.", comment: ""),
+                                       parent: self) { (success) in
+                                        self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
 }

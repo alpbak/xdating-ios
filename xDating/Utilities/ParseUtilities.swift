@@ -10,6 +10,8 @@ import Foundation
 import Parse
 import UIKit
 
+var blockedUsers:[String] = []
+
 func isUserLoggedIn() -> Bool {
     if PFUser.current()?.email == nil{
         return false
@@ -144,6 +146,11 @@ func saveDefaultUserPhoto(photoObject:PFObject){
 }
 
 func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) -> Void){
+    
+    getBlockUsers { (success, results) in
+        print("blockedUsers: ", blockedUsers)
+    }
+    
     let uid:String = PFUser.current()?.objectId ?? "-1"
     let params: [AnyHashable: Any] = [
         "iid": "000",
@@ -157,7 +164,9 @@ func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) ->
 //        print("getFeedUsers RESULT: ", result)
         
         if error == nil{
-            completion(true, result)
+            var tempArray:NSArray = []
+            tempArray = result as! NSArray
+            completion(true, cleanUpBlockedUsers(arrayToCheck: tempArray))
         }
         else{
             completion(false, nil)
@@ -165,6 +174,59 @@ func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) ->
         
     }
 }
+
+
+func cleanUpBlockedUsers(arrayToCheck:NSArray) -> [Any] {
+    var feedArray:[Any] = []
+    for x:Any in arrayToCheck {
+        let dict:NSDictionary = x as! NSDictionary
+        let tempUser:PFUser = dict["user"] as! PFUser
+        
+        if !blockedUsers.contains(tempUser.objectId!) {
+            feedArray.append(x)
+        }
+    }
+    return feedArray
+}
+
+func getBlockUsers(completion: @escaping(_ success: Bool, _ objects: [PFObject]?) -> Void){
+    guard let user = PFUser.current() else { return }
+    blockedUsers = []
+    
+    let q1 = PFQuery(className:"BlockUser")
+    q1.whereKey("blocker", equalTo: user)
+
+    let q2 = PFQuery(className:"BlockUser")
+    q2.whereKey("blocked", equalTo: user)
+
+    let query = PFQuery.orQuery(withSubqueries: [q1, q2])
+    
+    query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
+        if let error = error {
+            print("getBlockUsers-error: ", error.localizedDescription)
+            completion(false, objects)
+        } else if let objects = objects {
+            print("getBlockUsers: ", objects)
+            
+            for item:PFObject in objects {
+                let user1:PFUser = item["blocked"] as! PFUser
+                let user2:PFUser = item["blocker"] as! PFUser
+                
+                if user1.objectId != user.objectId {
+                    blockedUsers.append(user1.objectId!)
+                }
+                
+                if user2.objectId != user.objectId {
+                    blockedUsers.append(user2.objectId!)
+                }
+                
+            }
+            completion(true, objects)
+        }
+    }
+}
+
+
 
 func getProfileViewers(completion: @escaping(_ success: Bool, _ objects: Any?) -> Void){
     let uid:String = PFUser.current()?.objectId ?? "-1"
@@ -280,4 +342,21 @@ func reportUser(userToReport:PFUser, reason:String, completion: @escaping(_ succ
     report.saveInBackground { (success, error) in
         completion(success)
     }
+}
+
+func blockUser(userToBlock:PFUser, completion: @escaping(_ success: Bool) -> Void){
+    guard let user = PFUser.current() else { return }
+    
+    let block = PFObject(className:"BlockUser")
+    block["blocker"] = user
+    block["blocked"] = userToBlock
+    block["notSeen"] = true
+    block.saveInBackground { (success, error) in
+        completion(success)
+        blockedUsers.append(userToBlock.objectId!)
+        
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name("UserBlockedNotification"), object: nil)
+    }
+    
 }
