@@ -92,16 +92,15 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(refreshAction(_:)), name: Notification.Name("NewMediaAdded"), object: nil)
         
+        if isUserLoggedIn(){
+            getUserDetails()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        
         checkForLoggedIn()
-        if isUserLoggedIn(){
-            getUserDetails()
-        }
     }
     
     func setupNode(){

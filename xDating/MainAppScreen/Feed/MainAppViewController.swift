@@ -33,11 +33,16 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         appDelegate?.openSignUpScreen()
     }
     
+    @IBAction func topButtonAction(_ sender: Any) {
+        print("sss")
+        collectionNodeMain?.setContentOffset(CGPoint.zero, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.overrideUserInterfaceStyle = .dark
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-        getFeed()
+        setupNode()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +76,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     }
     
     @objc func getFeed(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+            displayWaitIndicator(message: NSLocalizedString("Loading", comment: ""))
+        })
+        
         setLastOnline()
         refreshControl.beginRefreshing()
         getFeedFromCloud { (success, results) in
@@ -87,6 +96,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         feedArray = results as! NSArray
         collectionNodeMain?.reloadData()
         refreshControl.endRefreshing()
+        hideWaitIndicator()
     }
     
     func handleStartup(){
@@ -102,7 +112,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
             regisrationStackView.isHidden = false
             registrationStackViewHeight.constant = 70
         }
-        setupNode()
+        
     }
     
     func setupNode(){
@@ -119,11 +129,11 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         collectionNodeMain?.view.isScrollEnabled = true
         self.view.addSubnode(collectionNodeMain!)
         collectionNodeMain?.view.refreshControl = refreshControl
+        getFeed()
     }
     
     
     ///NODE
-    
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         
         return {
