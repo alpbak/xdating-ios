@@ -4,6 +4,7 @@ PODS:
   - Kingfisher (5.14.0):
     - Kingfisher/Core (= 5.14.0)
   - Kingfisher/Core (5.14.0)
+  - NewYorkAlert (1.0.0)
   - Parse (1.18.0):
     - Parse/Core (= 1.18.0)
   - Parse/Core (1.18.0):
@@ -52,6 +53,7 @@ PODS:
 DEPENDENCIES:
   - CommonKeyboard
   - Kingfisher (~> 5.0)
+  - NewYorkAlert
   - Parse
   - Texture
   - YPImagePicker
@@ -61,6 +63,7 @@ SPEC REPOS:
     - Bolts
     - CommonKeyboard
     - Kingfisher
+    - NewYorkAlert
     - Parse
     - PINCache
     - PINOperation
@@ -74,6 +77,7 @@ SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
   CommonKeyboard: ed9c85e008ff5788a3207c10e366566dd7cb80b2
   Kingfisher: 7b64389a43139c903ec434788344c288217c792d
+  NewYorkAlert: cf254ead7dabf55f3bdb728e56673a855034722f
   Parse: 79bdda34fdb7eb2a707a43a951c8aae236cb3e34
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
@@ -83,6 +87,6 @@ SPEC CHECKSUMS:
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   YPImagePicker: 3b88ca0c50134af2856c48c481572c98a8b8b65b
 
-PODFILE CHECKSUM: baf08aac0da2b6f65bb6038e65ccf96e23c2cf41
+PODFILE CHECKSUM: c0b4525b5dfa3383e4931a53398fcf9c0808751f
 
 COCOAPODS: 1.8.4

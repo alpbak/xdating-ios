@@ -11,4 +11,5 @@ target 'xDating' do
   pod 'YPImagePicker'
   pod 'Kingfisher', '~> 5.0'
   pod "Texture"
+  pod 'NewYorkAlert'
 end

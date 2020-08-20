@@ -8,23 +8,63 @@
 
 import UIKit
 import Parse
-class MyProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+import AsyncDisplayKit
+import NewYorkAlert
 
-    @IBOutlet weak var addPhotoButton: UIButton!
-    @IBOutlet weak var refreshButton: UIButton!
-    
+class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLayout, ASCollectionDataSource, ASCollectionDelegate {
 
-    @IBOutlet weak var bioLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var bioView: UIView!
+    @IBOutlet weak var headerNameLabel: UILabel!
+    @IBOutlet weak var bioLAbel: UILabel!
+    @IBOutlet weak var headerLocationLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var editLabel: UILabel!
+    @IBOutlet weak var addMediaButton: UIButton!
+    @IBOutlet weak var addMediaLabel: UILabel!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var loadingLabel: UILabel!
+    @IBOutlet weak var profilePhotoContainer: UIView!
+    @IBOutlet weak var profilePhotoLabel: UILabel!
+    @IBOutlet weak var setDefaultPhotoButton: UIButton!
+    
+    @IBAction func setDefaultPhotoButtonAction(_ sender: Any) {
+        let selectedCell:ImageCellNode = currentDisplayedCell as! ImageCellNode
+        let object:PFObject = self.userPhotoObjectsArray[selectedCell.indexPath!.row]
+        
+        displayChangePhotoAlert(image: (selectedCell.imageNode.image ?? UIImage.init(named: "delete"))!, objectToDelete: object)
+    }
+    
+    @IBAction func deleteButtonAction(_ sender: Any) {
+        let selectedCell:ImageCellNode = currentDisplayedCell as! ImageCellNode
+        let object:PFObject = self.userPhotoObjectsArray[selectedCell.indexPath!.row]
+        let displayedPhotoUrl:String = (selectedCell.mUserPhotoObject?.imageFile.url)!
+        if displayedPhotoUrl == defaultProfilePhotoFileUrl {
+            displayAlert(alertTitle: NSLocalizedString("Warning", comment: ""),
+                         alertMessage: NSLocalizedString("You can't delete your profile photo", comment: ""),
+                         parent: self)
+        }
+        else{
+            displayDeleteAlert(image: (selectedCell.imageNode.image ?? UIImage.init(named: "delete"))!, objectToDelete: object)
+        }
+    }
+    
+    
+    
     var userPhotosArray:[UserPhotoObject] = []
+    var userPhotoObjectsArray:[PFObject] = []
+    var collectionNodeMain: ASCollectionNode?
+    var currentDisplayedCell:ASCellNode?
+    var defaultUserPhotoObject:PFObject?
+    var defaultProfilePhotoFileUrl:String?
     
     @IBAction func addPhotoVideo(_ sender: Any) {
+        displayLoadingView()
         showPhotoVideoPicker(parent: self)
     }
     
     @IBAction func refreshAction(_ sender: Any) {
+        hideLoadingView()
         getUserDetails()
     }
     
@@ -34,100 +74,226 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegate, UICol
             self.tabBarController?.selectedIndex = 0
 
         }
-        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        collectionView.dataSource = self
-        collectionView.delegate = self
         
+        setupNode()
+        editLabel.text = NSLocalizedString("Edit", comment: "")
+        addMediaLabel.text = NSLocalizedString("Add", comment: "")
+        loadingLabel.text = NSLocalizedString("Loading media", comment: "")
+        profilePhotoLabel.text = NSLocalizedString("This is your profile photo", comment: "")
+        setDefaultPhotoButton.setTitle(NSLocalizedString("Make this your pfofile photo", comment: ""), for: .normal)
+        loadingView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
+        loadingView.isHidden = false
+        profilePhotoContainer.isHidden = true
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(refreshAction(_:)), name: Notification.Name("NewMediaAdded"), object: nil)
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupCollectionView()
+        
+        
         checkForLoggedIn()
         if isUserLoggedIn(){
             getUserDetails()
         }
+    }
+    
+    func setupNode(){
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
         
-        
+        collectionNodeMain = ASCollectionNode(frame: CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: collectionView.frame.size.height), collectionViewLayout: flowLayout)
+        collectionNodeMain?.backgroundColor = UIColor.systemBackground
+        collectionNodeMain?.dataSource = self
+        collectionNodeMain?.delegate = self
+        //collectionNodeMain?.registerSupplementaryNode(ofKind: UICollectionView.elementKindSectionHeader)
+        collectionNodeMain?.view.isScrollEnabled = true
+        self.collectionView.addSubnode(collectionNodeMain!)
+        collectionNodeMain?.view.isPagingEnabled = true
     }
     
     func checkForLoggedIn(){
-        if isUserLoggedIn(){
-            addPhotoButton.isHidden = false
-            refreshButton.isHidden = false
-        }
-        else{
-            addPhotoButton.isHidden = true
-            refreshButton.isHidden = true
-            nameLabel.text = "REGISTER OR LOGIN!!"
-            locationLabel.text = "REGISTER OR LOGIN!!"
-            bioLabel.text = "REGISTER OR LOGIN!!"
-            self.userPhotosArray.removeAll()
-            collectionView.reloadData()
-        }
+//        if isUserLoggedIn(){
+//            addPhotoButton.isHidden = false
+//            refreshButton.isHidden = false
+//        }
+//        else{
+//            addPhotoButton.isHidden = true
+//            refreshButton.isHidden = true
+//            nameLabel.text = "REGISTER OR LOGIN!!"
+//            locationLabel.text = "REGISTER OR LOGIN!!"
+//            bioLabel.text = "REGISTER OR LOGIN!!"
+//            self.userPhotosArray.removeAll()
+//            collectionView.reloadData()
+//        }
     }
     
     func getUserDetails(){
+        self.userPhotosArray.removeAll()
+        self.userPhotoObjectsArray.removeAll()
         guard let user = PFUser.current() else { return }
-        //print("USER: ", user)
         
-        guard let photoRelation:PFRelation<PFObject> = user["userPhotos"] as? PFRelation<PFObject> else { return }
-        photoRelation.query().findObjectsInBackground { (objects, error) in
-            self.userPhotosArray.removeAll()
-            
-            objects?.forEach({ (object) in
-                let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object)
-                self.userPhotosArray.append(temp)
-            })
-            self.collectionView.reloadData()
+        user.fetchInBackground { (userObject, error) in
+            self.setupuser()
+        }
+    }
+    
+    func setupuser(){
+        guard let user = PFUser.current() else { return }
+        defaultUserPhotoObject = user["defaultUserPhoto"] as? PFObject
+                
+                guard let photoRelation:PFRelation<PFObject> = user["userPhotos"] as? PFRelation<PFObject> else { return }
+                photoRelation.query().findObjectsInBackground { (objects, error) in
+                    self.userPhotosArray.removeAll()
+                    
+                    objects?.forEach({ (object) in
+                        let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object)
+                        self.userPhotosArray.append(temp)
+                        self.userPhotoObjectsArray.append(object)
+                        
+                        if object.objectId == self.defaultUserPhotoObject?.objectId{
+                            self.defaultProfilePhotoFileUrl = temp.imageFile.url
+                        }
+                    })
+                    self.collectionNodeMain?.reloadData()
+                }
+                
+                headerNameLabel.text = getUserNameAndAge(user: user)
+                getUserLocation(user: user) { (locStr) in
+                    self.headerLocationLabel.text = locStr
+                }
+                
+                bioLAbel.text = user["bio"] as? String
+    }
+    
+    
+    ///NODE
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+        return userPhotosArray.count
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+        return {
+            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: PFUser.current()!)
+        }
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
+        let width = UIScreen.main.bounds.width
+        return ASSizeRange(min: CGSize(width: width, height: width*1.1), max: CGSize(width: width, height: width*1.1))
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+        //print("willDisplayItemWith: ", node.indexPath)
+        currentDisplayedCell = node
+        handleProfileViewContainer(node: node)
+        
+        if node.indexPath!.row > 0 {
+            sendProfileView(viewedUser: PFUser.current()!)
         }
         
-        guard let locationObject:PFObject = user["location"] as? PFObject else{ return }
-        locationObject.fetchIfNeededInBackground { (object, error) in
-            self.locationLabel.text = locationObject["name"] as? String
-        }
-        
-        nameLabel.text = user["name"] as? String
-        bioLabel.text = user["bio"] as? String
-        
-//        print("00000")
-//
-//        guard let userPhotosArray:[PFObject] = user["userPhotosArray"] as? [PFObject] else{ return }
-//
-//        print("userPhotosArray: ", userPhotosArray)
-//
-//        for object:PFObject in userPhotosArray {
-//            let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object)
-//            print("IMG URL: ", temp.imageFile.url)
-//
+//        if (node.indexPath!.row == userPhotosArray.count - 1 ) { //it's your last cell
+//            print("Load more data & reload your collection view")
 //        }
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didEndDisplayingItemWith node: ASCellNode) {
+        //print("didEndDisplayingItemWith: ", node.indexPath)
+    }
+    
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let w:UserPhotoObject = self.userPhotosArray[indexPath.row]
+        let vc = ImageViewerViewController()
+        vc.imageUrl = w.imageFile.url ?? ""
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func handleProfileViewContainer(node:ASCellNode){
+        profilePhotoContainer.isHidden = false
+        let selectedCell:ImageCellNode = node as! ImageCellNode
+        let displayedPhotoUrl:String = (selectedCell.mUserPhotoObject?.imageFile.url)!
         
+        if displayedPhotoUrl == defaultProfilePhotoFileUrl {
+            //profilePhotoContainer.isHidden = false
+            if !selectedCell.isForVideo {
+                setDefaultPhotoButton.isHidden = true
+                profilePhotoLabel.isHidden = false
+            }
+            else{
+                profilePhotoContainer.isHidden = true
+            }
+            
+        }
+        else{
+            profilePhotoLabel.isHidden = true
+            setDefaultPhotoButton.isHidden = false
+        }
     }
     
-    func setupCollectionView(){
-        collectionView.register(UINib.init(nibName: "MyProfileGalleryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MyProfileGalleryCollectionViewCell")
-    }
-    
+    func displayLoadingView(){
+        displayWaitIndicator(message: "Loading media")
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.userPhotosArray.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyProfileGalleryCollectionViewCell", for: indexPath) as! MyProfileGalleryCollectionViewCell
-        
-        cell.handleCell(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: PFUser.current()!)
-        
-        return cell
+    func hideLoadingView(){
+        hideWaitIndicator()
+    }
+ 
+    func displayDeleteAlert(image:UIImage, objectToDelete:PFObject){
+        let alert = NewYorkAlertController(title: NSLocalizedString("Delete?", comment: ""),
+                                           message: NSLocalizedString("Are you sure you want to delete this image?", comment: ""), style: .alert)
+        alert.addImage(image)
+
+        let ok = NewYorkButton(title: "OK", style: .default) { _ in
+            self.deleteImage(objectToDelete: objectToDelete)
+        }
+        let cancel = NewYorkButton(title: "Cancel", style: .cancel)
+
+        alert.addButton(ok)
+        alert.addButton(cancel)
+
+        present(alert, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let width  = (view.frame.width)
-        return CGSize(width: width, height: width)
+    func deleteImage(objectToDelete:PFObject){
+        displayWaitIndicator(message: NSLocalizedString("Deleteing", comment: ""))
+        deletePhotoObject(objectToDelete: objectToDelete) { (success) in
+            hideWaitIndicator()
+            self.getUserDetails()
+        }
+    }
+    
+    func displayChangePhotoAlert(image:UIImage, objectToDelete:PFObject){
+        let alert = NewYorkAlertController(title: NSLocalizedString("Change?", comment: ""),
+                                           message: NSLocalizedString("Are you sure you want to change yoır profile photo?", comment: ""), style: .alert)
+        alert.addImage(image)
+
+        let ok = NewYorkButton(title: "OK", style: .default) { _ in
+            self.changePhoto(objectToDelete: objectToDelete)
+        }
+        let cancel = NewYorkButton(title: "Cancel", style: .cancel)
+
+        alert.addButton(ok)
+        alert.addButton(cancel)
+
+        present(alert, animated: true)
+    }
+    
+    func changePhoto(objectToDelete:PFObject){
+        displayWaitIndicator(message: NSLocalizedString("Deleteing", comment: ""))
+        
+        changeDefaultUserPhoto(newUserPhotoObject: objectToDelete) { (success) in
+            hideWaitIndicator()
+            self.getUserDetails()
+        }
     }
 }

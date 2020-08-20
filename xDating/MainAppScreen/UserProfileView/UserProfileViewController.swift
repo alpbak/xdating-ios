@@ -52,10 +52,9 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         
         cellUser = cellDict?["user"] as? PFUser
         cellPhotos = cellDict?["photos"] as! NSArray

@@ -116,7 +116,13 @@ func addPhotoRelation(photoObject:PFObject){
     user.saveInBackground { (sucess, error) in
         print("USER PFOTO RELATION SAVED! - error: ", (error?.localizedDescription ?? "") as String)
         checkDefaultUserPhoto(photoObject: photoObject)
+        sendNewMediaNotification()
     }
+}
+
+func sendNewMediaNotification(){
+    let nc = NotificationCenter.default
+    nc.post(name: Notification.Name("NewMediaAdded"), object: nil)
 }
 
 func checkDefaultUserPhoto(photoObject:PFObject){
@@ -219,6 +225,11 @@ func sendProfileView(viewedUser:PFUser){
     }
     
     let uid:String = PFUser.current()?.objectId ?? "-1"
+    
+    if uid == viewedUser.objectId {
+        return
+    }
+    
     let params: [AnyHashable: Any] = [
         "viewerId": uid,
         "viewedId" : (viewedUser.objectId ?? "") as String
@@ -236,5 +247,23 @@ func setProfileObjectSeen(profileObject:PFObject){
     profileObject["notSeen"] = false
     profileObject.saveInBackground { (success, error) in
         //print("PROFILE OBJECT SET AS SEEN: error: ", error)
+    }
+}
+
+
+func deletePhotoObject(objectToDelete:PFObject, completion: @escaping(_ success: Bool) -> Void){
+    objectToDelete.deleteInBackground { (success, error) in
+        print("PHOTO DELETE-success: ", success)
+        completion(success)
+    }
+}
+
+func changeDefaultUserPhoto(newUserPhotoObject:PFObject, completion: @escaping(_ success: Bool) -> Void){
+    guard let user = PFUser.current() else { return }
+    
+    user["defaultUserPhoto"] = newUserPhotoObject
+    user.saveInBackground { (success, error) in
+        print("DEFAULT PHOTO CHANGED")
+        completion(success)
     }
 }
