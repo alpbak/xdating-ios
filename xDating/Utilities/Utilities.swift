@@ -15,17 +15,15 @@ import Photos
 import Parse
 import NewYorkAlert
 
-func displayAlert(alertTitle:String, alertMessage:String, parent:UIViewController){
-    
-//    let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-//    let action1 = UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default) { (action:UIAlertAction) in
-//
-//    }
-//
-//    alertController.addAction(action1)
-//    parent.present(alertController, animated: true, completion: nil)
-    
-    
+
+public enum ReportReason {
+    static let inappropriatePhoto: String = NSLocalizedString("INAPPROPRIATE PHOTO/VIDEO", comment: "")
+    static let inappropriateContent: String = NSLocalizedString("INAPPROPRIATE CONTENT", comment: "")
+    static let spammer: String = NSLocalizedString("SPAMMER", comment: "")
+    static let harrasment: String = NSLocalizedString("HARRASMENT", comment: "")
+}
+
+func displayAlert(alertTitle:String, alertMessage:String, parent:UIViewController?){
     let alert = NewYorkAlertController(title: alertTitle,
                                        message: alertMessage,
                                        style: .alert)
@@ -35,7 +33,14 @@ func displayAlert(alertTitle:String, alertMessage:String, parent:UIViewControlle
     }
     
     alert.addButton(ok)
-    parent.present(alert, animated: true)
+    if parent == nil {
+        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+        let rootVC = appDelegate?.getRootVC()
+        rootVC?.present(alert, animated: true)
+    }
+    else{
+        parent?.present(alert, animated: true)
+    }
 }
 
 func displayWaitIndicator(message:String?){
@@ -143,4 +148,48 @@ func getUserLocation(user:PFUser, completion: @escaping(_ str: String?) -> Void)
     }
 }
 
+func reportUser(user:PFUser, parent:UIViewController?){
+    let actionSheet = NewYorkAlertController(title: NSLocalizedString("REPORT USER", comment: ""),
+                                             message: NSLocalizedString("Please select the subject for your report.", comment: ""),
+                                             style: .actionSheet)
 
+    let buttons = [
+        NewYorkButton(title: ReportReason.inappropriateContent, style: .default, handler: { (button) in
+            reportUser(userToReport: user, reason: ReportReason.inappropriateContent) { (success) in
+                displayReportAlert(parent: parent)
+            }
+        }),
+        NewYorkButton(title: ReportReason.inappropriatePhoto, style: .default, handler: { (button) in
+            reportUser(userToReport: user, reason: ReportReason.inappropriatePhoto) { (success) in
+                displayReportAlert(parent: parent)
+            }
+        }),
+        NewYorkButton(title: ReportReason.spammer, style: .default, handler: { (button) in
+            reportUser(userToReport: user, reason: ReportReason.spammer) { (success) in
+                displayReportAlert(parent: parent)
+            }
+        }),
+        NewYorkButton(title: ReportReason.harrasment, style: .default, handler: { (button) in
+            reportUser(userToReport: user, reason: ReportReason.harrasment) { (success) in
+                displayReportAlert(parent: parent)
+            }
+        })
+    ]
+    actionSheet.addButtons(buttons)
+    
+    if parent == nil {
+        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+        let rootVC = appDelegate?.getRootVC()
+        rootVC?.present(actionSheet, animated: true)
+    }
+    else{
+        parent?.present(actionSheet, animated: true)
+    }
+    
+}
+
+func displayReportAlert(parent:UIViewController?){
+    displayAlert(alertTitle: NSLocalizedString("Thank You", comment: ""),
+    alertMessage: NSLocalizedString("We have received your report.", comment: ""),
+    parent: parent)
+}

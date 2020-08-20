@@ -41,7 +41,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     }
     
     @IBAction func reportAction(_ sender: Any) {
-        print("REPORT")
+        reportUser(user: cellUser!, parent: self)
     }
     
     @IBAction func blockAction(_ sender: Any) {

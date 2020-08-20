@@ -267,3 +267,17 @@ func changeDefaultUserPhoto(newUserPhotoObject:PFObject, completion: @escaping(_
         completion(success)
     }
 }
+
+func reportUser(userToReport:PFUser, reason:String, completion: @escaping(_ success: Bool) -> Void){
+    guard let user = PFUser.current() else { return }
+    
+    let report = PFObject(className:"ProfileReport")
+    report["reporter"] = user
+    report["reported"] = userToReport
+    report["notSeen"] = true
+    report["reason"] = reason
+    report.incrementKey("reports")
+    report.saveInBackground { (success, error) in
+        completion(success)
+    }
+}

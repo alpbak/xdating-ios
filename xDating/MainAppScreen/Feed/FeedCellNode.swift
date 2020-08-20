@@ -233,21 +233,27 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     func getButtonsStack() -> ASStackLayoutSpec {
         let sendMessageTextNode = ASTextNode()
         let videoTextNode = ASTextNode()
+        let optionTextNode = ASTextNode()
         let buttonStringsAttr = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue", size: 12.0), NSAttributedString.Key.foregroundColor: UIColor.label]
         
         let messageString = NSAttributedString(string: "Message", attributes: buttonStringsAttr as [NSAttributedString.Key : Any])
         let videoString = NSAttributedString(string: "Approved", attributes: buttonStringsAttr as [NSAttributedString.Key : Any])
+        let optionString = NSAttributedString(string: "", attributes: buttonStringsAttr as [NSAttributedString.Key : Any])
         
         sendMessageTextNode.maximumNumberOfLines = 2
         videoTextNode.maximumNumberOfLines = 2
         sendMessageTextNode.attributedText = messageString
         videoTextNode.attributedText = videoString
+        optionTextNode.attributedText = optionString
         
         let messageButtonNode = ASButtonNode()
         messageButtonNode.setImage(UIImage.init(named: "messageicon"), for: .normal)
         
         let videoButtonNode = ASButtonNode()
         videoButtonNode.setImage(UIImage.init(named: "videoicon"), for: .normal)
+        
+        let optionsButtonNode = ASButtonNode()
+        optionsButtonNode.setImage(UIImage.init(named: "options"), for: .normal)
         
         let messageStack = ASStackLayoutSpec.vertical()
         messageStack.spacing = 5
@@ -259,14 +265,20 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         videoStack.children = [videoButtonNode, videoTextNode]
         videoStack.alignItems = .center
         
+        let optionsStack = ASStackLayoutSpec.vertical()
+        optionsStack.spacing = 5
+        optionsStack.children = [optionsButtonNode, optionTextNode]
+        optionsStack.alignItems = .center
+        
         let buttonStack = ASStackLayoutSpec.horizontal()
         buttonStack.spacing = 10
         buttonStack.alignContent = .center
-        buttonStack.children = [messageStack, videoStack]
+        buttonStack.children = [messageStack, videoStack, optionsStack]
         buttonStack.alignItems = .center
         
         messageButtonNode.addTarget(self, action: #selector(handleMessageClick), forControlEvents: .touchUpInside)
         videoButtonNode.addTarget(self, action: #selector(handleVideoClick), forControlEvents: .touchUpInside)
+        optionsButtonNode.addTarget(self, action: #selector(handleReportClick), forControlEvents: .touchUpInside)
         
         return buttonStack
     }
@@ -277,6 +289,11 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     @objc func handleVideoClick(sender: UIButton){
         print("VIDEO", cellUser?["name"] ?? "")
+    }
+    
+    @objc func handleReportClick(sender: UIButton){
+        print("REPORT", cellUser?["name"] ?? "")
+        reportUser(user: cellUser!, parent: nil)
     }
     
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
@@ -299,7 +316,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     }
      
     func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-        print("willDisplayItemWith: ", node.indexPath)
+        //print("willDisplayItemWith: ", node.indexPath)
         
         if node.indexPath!.row > 0 {
             sendProfileView(viewedUser: cellUser!)

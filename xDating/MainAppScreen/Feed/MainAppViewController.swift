@@ -143,12 +143,6 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         }
     }
     
-//    func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
-//        let textCellNode = ASTextCellNode()
-//        textCellNode.frame = CGRect.zero
-//        return textCellNode
-//    }
-    
     func numberOfSections(in collectionNode: ASCollectionNode) -> Int {
         return 1
     }
