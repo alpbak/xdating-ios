@@ -169,17 +169,24 @@ func getUserLocation(user:PFUser, completion: @escaping(_ str: String?) -> Void)
 }
 
 func reportUser(user:PFUser, parent:UIViewController?){
-    var mParent = UIViewController()
     
-    if parent == nil {
-        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-        mParent = appDelegate?.getRootVC() as! UIViewController
-    }
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    let rootParent = appDelegate?.getRootVC()
+    
+    
+    let mParent:UIViewController
+    mParent = parent ?? rootParent!
+    
+//    if parent == nil {
+//        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+//        let rootParent = appDelegate?.getRootVC()
+//    }
     
     let actionSheet = NewYorkAlertController(title: NSLocalizedString("REPORT USER", comment: ""),
                                              message: NSLocalizedString("Please select the subject for your report.", comment: ""),
                                              style: .actionSheet)
 
+    
     let buttons = [
         NewYorkButton(title: ReportReason.inappropriateContent, style: .default, handler: { (button) in
             reportUser(userToReport: user, reason: ReportReason.inappropriateContent) { (success) in
