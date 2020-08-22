@@ -11,7 +11,7 @@ import Quickblox
 import QuickbloxWebRTC
 
 let QBDEFAULTPASSWORD:String = "qbpass1230!!*poghk"
-
+private let chatManager = ChatManager.instance
 
 
 func connectQuickBlox(){
@@ -78,4 +78,46 @@ func connectToChat(user: QBUUser) {
             print("QBChat.instance CONNECTED")
         }
     }
+}
+
+func getUserWithId(uid:Int) -> QBUUser {
+    let user = QBUUser()
+//    user.email = userEmail
+//    user.password = userPassword
+    user.id = UInt(uid)
+    
+    return user
+}
+
+func startChatWithUserQBId(uid:Int, parent:UIViewController?){
+    if uid == 0 {
+        return
+    }
+    
+    chatManager.createPrivateDialog(withOpponent: getUserWithId(uid: uid), completion: { (response, dialog) in
+        guard let dialog = dialog else {
+            if let error = response?.error {
+                //SVProgressHUD.showError(withStatus: error.error?.localizedDescription)
+                print("startChatWithUserQBId - error: ", error)
+            }
+            return
+        }
+        //SVProgressHUD.showSuccess(withStatus: "STR_DIALOG_CREATED".localized)
+        openNewDialog(dialog, parent: parent)
+    })
+}
+
+private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?) {
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    let rootParent = appDelegate?.getRootVC()
+    
+    let mParent:UIViewController
+    mParent = parent ?? rootParent!
+    
+    let vc = ChatNewViewController()
+    vc.dialogID = newDialog.id
+    mParent.present(vc, animated: true, completion: nil)
+    
+    
+    
 }

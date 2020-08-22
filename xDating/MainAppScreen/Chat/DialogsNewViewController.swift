@@ -223,9 +223,7 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
         else{
             self.tabBarItem.badgeValue = "\(unreadCount)"
         }
-        
     }
-    
     
     // MARK: - ChatManagerDelegate
     

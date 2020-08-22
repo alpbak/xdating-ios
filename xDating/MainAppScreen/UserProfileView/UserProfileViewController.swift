@@ -34,7 +34,12 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     var collectionNodeMain: ASCollectionNode?
     
     @IBAction func messageAction(_ sender: Any) {
-        print("MESSAGE")
+        print("CHAT: ", cellUser?["name"] ?? "")
+        
+        if cellUser?["qbUserId"] != nil {
+            let userQBId = (cellUser?["qbUserId"])! as? Int
+            startChatWithUserQBId(uid: userQBId ?? 0, parent: self)
+        }
     }
     
     @IBAction func videoAction(_ sender: Any) {

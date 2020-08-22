@@ -285,6 +285,11 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     @objc func handleMessageClick(sender: UIButton){
         print("CHAT: ", cellUser?["name"] ?? "")
+        
+        if cellUser?["qbUserId"] != nil {
+            let userQBId = (cellUser?["qbUserId"])! as? Int
+            startChatWithUserQBId(uid: userQBId ?? 0, parent: nil)
+        }
     }
     
     @objc func handleVideoClick(sender: UIButton){
