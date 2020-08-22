@@ -8,6 +8,8 @@
 
 import UIKit
 import Quickblox
+import Parse
+import SDWebImage
 
 class DialogCellNew: UITableViewCell {
     
@@ -19,6 +21,17 @@ class DialogCellNew: UITableViewCell {
     @IBOutlet weak var dialogAvatarLabel: UILabel!
     @IBOutlet weak var unreadMessageCounterLabel: UILabel!
     @IBOutlet weak var unreadMessageCounterHolder: UIView!
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var openProfileButton: UIButton!
+    @IBAction func openProfileAction(_ sender: Any) {
+        print("OPENNN")
+        if cellUser == nil {
+            return
+        }
+        openUserProfileForUser(user: cellUser!)
+    }
+    
+    var cellUser:PFUser?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,8 +66,57 @@ class DialogCellNew: UITableViewCell {
         unreadMessageCounterHolder.backgroundColor = markerColor
     }
     
+    func setupUserPhoto(){
+        print("Alp-setupUserPhoto")
+        cellUser?.fetchInBackground(block: { (user, error) in
+            let photoObject:PFObject = user?["defaultUserPhoto"] as! PFObject
+            
+            photoObject.fetchIfNeededInBackground { (object, error) in
+                let photoFile:PFFileObject = object?["imageFile"] as! PFFileObject
+                chatUserPhotoUrls[self.cellUser!.objectId!] = photoFile.url
+                let defaults = UserDefaults.standard
+                defaults.setValue(chatUserPhotoUrls, forKey: "chatUserPhotoUrls")
+                self.displayPhoto(urlStr: photoFile.url ?? "")
+            }
+            
+            
+        })
+    }
+    
+    func displayPhoto(urlStr:String){
+        self.userImageView.isHidden = false
+        //openProfileButton.isHidden = false
+        self.userImageView.sd_setImage(with: URL(string: urlStr)) { (image, error, cacheType, url) in
+        }
+    }
+    
     func setupCell(index:Int, chatDialog:QBChatDialog, cellModel:DialogTableViewCellModel){
-        print("SETUP CELL")
+        //print("SETUP CELL-:", cellModel.dialogUser)
+        
+        let defaults = UserDefaults.standard
+        let dictValue = defaults.value(forKey: "chatUserPhotoUrls")
+        if dictValue != nil {
+            chatUserPhotoUrls = dictValue as! [String : String]
+        }
+        
+        userImageView.isHidden = true
+        //openProfileButton.isHidden = true
+        
+        if cellModel.dialogUser?.customData != nil {
+            cellUser = PFUser()
+            cellUser?.objectId = cellModel.dialogUser?.customData
+                        
+            if chatUserPhotoUrls.keys.contains((cellModel.dialogUser?.customData)!) {
+                displayPhoto(urlStr: chatUserPhotoUrls[(cellModel.dialogUser?.customData)!]!)
+            }
+            else{
+                setupUserPhoto()
+            }
+        }
+        else{
+            print("Alp-SETUP CELL-USEROBJECT ID: NOUSERID")
+        }
+        
         
         self.isExclusiveTouch = true
         self.contentView.isExclusiveTouch = true

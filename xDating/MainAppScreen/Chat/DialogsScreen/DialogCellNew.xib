@@ -113,18 +113,35 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zQ6-AX-ieh">
+                        <rect key="frame" x="17" y="35.5" width="40" height="40"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nTN-D5-9hx">
+                        <rect key="frame" x="17" y="35.5" width="40" height="40"/>
+                        <connections>
+                            <action selector="openProfileAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="otb-qa-uSz"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5UB-tX-yYF" firstAttribute="top" secondItem="I1r-G1-JdX" secondAttribute="bottom" constant="5" id="45x-9H-Bz0"/>
                     <constraint firstItem="dTU-Hz-b0O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="17" id="5me-oC-wch"/>
                     <constraint firstItem="dTU-Hz-b0O" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="7Xy-8k-3dx"/>
                     <constraint firstItem="5UB-tX-yYF" firstAttribute="trailing" secondItem="I1r-G1-JdX" secondAttribute="trailing" id="7dB-2T-DmC"/>
+                    <constraint firstItem="zQ6-AX-ieh" firstAttribute="bottom" secondItem="dTU-Hz-b0O" secondAttribute="bottom" id="BFU-uB-0Mg"/>
+                    <constraint firstItem="nTN-D5-9hx" firstAttribute="leading" secondItem="zQ6-AX-ieh" secondAttribute="leading" id="Cpo-fm-uAX"/>
                     <constraint firstItem="zRD-ne-NOx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EyS-yw-8fv"/>
+                    <constraint firstItem="zQ6-AX-ieh" firstAttribute="leading" secondItem="dTU-Hz-b0O" secondAttribute="leading" id="JB9-pJ-hCq"/>
+                    <constraint firstItem="nTN-D5-9hx" firstAttribute="trailing" secondItem="zQ6-AX-ieh" secondAttribute="trailing" id="R58-ah-mt3"/>
                     <constraint firstAttribute="trailing" secondItem="5UB-tX-yYF" secondAttribute="trailing" constant="10" id="cyK-j7-OQc"/>
                     <constraint firstItem="zRD-ne-NOx" firstAttribute="leading" secondItem="dTU-Hz-b0O" secondAttribute="trailing" constant="6" id="e5R-bL-w1o"/>
+                    <constraint firstItem="zQ6-AX-ieh" firstAttribute="top" secondItem="dTU-Hz-b0O" secondAttribute="top" id="fXL-Ka-hKH"/>
+                    <constraint firstItem="nTN-D5-9hx" firstAttribute="top" secondItem="zQ6-AX-ieh" secondAttribute="top" id="hFY-Dd-PMP"/>
                     <constraint firstItem="5UB-tX-yYF" firstAttribute="bottom" secondItem="zRD-ne-NOx" secondAttribute="bottom" id="kK7-W7-Rew"/>
                     <constraint firstAttribute="trailing" secondItem="Ixc-Wu-4GR" secondAttribute="trailing" constant="12" id="mOe-2m-Ldd"/>
                     <constraint firstItem="Ixc-Wu-4GR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nbc-l5-mmX"/>
+                    <constraint firstItem="zQ6-AX-ieh" firstAttribute="trailing" secondItem="dTU-Hz-b0O" secondAttribute="trailing" id="qB8-ni-WOV"/>
+                    <constraint firstItem="nTN-D5-9hx" firstAttribute="bottom" secondItem="zQ6-AX-ieh" secondAttribute="bottom" id="sba-tV-hi7"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -135,8 +152,10 @@
                 <outlet property="dialogLastMessage" destination="0M5-Fh-f5U" id="zPV-3H-SXR"/>
                 <outlet property="dialogName" destination="S8Y-PS-32V" id="uWY-hl-pFk"/>
                 <outlet property="lastMessageDateLabel" destination="I1r-G1-JdX" id="Ohb-y0-1Fx"/>
+                <outlet property="openProfileButton" destination="nTN-D5-9hx" id="flq-BS-o0H"/>
                 <outlet property="unreadMessageCounterHolder" destination="5UB-tX-yYF" id="H1s-jm-4vp"/>
                 <outlet property="unreadMessageCounterLabel" destination="ptz-IL-AEr" id="Xlu-de-Fl9"/>
+                <outlet property="userImageView" destination="zQ6-AX-ieh" id="Ccd-KR-xZm"/>
             </connections>
             <point key="canvasLocation" x="174.63768115942031" y="125.55803571428571"/>
         </tableViewCell>

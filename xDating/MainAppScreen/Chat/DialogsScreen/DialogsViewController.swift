@@ -25,6 +25,7 @@ class DialogTableViewCellModel: NSObject {
     
     //MARK: - Properties
     var textLabelText: String = ""
+    var dialogUser: QBUUser?
     var unreadMessagesCounterLabelText : String?
     var unreadMessagesCounterHiden = true
     var dialogIcon : UIImage?
@@ -61,9 +62,11 @@ class DialogTableViewCellModel: NSObject {
             if let recipient = ChatManager.instance.storage.user(withID: UInt(dialog.recipientID)),
                 let fullName = recipient.fullName {
                 self.textLabelText = fullName
+                dialogUser = recipient
             } else {
                 ChatManager.instance.loadUser(UInt(dialog.recipientID)) { [weak self] (user) in
                     self?.textLabelText = user?.fullName ?? user?.login ?? ""
+                    self?.dialogUser = user!
                 }
             }
         } else {
@@ -402,6 +405,8 @@ class DialogsViewController: UITableViewController {
         dialogs = chatManager.storage.dialogsSortByUpdatedAt()
         tableView.reloadData()
     }
+    
+    
     
     fileprivate func setupDate(_ dateSent: Date) -> String {
         let formatter = DateFormatter()

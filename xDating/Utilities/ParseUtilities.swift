@@ -12,6 +12,8 @@ import UIKit
 
 var blockedUsers:[String] = []
 
+var chatUserPhotoUrls = [String:String]()
+
 func isUserLoggedIn() -> Bool {
     if PFUser.current()?.email == nil{
         return false

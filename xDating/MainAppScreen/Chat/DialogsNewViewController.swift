@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 import Quickblox
-
+import Parse
 
 class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChatManagerDelegate, QBChatDelegate {
     @IBOutlet weak var tableView: UITableView!
@@ -215,6 +215,8 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         tableView.reloadData()
     }
+    
+    
     
     func setUnreadBadge(unreadCount:Int){
         if unreadCount == 0 {

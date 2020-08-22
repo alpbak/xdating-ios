@@ -164,6 +164,14 @@ func openUserProfile(cellDict:NSDictionary){
     rootVC?.present(vc, animated: true, completion: nil)
 }
 
+func openUserProfileForUser(user:PFUser){
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    let vc = UserProfileViewController()
+    vc.cellUser = user
+    let rootVC = appDelegate?.getRootVC()
+    rootVC?.present(vc, animated: true, completion: nil)
+}
+
 func getUserNameAndAge(user:PFUser) -> String {
     let name:String = user["name"] as? String ?? ""
     let age:Int = user["age"] as? Int ?? 18

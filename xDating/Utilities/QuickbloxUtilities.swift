@@ -9,6 +9,7 @@
 import Foundation
 import Quickblox
 import QuickbloxWebRTC
+import Parse
 
 let QBDEFAULTPASSWORD:String = "qbpass1230!!*poghk"
 private let chatManager = ChatManager.instance
@@ -45,13 +46,24 @@ func signupChat(userEmail:String, userPassword:String){
     }
 }
 
+func updateQBUser(user:QBUUser){
+    let updateUserParameter = QBUpdateUserParameters()
+    updateUserParameter.customData = PFUser.current()?.objectId
+    
+    QBRequest.updateCurrentUser(updateUserParameter, successBlock: {response, user in
+        print("UPDATE QB USER - success")
+    }, errorBlock: { (response) in
+        print("UPDATE QB USER - error: ", response.error!)
+    })
+}
+
 func loginChat(userEmail:String, userPassword:String){
     QBRequest.logIn(withUserEmail: userEmail, password: userPassword, successBlock: { (qbresponse, qbuser) in
         //print("CHAT LOGIN SUCCESS-reponse: ", qbresponse)
         print("CHAT LOGIN SUCCESS-isSuccess: ", qbresponse.isSuccess)
         //print("CHAT USER: ", qbuser)
         saveQBUserId(qbUserId: Int(qbuser.id))
-        
+        updateQBUser(user: qbuser)
         connectToChat(user: qbuser)
     }) { (qberrorresponse) in
         print("loginChat-error: ", qberrorresponse.error!)

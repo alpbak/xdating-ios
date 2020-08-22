@@ -66,9 +66,42 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cellUser = cellDict?["user"] as? PFUser
-        cellPhotos = cellDict?["photos"] as! NSArray
-        
+
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if cellUser == nil {
+            cellUser = cellDict?["user"] as? PFUser
+            cellPhotos = cellDict?["photos"] as! NSArray
+            
+            cellPhotos.forEach({ (object) in
+                let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object as! PFObject)
+                self.userPhotosArray.append(temp)
+            })
+            
+            handleViews()
+        }
+        else{
+            setupuser()
+        }
+    }
+    
+    func setupuser(){
+        cellUser?.fetchInBackground(block: { (user, error) in
+            guard let photoRelation:PFRelation<PFObject> = self.cellUser!["userPhotos"] as? PFRelation<PFObject> else { return }
+            photoRelation.query().findObjectsInBackground { (objects, error) in
+                self.userPhotosArray.removeAll()
+                
+                objects?.forEach({ (object) in
+                    let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object)
+                    self.userPhotosArray.append(temp)
+                })
+                self.handleViews()
+            }
+        })
+    }
+    
+    func handleViews(){
         sendProfileView(viewedUser: cellUser!)
         
         messageLabel.text = NSLocalizedString("Message", comment: "")
@@ -76,10 +109,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         reportLabel.text = NSLocalizedString("Report", comment: "")
         blockLabel.text = NSLocalizedString("Block", comment: "")
         
-        cellPhotos.forEach({ (object) in
-            let temp:UserPhotoObject = UserPhotoObject.init(pfObject: object as! PFObject)
-            self.userPhotosArray.append(temp)
-        })
+        
         
         setupNode()
         
@@ -93,6 +123,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         bioLAbel.text = (cellUser?["bio"] ?? "") as? String
         
         bioView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
+        collectionNodeMain?.reloadData()
     }
     
     func setupNode(){
@@ -116,7 +147,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     ///NODE
     
     func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
-        return cellPhotos.count
+        return userPhotosArray.count
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
@@ -135,9 +166,9 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
             sendProfileView(viewedUser: cellUser!)
         }
         
-        if (node.indexPath!.row == cellPhotos.count - 1 ) { //it's your last cell
-            print("Load more data & reload your collection view")
-        }
+//        if (node.indexPath!.row == cellPhotos.count - 1 ) { //it's your last cell
+//            print("Load more data & reload your collection view")
+//        }
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
