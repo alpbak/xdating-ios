@@ -97,12 +97,10 @@ func startChatWithUserQBId(uid:Int, parent:UIViewController?){
     chatManager.createPrivateDialog(withOpponent: getUserWithId(uid: uid), completion: { (response, dialog) in
         guard let dialog = dialog else {
             if let error = response?.error {
-                //SVProgressHUD.showError(withStatus: error.error?.localizedDescription)
                 print("startChatWithUserQBId - error: ", error)
             }
             return
         }
-        //SVProgressHUD.showSuccess(withStatus: "STR_DIALOG_CREATED".localized)
         openNewDialog(dialog, parent: parent)
     })
 }

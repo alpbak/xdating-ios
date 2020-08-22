@@ -184,13 +184,18 @@ func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) ->
 
 
 func cleanUpBlockedUsers(arrayToCheck:NSArray) -> [Any] {
+    
     var feedArray:[Any] = []
     for x:Any in arrayToCheck {
         let dict:NSDictionary = x as! NSDictionary
         let tempUser:PFUser = dict["user"] as! PFUser
         
         if !blockedUsers.contains(tempUser.objectId!) {
-            feedArray.append(x)
+            
+            if tempUser.objectId != PFUser.current()?.objectId{
+                feedArray.append(x)
+            }
+            
         }
     }
     return feedArray
