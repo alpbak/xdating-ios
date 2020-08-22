@@ -21,6 +21,10 @@ func isUserLoggedIn() -> Bool {
     }
 }
 
+func currentUserEmail() -> String {
+    return PFUser.current()?.email ?? "none"
+}
+
 func signUp(emailStr:String, passwordStr:String, nameStr:String, isFemale:Bool, age:Int, completion: @escaping(_ success: Bool, _ error:Error?) -> Void) {
     let user = PFUser()
     user.username = emailStr
@@ -35,6 +39,7 @@ func signUp(emailStr:String, passwordStr:String, nameStr:String, isFemale:Bool, 
             print("User SignUp Error: ", error.localizedDescription)
             completion(false, error)
         } else {
+            signupChat(userEmail: emailStr, userPassword: QBDEFAULTPASSWORD)
             completion(true, nil)
         }
     }
@@ -146,33 +151,35 @@ func saveDefaultUserPhoto(photoObject:PFObject){
 }
 
 func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) -> Void){
-    
+    print("getFeedFromCloud")
     getBlockUsers { (success, results) in
         print("blockedUsers: ", blockedUsers)
+        
+            let uid:String = PFUser.current()?.objectId ?? "-1"
+            let params: [AnyHashable: Any] = [
+                "iid": "000",
+                "userObjectId" : uid
+            ]
+            
+            //print("sendFollowersToServer-params: ", params)
+            
+            PFCloud.callFunction(inBackground: "getFeedUsersAndPhotos", withParameters: params) { (result, error) in
+        //        print("getFeedUsers ERROR: ", error)
+        //        print("getFeedUsers RESULT: ", result)
+                
+                if error == nil{
+                    var tempArray:NSArray = []
+                    tempArray = result as! NSArray
+                    completion(true, cleanUpBlockedUsers(arrayToCheck: tempArray))
+                }
+                else{
+                    completion(false, nil)
+                }
+                
+            }
     }
     
-    let uid:String = PFUser.current()?.objectId ?? "-1"
-    let params: [AnyHashable: Any] = [
-        "iid": "000",
-        "userObjectId" : uid
-    ]
-    
-    //print("sendFollowersToServer-params: ", params)
-    
-    PFCloud.callFunction(inBackground: "getFeedUsersAndPhotos", withParameters: params) { (result, error) in
-//        print("getFeedUsers ERROR: ", error)
-//        print("getFeedUsers RESULT: ", result)
-        
-        if error == nil{
-            var tempArray:NSArray = []
-            tempArray = result as! NSArray
-            completion(true, cleanUpBlockedUsers(arrayToCheck: tempArray))
-        }
-        else{
-            completion(false, nil)
-        }
-        
-    }
+
 }
 
 
@@ -190,7 +197,11 @@ func cleanUpBlockedUsers(arrayToCheck:NSArray) -> [Any] {
 }
 
 func getBlockUsers(completion: @escaping(_ success: Bool, _ objects: [PFObject]?) -> Void){
-    guard let user = PFUser.current() else { return }
+    guard let user = PFUser.current() else {
+        completion(false, nil)
+        return
+        
+    }
     blockedUsers = []
     
     let q1 = PFQuery(className:"BlockUser")
@@ -206,7 +217,7 @@ func getBlockUsers(completion: @escaping(_ success: Bool, _ objects: [PFObject]?
             print("getBlockUsers-error: ", error.localizedDescription)
             completion(false, objects)
         } else if let objects = objects {
-            print("getBlockUsers: ", objects)
+            //print("getBlockUsers: ", objects)
             
             for item:PFObject in objects {
                 let user1:PFUser = item["blocked"] as! PFUser
@@ -358,5 +369,12 @@ func blockUser(userToBlock:PFUser, completion: @escaping(_ success: Bool) -> Voi
         let nc = NotificationCenter.default
         nc.post(name: Notification.Name("UserBlockedNotification"), object: nil)
     }
-    
+}
+
+func saveQBUserId(qbUserId:Int){
+    guard let user = PFUser.current() else { return }
+    user["qbUserId"] = qbUserId
+    user.saveInBackground { (success, error) in
+        print("USER QB ID SAVED")
+    }
 }

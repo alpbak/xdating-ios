@@ -15,6 +15,21 @@ import Photos
 import Parse
 import NewYorkAlert
 
+struct LoginConstant {
+    static let notSatisfyingDeviceToken = "Invalid parameter not satisfying: deviceToken != nil"
+    static let enterToChat = NSLocalizedString("Enter to chat", comment: "")
+    static let fullNameDidChange = NSLocalizedString("Full Name Did Change", comment: "")
+    static let login = NSLocalizedString("Login", comment: "")
+    static let checkInternet = NSLocalizedString("No Internet Connection", comment: "")
+    static let checkInternetMessage = NSLocalizedString("Make sure your device is connected to the internet", comment: "")
+    static let enterUsername = NSLocalizedString("Please enter your login and username", comment: "")
+    static let loginHint = NSLocalizedString("Use your email or alphanumeric characters in a range from 3 to 50. First character must be a letter.", comment: "")
+    static let usernameHint = NSLocalizedString("Use alphanumeric characters and spaces in a range from 3 to 20. Cannot contain more than one space in a row.", comment: "")
+    static let defaultPassword = "quickblox"
+    static let infoSegue = "ShowInfoScreen"
+    static let showDialogs = "ShowDialogsViewController"
+}
+
 
 public enum ReportReason {
     static let inappropriatePhoto: String = NSLocalizedString("INAPPROPRIATE PHOTO/VIDEO", comment: "")
@@ -220,10 +235,7 @@ func reportUser(user:PFUser, parent:UIViewController?){
         })
     ]
     actionSheet.addButtons(buttons)
-    
     mParent.present(actionSheet, animated: true)
-    
-    
 }
 
 func displayReportAlert(parent:UIViewController?){
@@ -251,3 +263,25 @@ func displayBlockAlert(parent:UIViewController, completion: @escaping(_ success:
     parent.present(alert, animated: true)
 }
 
+func setupDate(_ dateSent: Date) -> String {
+    let formatter = DateFormatter()
+    var dateString = ""
+    
+    if Calendar.current.isDateInToday(dateSent) == true {
+        dateString = messageTimeDateFormatter.string(from: dateSent)
+    } else if Calendar.current.isDateInYesterday(dateSent) == true {
+        dateString = "Yesterday"
+    } else if dateSent.hasSame([.year], as: Date()) == true {
+        formatter.dateFormat = "d MMM"
+        dateString = formatter.string(from: dateSent)
+    } else {
+        formatter.dateFormat = "d.MM.yy"
+        var anotherYearDate = formatter.string(from: dateSent)
+        if (anotherYearDate.hasPrefix("0")) {
+            anotherYearDate.remove(at: anotherYearDate.startIndex)
+        }
+        dateString = anotherYearDate
+    }
+    
+    return dateString
+}

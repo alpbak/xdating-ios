@@ -34,7 +34,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     }
     
     @IBAction func topButtonAction(_ sender: Any) {
-        print("sss")
+        print("topButtonAction")
         collectionNodeMain?.setContentOffset(CGPoint.zero, animated: true)
     }
     
@@ -45,7 +45,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         nc.addObserver(self, selector: #selector(newUserBlock), name: Notification.Name("UserBlockedNotification"), object: nil)
         
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-        setupNode()
+        //setupNode()
         
     }
     
@@ -61,6 +61,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     }
     
     override func viewDidLayoutSubviews() {
+        setupNode()
         handleStartup()
     }
     
@@ -114,18 +115,21 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
             registerButton.isHidden = true
             loginButton.isHidden = true
             regisrationStackView.isHidden = true
-            registrationStackViewHeight.constant = 0
+            //registrationStackViewHeight.constant = 0
         }
         else{
             registerButton.isHidden = false
             loginButton.isHidden = false
             regisrationStackView.isHidden = false
-            registrationStackViewHeight.constant = 70
+            //registrationStackViewHeight.constant = 70
         }
         
     }
     
     func setupNode(){
+        if collectionNodeMain != nil {
+            return
+        }
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = 0
@@ -139,6 +143,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         collectionNodeMain?.view.isScrollEnabled = true
         self.view.addSubnode(collectionNodeMain!)
         collectionNodeMain?.view.refreshControl = refreshControl
+        self.view.bringSubviewToFront(self.regisrationStackView)
         getFeed()
     }
     

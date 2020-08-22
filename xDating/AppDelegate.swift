@@ -19,12 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         CommonKeyboard.shared.enabled = true
-        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         mApplication = application
+        connectQuickBlox()
         connectParse()
-        
-        //setRootViewController(MainAppViewController())
         openMainScreen()
         return true
     }
@@ -107,6 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else{
             print("ANONYMOUS USER ALREADY CREATED")
             print("USER OBJECT ID: ", PFUser.current()?.objectId ?? "aa3")
+            checkChat()
         }
     }
     
@@ -118,7 +117,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             else{
                 print("ANONYMOUS USER CREATED")
                 print("USER OBJECT ID: ", PFUser.current()?.objectId ?? "aa2")
+                self.checkChat()
             }
+        }
+    }
+    
+    func checkChat(){
+        if isUserLoggedIn() {
+            checkQBAccountExists(userEmail: currentUserEmail())
         }
     }
 

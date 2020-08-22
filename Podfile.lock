@@ -25,7 +25,14 @@ PODS:
     - PINCache (= 3.0.1-beta.6)
     - PINRemoteImage/Core
   - PryntTrimmerView (4.0.0)
+  - QuickBlox (2.17.4)
+  - Quickblox-WebRTC (2.7.5):
+    - QuickBlox (>= 2.7.5)
+  - SDWebImage (4.4.8):
+    - SDWebImage/Core (= 4.4.8)
+  - SDWebImage/Core (4.4.8)
   - SteviaLayout (4.7.3)
+  - SVProgressHUD (2.2.5)
   - Texture (2.8.1):
     - Texture/AssetsLibrary (= 2.8.1)
     - Texture/Core (= 2.8.1)
@@ -46,6 +53,7 @@ PODS:
     - Texture/Core
   - Texture/Video (2.8.1):
     - Texture/Core
+  - TTTAttributedLabel (2.0.0)
   - YPImagePicker (4.2.1):
     - PryntTrimmerView (~> 4.0.0)
     - SteviaLayout (~> 4.7.3)
@@ -55,7 +63,12 @@ DEPENDENCIES:
   - Kingfisher (~> 5.0)
   - NewYorkAlert
   - Parse
+  - QuickBlox (~> 2.17.4)
+  - Quickblox-WebRTC (~> 2.7.4)
+  - SDWebImage (~> 4.4.7)
+  - SVProgressHUD
   - Texture
+  - TTTAttributedLabel (~> 2.0.0)
   - YPImagePicker
 
 SPEC REPOS:
@@ -69,8 +82,13 @@ SPEC REPOS:
     - PINOperation
     - PINRemoteImage
     - PryntTrimmerView
+    - QuickBlox
+    - Quickblox-WebRTC
+    - SDWebImage
     - SteviaLayout
+    - SVProgressHUD
     - Texture
+    - TTTAttributedLabel
     - YPImagePicker
 
 SPEC CHECKSUMS:
@@ -83,10 +101,15 @@ SPEC CHECKSUMS:
   PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   PryntTrimmerView: 67e67573ffd4c073f1308effa66aefd0cfa667a0
+  QuickBlox: 992be26bc127313991a1337dfd98c9359832c147
+  Quickblox-WebRTC: 6be5253719fc8b747408fdac53985d04d40f3172
+  SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YPImagePicker: 3b88ca0c50134af2856c48c481572c98a8b8b65b
 
-PODFILE CHECKSUM: c0b4525b5dfa3383e4931a53398fcf9c0808751f
+PODFILE CHECKSUM: d53a008ff64458ca2a960145ee133701294dba54
 
 COCOAPODS: 1.8.4

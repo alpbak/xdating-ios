@@ -256,10 +256,10 @@
             </objects>
             <point key="canvasLocation" x="1695.6521739130435" y="-301.33928571428572"/>
         </scene>
-        <!--View Controller-->
+        <!--Dialogs New View Controller-->
         <scene sceneID="A4H-Jh-eqp">
             <objects>
-                <viewController id="YMe-1C-OVm" sceneMemberID="viewController">
+                <viewController id="YMe-1C-OVm" customClass="DialogsNewViewController" customModule="XD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i8J-kp-xzk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -281,20 +281,31 @@
                                     <constraint firstItem="RPL-gg-Q3k" firstAttribute="centerY" secondItem="mUx-99-0Pd" secondAttribute="centerY" id="nfO-dh-AtO"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tg5-6b-tyg">
+                                <rect key="frame" x="0.0" y="94" width="414" height="719"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="mUx-99-0Pd" firstAttribute="leading" secondItem="cwp-Ly-gsf" secondAttribute="leading" id="7J8-sf-H3G"/>
+                            <constraint firstItem="Tg5-6b-tyg" firstAttribute="bottom" secondItem="cwp-Ly-gsf" secondAttribute="bottom" id="ByJ-Ji-Ipm"/>
                             <constraint firstAttribute="trailing" secondItem="mUx-99-0Pd" secondAttribute="trailing" id="Ci7-wH-HJX"/>
                             <constraint firstItem="mUx-99-0Pd" firstAttribute="top" secondItem="cwp-Ly-gsf" secondAttribute="top" id="Yeu-qE-ECy"/>
+                            <constraint firstItem="Tg5-6b-tyg" firstAttribute="leading" secondItem="cwp-Ly-gsf" secondAttribute="leading" id="aVT-vd-FUt"/>
+                            <constraint firstItem="Tg5-6b-tyg" firstAttribute="trailing" secondItem="cwp-Ly-gsf" secondAttribute="trailing" id="cJw-D3-dht"/>
+                            <constraint firstItem="Tg5-6b-tyg" firstAttribute="top" secondItem="mUx-99-0Pd" secondAttribute="bottom" id="eKT-ai-Hwf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cwp-Ly-gsf"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icon-message" badgeValue="4" id="lgL-Yp-ZA5"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon-message" id="lgL-Yp-ZA5"/>
+                    <connections>
+                        <outlet property="tableView" destination="Tg5-6b-tyg" id="viV-en-Vgq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdG-Dq-96c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2378" y="-301"/>
+            <point key="canvasLocation" x="2376.811594202899" y="-301.33928571428572"/>
         </scene>
         <!--My Profile View Controller-->
         <scene sceneID="dbo-cS-269">
@@ -601,24 +612,27 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Y39-mM-dUb">
+                            <stackView clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Y39-mM-dUb">
                                 <rect key="frame" x="20" y="743" width="374" height="70"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wi1-vx-4do">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="35"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="33.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <state key="normal" title="REGISTER"/>
                                         <connections>
                                             <action selector="signUp:" destination="A7W-OV-kHf" eventType="touchUpInside" id="T0y-m8-Q5v"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zop-BZ-xpn">
-                                        <rect key="frame" x="0.0" y="35" width="374" height="35"/>
+                                        <rect key="frame" x="0.0" y="36.5" width="374" height="33.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <state key="normal" title="LOGIN"/>
                                         <connections>
                                             <action selector="loginButtonAction:" destination="A7W-OV-kHf" eventType="touchUpInside" id="cJe-8h-nHG"/>
                                         </connections>
                                     </button>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="6OA-X8-ZSS"/>
                                 </constraints>
