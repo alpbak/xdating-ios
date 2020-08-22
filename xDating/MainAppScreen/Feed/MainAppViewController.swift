@@ -180,7 +180,11 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     }
     
     func setUnreadMessageCount(){
+        if !isUserLoggedIn() {
+            return
+        }
         let chatManager = ChatManager.instance
+        chatManager.updateStorage()
         chatManager.storage.setTotalUnreadMessageCount { (unreadMessageCount) in
             if unreadMessageCount == 0 {
                 self.tabBarController?.tabBar.items?[3].badgeValue = nil
@@ -194,6 +198,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
 
 extension MainAppViewController : QBChatDelegate {
     func chatDidConnect() {
+        print("ALPP - chatDidConnect")
         setUnreadMessageCount()
     }
     func chatDidReconnect() {

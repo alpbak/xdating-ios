@@ -261,7 +261,9 @@ class ChatManager: NSObject {
     
     func createPrivateDialog(withOpponent opponent: QBUUser,
                              completion: DialogCompletion? = nil) {
+        
         assert(opponent.id > 0, "Incorrect user ID")
+        
         if let dialog = storage.privateDialog(opponentID: opponent.id) {
             completion?(nil, dialog)
         } else {

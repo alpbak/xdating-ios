@@ -25,6 +25,10 @@ func currentUserEmail() -> String {
     return PFUser.current()?.email ?? "none"
 }
 
+func currentUserName() -> String {
+    return PFUser.current()?["name"] as! String
+}
+
 func signUp(emailStr:String, passwordStr:String, nameStr:String, isFemale:Bool, age:Int, completion: @escaping(_ success: Bool, _ error:Error?) -> Void) {
     let user = PFUser()
     user.username = emailStr
@@ -51,6 +55,7 @@ func login(emailStr:String, passwordStr:String, completion: @escaping(_ success:
             print("login-error: ", error.localizedDescription)
             completion(false, error)
         } else {
+            checkQBAccountExists(userEmail: currentUserEmail())
             completion(true, nil)
         }
     }

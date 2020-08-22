@@ -31,12 +31,14 @@ func signupChat(userEmail:String, userPassword:String){
     let user = QBUUser()
     user.email = userEmail
     user.password = userPassword
+    user.fullName = currentUserName()
     
     QBRequest.signUp(user, successBlock: { (qbresponse, qbuser) in
         print("CHAT SIGNUP SUCCESS-reponse: ", qbresponse)
         //print("CHAT SIGNUP USER: ", qbuser)
         saveQBUserId(qbUserId: Int(qbuser.id))
-        connectToChat(user: qbuser)
+        loginChat(userEmail: userEmail, userPassword: userPassword)
+        //connectToChat(user: qbuser)
         
     }) { (qberrorresponse) in
         print("signupChat-error: ", qberrorresponse.error!)
@@ -113,7 +115,4 @@ private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?) 
     let vc = ChatNewViewController()
     vc.dialogID = newDialog.id
     mParent.present(vc, animated: true, completion: nil)
-    
-    
-    
 }
