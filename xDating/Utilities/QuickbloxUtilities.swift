@@ -82,8 +82,6 @@ func connectToChat(user: QBUUser) {
 
 func getUserWithId(uid:Int) -> QBUUser {
     let user = QBUUser()
-//    user.email = userEmail
-//    user.password = userPassword
     user.id = UInt(uid)
     
     return user

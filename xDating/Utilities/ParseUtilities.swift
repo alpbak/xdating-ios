@@ -178,8 +178,6 @@ func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) ->
                 
             }
     }
-    
-
 }
 
 

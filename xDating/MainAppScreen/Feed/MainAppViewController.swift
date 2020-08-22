@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import AsyncDisplayKit
+import Quickblox
 
 class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate {
     
@@ -40,6 +41,8 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        QBChat.instance.addDelegate(self)
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(newUserBlock), name: Notification.Name("UserBlockedNotification"), object: nil)
@@ -175,5 +178,31 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         let x:NSDictionary = feedArray[indexPath.row]  as! NSDictionary
         openUserProfile(cellDict: x)
     }
+    
+    func setUnreadMessageCount(){
+        let chatManager = ChatManager.instance
+        chatManager.storage.setTotalUnreadMessageCount { (unreadMessageCount) in
+            if unreadMessageCount == 0 {
+                self.tabBarController?.tabBar.items?[3].badgeValue = nil
+            }
+            else{
+                self.tabBarController?.tabBar.items?[3].badgeValue = "\(unreadMessageCount)"
+            }
+        }
+    }
 }
 
+extension MainAppViewController : QBChatDelegate {
+    func chatDidConnect() {
+        setUnreadMessageCount()
+    }
+    func chatDidReconnect() {
+        print("ALPP - chatDidReconnect")
+    }
+    func chatDidDisconnectWithError(_ error: Error) {
+        print("ALPP - chatDidDisconnectWithError")
+    }
+    func chatDidNotConnectWithError(_ error: Error) {
+        print("ALPP - chatDidNotConnectWithError")
+    }
+}
