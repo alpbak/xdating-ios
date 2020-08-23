@@ -66,11 +66,16 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("USERPROFILE - viewDidLoad")
 
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewDidAppear(_ animated: Bool) {
+        super .viewDidAppear(animated)
+        print("USERPROFILE - viewDidAppear")
+        
         if cellUser == nil {
+            print("USERPROFILE - USER == NIL")
             cellUser = cellDict?["user"] as? PFUser
             cellPhotos = cellDict?["photos"] as! NSArray
             
@@ -82,11 +87,19 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
             handleViews()
         }
         else{
+            print("USERPROFILE - USER NOT NIL")
             setupuser()
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        //print("USERPROFILE - viewDidLayoutSubviews")
+        super .viewDidLayoutSubviews()
+
+    }
+    
     func setupuser(){
+        print("USERPROFILE - setupuser")
         cellUser?.fetchInBackground(block: { (user, error) in
             guard let photoRelation:PFRelation<PFObject> = self.cellUser!["userPhotos"] as? PFRelation<PFObject> else { return }
             photoRelation.query().findObjectsInBackground { (objects, error) in
@@ -102,18 +115,17 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     }
     
     func handleViews(){
+        print("USERPROFILE - handleViews")
         sendProfileView(viewedUser: cellUser!)
         
         messageLabel.text = NSLocalizedString("Message", comment: "")
         videoLabel.text = NSLocalizedString("Video", comment: "")
         reportLabel.text = NSLocalizedString("Report", comment: "")
         blockLabel.text = NSLocalizedString("Block", comment: "")
-        
-        
-        
+
         setupNode()
         
-        collectionView.reloadData()
+        //collectionView.reloadData()
         print("USERID: ", cellUser?.objectId ?? "")
         
         headerNameLabel.text = getUserNameAndAge(user: cellUser!)

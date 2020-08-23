@@ -497,6 +497,7 @@ extension DialogsViewController: QBChatDelegate {
 // MARK: - ChatManagerDelegate
 extension DialogsViewController: ChatManagerDelegate {
     func chatManager(_ chatManager: ChatManager, didUpdateChatDialog chatDialog: QBChatDialog) {
+        //print("ALPP - Dialogs - didUpdateChatDialog")
         reloadContent()
         SVProgressHUD.dismiss()
     }
@@ -506,6 +507,7 @@ extension DialogsViewController: ChatManagerDelegate {
     }
     
     func chatManager(_ chatManager: ChatManager, didUpdateStorage message: String) {
+        //print("ALPP - Dialogs - didUpdateStorage")
         reloadContent()
         SVProgressHUD.dismiss()
         QBChat.instance.addDelegate(self)

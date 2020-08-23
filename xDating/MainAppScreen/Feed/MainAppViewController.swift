@@ -197,17 +197,21 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
 }
 
 extension MainAppViewController : QBChatDelegate {
+    func chatDidReceive(_ message: QBChatMessage) {
+        //print("ALPP - chatDidReceive")
+        setUnreadMessageCount()
+    }
     func chatDidConnect() {
-        print("ALPP - chatDidConnect")
+        //print("ALPP - chatDidConnect")
         setUnreadMessageCount()
     }
     func chatDidReconnect() {
-        print("ALPP - chatDidReconnect")
+        //print("ALPP - chatDidReconnect")
     }
     func chatDidDisconnectWithError(_ error: Error) {
-        print("ALPP - chatDidDisconnectWithError")
+        //print("ALPP - chatDidDisconnectWithError")
     }
     func chatDidNotConnectWithError(_ error: Error) {
-        print("ALPP - chatDidNotConnectWithError")
+        //print("ALPP - chatDidNotConnectWithError")
     }
 }
