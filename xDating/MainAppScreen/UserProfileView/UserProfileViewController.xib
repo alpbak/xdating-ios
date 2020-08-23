@@ -31,7 +31,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fjb-Vh-4ky" userLabel="BottomView">
-                    <rect key="frame" x="0.0" y="576.5" width="414" height="319.5"/>
+                    <rect key="frame" x="0.0" y="666" width="414" height="230"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zx5-T3-VY5" userLabel="BioView">
                             <rect key="frame" x="10" y="60" width="394" height="36.5"/>
@@ -65,7 +65,7 @@
                     </constraints>
                 </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BX6-EN-vIa" userLabel="PhotoContainer">
-                    <rect key="frame" x="0.0" y="44" width="414" height="582.5"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="672"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oaI-Ss-liy">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -109,7 +109,7 @@
                             </constraints>
                         </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="O5S-uw-xuf">
-                            <rect key="frame" x="0.0" y="80" width="414" height="442.5"/>
+                            <rect key="frame" x="0.0" y="80" width="414" height="532"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="xXo-CA-OyA">
                                 <size key="itemSize" width="128" height="128"/>
@@ -119,7 +119,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SKQ-PA-xOb" userLabel="ButtonContainer">
-                            <rect key="frame" x="0.0" y="522.5" width="414" height="60"/>
+                            <rect key="frame" x="0.0" y="612" width="414" height="60"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Lf-Cx-GDc">
                                     <rect key="frame" x="364" y="5" width="40" height="40"/>
@@ -241,7 +241,7 @@
             <constraints>
                 <constraint firstItem="fjb-Vh-4ky" firstAttribute="top" secondItem="BX6-EN-vIa" secondAttribute="bottom" constant="-50" id="05h-5g-6rL"/>
                 <constraint firstItem="BX6-EN-vIa" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="5ZQ-WZ-gzY"/>
-                <constraint firstItem="BX6-EN-vIa" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.65" id="AQJ-Z0-36k"/>
+                <constraint firstItem="BX6-EN-vIa" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.75" id="AQJ-Z0-36k"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BX6-EN-vIa" secondAttribute="trailing" id="BbM-TT-eM5"/>
                 <constraint firstAttribute="bottom" secondItem="fjb-Vh-4ky" secondAttribute="bottom" id="VYG-RF-cRi"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fjb-Vh-4ky" secondAttribute="trailing" id="Zvv-hi-ju8"/>

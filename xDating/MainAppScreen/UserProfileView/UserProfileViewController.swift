@@ -122,11 +122,9 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         videoLabel.text = NSLocalizedString("Video", comment: "")
         reportLabel.text = NSLocalizedString("Report", comment: "")
         blockLabel.text = NSLocalizedString("Block", comment: "")
-
-        setupNode()
         
         //collectionView.reloadData()
-        print("USERID: ", cellUser?.objectId ?? "")
+        print("USERPROFILE-USERID: ", cellUser?.objectId ?? "")
         
         headerNameLabel.text = getUserNameAndAge(user: cellUser!)
         getUserLocation(user: cellUser!) { (locStr) in
@@ -135,6 +133,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         bioLAbel.text = (cellUser?["bio"] ?? "") as? String
         
         bioView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.6)
+        setupNode()
         collectionNodeMain?.reloadData()
     }
     
@@ -144,13 +143,16 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
         
-        collectionNodeMain = ASCollectionNode(frame: CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: collectionView.frame.size.height), collectionViewLayout: flowLayout)
+//        collectionNodeMain = ASCollectionNode(frame: CGRect(x: 0, y: 0, width: collectionView.frame.size.width, height: collectionView.frame.size.height), collectionViewLayout: flowLayout)
+        
+        collectionNodeMain = ASCollectionNode(frame: collectionView.frame, collectionViewLayout: flowLayout)
+        
         collectionNodeMain?.backgroundColor = UIColor.systemBackground
         collectionNodeMain?.dataSource = self
         collectionNodeMain?.delegate = self
         //collectionNodeMain?.registerSupplementaryNode(ofKind: UICollectionView.elementKindSectionHeader)
         collectionNodeMain?.view.isScrollEnabled = true
-        self.collectionView.addSubnode(collectionNodeMain!)
+        self.view.addSubnode(collectionNodeMain!)
         collectionNodeMain?.view.isPagingEnabled = true
     }
     
