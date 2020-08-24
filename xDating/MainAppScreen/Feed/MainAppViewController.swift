@@ -24,6 +24,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     var feedArray:NSArray = []
     private let refreshControl = UIRefreshControl()
+    var profilesUptading = false
     
     @IBAction func loginButtonAction(_ sender: Any) {
         let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
@@ -40,30 +41,14 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     @IBAction func topButtonAction(_ sender: Any) {
         print("topButtonAction")
-        
-//        let list = ProfileViewListener()
-//        list.startListener()
-        
-        var armorQuery: PFQuery<ProfileView> {
-          return (ProfileView.query()!
-                       .whereKeyExists("viewer")
-                       .order(byAscending: "createdAt")) as! PFQuery<ProfileView>
-        }
-        client = ParseLiveQuery.Client()
-        subscription = client.subscribe(armorQuery)
-                      // handle creation events, we can also listen for update, leave, enter events
-                             .handle(Event.created) { _, armor in
-                                print("\(armor)")
-                             }
-        
-        
         collectionNodeMain?.setContentOffset(CGPoint.zero, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //connectLiveProfile()
+        getInitialProfileViews()
+        startProfileViewListener()
         
         QBChat.instance.addDelegate(self)
         
@@ -95,7 +80,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         print("traitCollectionDidChange")
         collectionNodeMain?.view.overrideUserInterfaceStyle = .dark
     }
-
+    
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         print("willTransition")
     }
@@ -160,7 +145,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         flowLayout.scrollDirection = .vertical
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
-                
+        
         collectionNodeMain = ASCollectionNode(frame: asCollectionView.frame, collectionViewLayout: flowLayout)
         collectionNodeMain?.backgroundColor = UIColor.systemBackground
         collectionNodeMain?.dataSource = self
@@ -215,6 +200,76 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
             else{
                 self.tabBarController?.tabBar.items?[3].badgeValue = "\(unreadMessageCount)"
             }
+        }
+    }
+    
+    func getInitialProfileViews(){
+        getProfileViewsCount { (unseenProfileViewCount) in
+            self.setProfileViewVadge(unseenProfileViewCount: Int(unseenProfileViewCount))
+        }
+    }
+    
+    func startProfileViewListener(){
+        guard let user = PFUser.current() else { return }
+        
+        var profileQuery: PFQuery<ProfileView> {
+            return (ProfileView.query()!
+                .whereKey("viewed", equalTo: user)
+                .whereKeyExists("viewer")
+                .whereKey("notSeen", equalTo: true)
+                .order(byAscending: "createdAt")) as! PFQuery<ProfileView>
+        }
+        
+        
+        client = ParseLiveQuery.Client()
+        //        subscription = client.subscribe(profileQuery)
+        //            // handle creation events, we can also listen for update, leave, enter events
+        //            .handle(Event.created) { _, armor in
+        //                print("\(armor)")
+        //        }
+        
+        subscription = client.subscribe(profileQuery).handleEvent({ (profiles, event) in
+            print("ABC-profiles: ", profiles)
+            //print("ABC-event: ", event)
+            
+            self.updateProfileViewBadge(query: profiles)
+            
+            //                switch event {
+            //                case .entered(_):
+            //                    print("ABC-ENTERED")
+            //                case .left(_):
+            //                    print("ABC-LEFT")
+            //                case .created(_):
+            //                    print("ABC-CREATED")
+            //                case .updated(_):
+            //                    print("ABC-UPDATED")
+            //                case .deleted(_):
+            //                    print("ABC-DELETED")
+            //                }
+        })
+    }
+    
+    func updateProfileViewBadge(query:PFQuery<ProfileView>){
+        
+        if !profilesUptading {
+            profilesUptading = true
+            query.countObjectsInBackground { (unseenProfileViewCount, error) in
+                //print("ABC- COUNT: ", unseenProfileViewCount)
+                self.setProfileViewVadge(unseenProfileViewCount: Int(unseenProfileViewCount))
+                self.profilesUptading = false
+            }
+        }
+        
+        
+    }
+    
+    func setProfileViewVadge(unseenProfileViewCount:Int){
+        //print("ABC-setProfileViewVadge:")
+        if unseenProfileViewCount == 0 {
+            self.tabBarController?.tabBar.items?[1].badgeValue = nil
+        }
+        else{
+            self.tabBarController?.tabBar.items?[1].badgeValue = "\(unseenProfileViewCount)"
         }
     }
 }

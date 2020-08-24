@@ -393,32 +393,24 @@ func saveQBUserId(qbUserId:Int){
     }
 }
 
-func connectLiveProfile(){
+func getProfileViewsCount(completion: @escaping(_ profileViewCount: Int) -> Void){
     guard let user = PFUser.current() else { return }
     
-    print("connectLiveProfile")
-    print("connectLiveProfile-subscription1: ", subscription)
-    //let liveQueryClient = ParseLiveQuery.Client(server: "xdating.b4a.app", applicationId: "Er4D5b5gWUWuwSkKp3BL3olrJaIlE4kNxNqzoIU8", clientKey: "0Sh5MFlkJlCP0bafUnuoYqlfdchDHPZSLJnYe7Vp")
-
-    let liveQueryClient = ParseLiveQuery.Client()
-    let subscription: Subscription<ProfileView>?
-
-    ProfileView.registerSubclass()
-
-    var messagesQuery: PFQuery<ProfileView> {
-        return (ProfileView.query()?
-            .whereKey("viewed", equalTo: user)
-            .whereKeyExists("viewer")
-            .whereKey("notSeen", equalTo: true)
-            .order(byAscending: "createdAt")) as! PFQuery<ProfileView>
-    }
-
-    subscription = liveQueryClient
-        .subscribe(messagesQuery)
-        .handle(Event.created) { _, message in
-            print("LIVEQUERY: ", message)
+    var profileQuery: PFQuery<ProfileView> {
+    return (ProfileView.query()!
+        .whereKey("viewed", equalTo: user)
+        .whereKeyExists("viewer")
+        .whereKey("notSeen", equalTo: true)
+        .order(byAscending: "createdAt")) as! PFQuery<ProfileView>
     }
     
-
-    
+    profileQuery.countObjectsInBackground { (count, error) in
+        if error == nil{
+            completion(Int(count))
+        }
+        else{
+            completion(0)
+        }
+    }
+        
 }
