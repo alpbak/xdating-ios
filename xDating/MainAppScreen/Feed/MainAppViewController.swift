@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import AsyncDisplayKit
 import Quickblox
+import ParseLiveQuery
 
 class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate {
     
@@ -34,13 +35,35 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         appDelegate?.openSignUpScreen()
     }
     
+    var client : ParseLiveQuery.Client!
+    var subscription : Subscription<ProfileView>!
+    
     @IBAction func topButtonAction(_ sender: Any) {
         print("topButtonAction")
+        
+//        let list = ProfileViewListener()
+//        list.startListener()
+        
+        var armorQuery: PFQuery<ProfileView> {
+          return (ProfileView.query()!
+                       .whereKeyExists("viewer")
+                       .order(byAscending: "createdAt")) as! PFQuery<ProfileView>
+        }
+        client = ParseLiveQuery.Client()
+        subscription = client.subscribe(armorQuery)
+                      // handle creation events, we can also listen for update, leave, enter events
+                             .handle(Event.created) { _, armor in
+                                print("\(armor)")
+                             }
+        
+        
         collectionNodeMain?.setContentOffset(CGPoint.zero, animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //connectLiveProfile()
         
         QBChat.instance.addDelegate(self)
         

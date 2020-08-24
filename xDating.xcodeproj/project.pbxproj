@@ -30,6 +30,8 @@
 		2B83416724F1400300B74673 /* DialogCellNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B83416524F1400300B74673 /* DialogCellNew.xib */; };
 		2B83416A24F14EC100B74673 /* ChatNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83416824F14EC100B74673 /* ChatNewViewController.swift */; };
 		2B83416B24F14EC100B74673 /* ChatNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B83416924F14EC100B74673 /* ChatNewViewController.xib */; };
+		2B83417224F2FF6800B74673 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83417124F2FF6800B74673 /* ProfileView.swift */; };
+		2B83417C24F3DDE300B74673 /* ProfileViewListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83417B24F3DDE300B74673 /* ProfileViewListener.swift */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -165,6 +167,8 @@
 		2B83416524F1400300B74673 /* DialogCellNew.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialogCellNew.xib; sourceTree = "<group>"; };
 		2B83416824F14EC100B74673 /* ChatNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNewViewController.swift; sourceTree = "<group>"; };
 		2B83416924F14EC100B74673 /* ChatNewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatNewViewController.xib; sourceTree = "<group>"; };
+		2B83417124F2FF6800B74673 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		2B83417B24F3DDE300B74673 /* ProfileViewListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewListener.swift; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -379,6 +383,7 @@
 				2B9E980124C6FC4C00ED7A68 /* SKActivityIndicatorView.swift */,
 				2B9E980224C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift */,
 				2B3A35D424DF1A630014FF4B /* TimeAgo.swift */,
+				2B83417124F2FF6800B74673 /* ProfileView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -405,6 +410,7 @@
 				2B76136224EAF78900063465 /* ImageViewerViewController.swift */,
 				2B76136324EAF78900063465 /* ImageViewerViewController.xib */,
 				2BC589D724EFA54F00EB3DB2 /* QuickbloxUtilities.swift */,
+				2B83417B24F3DDE300B74673 /* ProfileViewListener.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1007,6 +1013,7 @@
 				2BC58A1524EFD7FF00EB3DB2 /* UIImage+Extention.swift in Sources */,
 				2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */,
 				2BC58AAF24EFDC3A00EB3DB2 /* ZoomedAttachmentViewController.swift in Sources */,
+				2B83417224F2FF6800B74673 /* ProfileView.swift in Sources */,
 				2BC58A6024EFDBDE00EB3DB2 /* ToolbarContentView.swift in Sources */,
 				2BC589EC24EFD6EF00EB3DB2 /* DialogsSelectionVC.swift in Sources */,
 				2BC589FA24EFD76B00EB3DB2 /* AttachmentDownloadOperation.swift in Sources */,
@@ -1026,6 +1033,7 @@
 				2BC58A4224EFDB3900EB3DB2 /* DialogTableViewCell.swift in Sources */,
 				2BC58A1724EFD7FF00EB3DB2 /* PHAsset+Extention.swift in Sources */,
 				2BC58A8924EFDBEB00EB3DB2 /* ChatCell.swift in Sources */,
+				2B83417C24F3DDE300B74673 /* ProfileViewListener.swift in Sources */,
 				2BC58A9324EFDBEB00EB3DB2 /* ChatCollectionView.swift in Sources */,
 				2B83416124F04F5B00B74673 /* UsersInfoTableViewController.swift in Sources */,
 				2BC58A4424EFDB3900EB3DB2 /* TypingView.swift in Sources */,

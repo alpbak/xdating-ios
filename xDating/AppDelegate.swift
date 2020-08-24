@@ -72,7 +72,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = ParseClientConfiguration {
             $0.applicationId = "Er4D5b5gWUWuwSkKp3BL3olrJaIlE4kNxNqzoIU8"
             $0.clientKey = "0Sh5MFlkJlCP0bafUnuoYqlfdchDHPZSLJnYe7Vp"
-            $0.server = "https://parseapi.back4app.com"
+            //$0.server = "https://parseapi.back4app.com"
+            $0.server = "https://xdating.b4a.app"
+            
+            
         }
         Parse.initialize(with: configuration)
         

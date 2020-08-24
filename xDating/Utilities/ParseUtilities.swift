@@ -9,10 +9,14 @@
 import Foundation
 import Parse
 import UIKit
+import ParseLiveQuery
 
 var blockedUsers:[String] = []
 
 var chatUserPhotoUrls = [String:String]()
+
+var subscription: Subscription<PFObject>?
+let liveQueryClient = ParseLiveQuery.Client()
 
 func isUserLoggedIn() -> Bool {
     if PFUser.current()?.email == nil{
@@ -162,28 +166,28 @@ func getFeedFromCloud(completion: @escaping(_ success: Bool, _ objects: Any?) ->
     getBlockUsers { (success, results) in
         print("blockedUsers: ", blockedUsers)
         
-            let uid:String = PFUser.current()?.objectId ?? "-1"
-            let params: [AnyHashable: Any] = [
-                "iid": "000",
-                "userObjectId" : uid
-            ]
+        let uid:String = PFUser.current()?.objectId ?? "-1"
+        let params: [AnyHashable: Any] = [
+            "iid": "000",
+            "userObjectId" : uid
+        ]
+        
+        //print("sendFollowersToServer-params: ", params)
+        
+        PFCloud.callFunction(inBackground: "getFeedUsersAndPhotos", withParameters: params) { (result, error) in
+            //        print("getFeedUsers ERROR: ", error)
+            //        print("getFeedUsers RESULT: ", result)
             
-            //print("sendFollowersToServer-params: ", params)
-            
-            PFCloud.callFunction(inBackground: "getFeedUsersAndPhotos", withParameters: params) { (result, error) in
-        //        print("getFeedUsers ERROR: ", error)
-        //        print("getFeedUsers RESULT: ", result)
-                
-                if error == nil{
-                    var tempArray:NSArray = []
-                    tempArray = result as! NSArray
-                    completion(true, cleanUpBlockedUsers(arrayToCheck: tempArray))
-                }
-                else{
-                    completion(false, nil)
-                }
-                
+            if error == nil{
+                var tempArray:NSArray = []
+                tempArray = result as! NSArray
+                completion(true, cleanUpBlockedUsers(arrayToCheck: tempArray))
             }
+            else{
+                completion(false, nil)
+            }
+            
+        }
     }
 }
 
@@ -216,10 +220,10 @@ func getBlockUsers(completion: @escaping(_ success: Bool, _ objects: [PFObject]?
     
     let q1 = PFQuery(className:"BlockUser")
     q1.whereKey("blocker", equalTo: user)
-
+    
     let q2 = PFQuery(className:"BlockUser")
     q2.whereKey("blocked", equalTo: user)
-
+    
     let query = PFQuery.orQuery(withSubqueries: [q1, q2])
     
     query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
@@ -258,8 +262,8 @@ func getProfileViewers(completion: @escaping(_ success: Bool, _ objects: Any?) -
     print("getProfileViewers-params: ", params)
     
     PFCloud.callFunction(inBackground: "getProfileViewers", withParameters: params) { (result, error) in
-//        print("getProfileViewers ERROR: ", error)
-//        print("getProfileViewers RESULT: ", result)
+        //        print("getProfileViewers ERROR: ", error)
+        //        print("getProfileViewers RESULT: ", result)
         
         if error == nil{
             completion(true, result)
@@ -281,8 +285,8 @@ func getSearchResuts(locationId:String, completion: @escaping(_ success: Bool, _
     print("getSearchResuts-params: ", params)
     
     PFCloud.callFunction(inBackground: "searchUsers", withParameters: params) { (result, error) in
-//        print("getSearchResuts ERROR: ", error)
-//        print("getSearchResuts RESULT: ", result)
+        //        print("getSearchResuts ERROR: ", error)
+        //        print("getSearchResuts RESULT: ", result)
         
         if error == nil{
             completion(true, result)
@@ -387,4 +391,34 @@ func saveQBUserId(qbUserId:Int){
     user.saveInBackground { (success, error) in
         print("USER QB ID SAVED")
     }
+}
+
+func connectLiveProfile(){
+    guard let user = PFUser.current() else { return }
+    
+    print("connectLiveProfile")
+    print("connectLiveProfile-subscription1: ", subscription)
+    //let liveQueryClient = ParseLiveQuery.Client(server: "xdating.b4a.app", applicationId: "Er4D5b5gWUWuwSkKp3BL3olrJaIlE4kNxNqzoIU8", clientKey: "0Sh5MFlkJlCP0bafUnuoYqlfdchDHPZSLJnYe7Vp")
+
+    let liveQueryClient = ParseLiveQuery.Client()
+    let subscription: Subscription<ProfileView>?
+
+    ProfileView.registerSubclass()
+
+    var messagesQuery: PFQuery<ProfileView> {
+        return (ProfileView.query()?
+            .whereKey("viewed", equalTo: user)
+            .whereKeyExists("viewer")
+            .whereKey("notSeen", equalTo: true)
+            .order(byAscending: "createdAt")) as! PFQuery<ProfileView>
+    }
+
+    subscription = liveQueryClient
+        .subscribe(messagesQuery)
+        .handle(Event.created) { _, message in
+            print("LIVEQUERY: ", message)
+    }
+    
+
+    
 }

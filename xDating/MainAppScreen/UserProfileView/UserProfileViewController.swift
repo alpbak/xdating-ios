@@ -175,15 +175,15 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         return ASSizeRange(min: CGSize(width: width, height: width*1.1), max: CGSize(width: width, height: width*1.1))
     }
     
-    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-        if node.indexPath!.row > 0 {
-            sendProfileView(viewedUser: cellUser!)
-        }
-        
-//        if (node.indexPath!.row == cellPhotos.count - 1 ) { //it's your last cell
-//            print("Load more data & reload your collection view")
-//        }
-    }
+//    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
+////        if node.indexPath!.row > 0 {
+////            sendProfileView(viewedUser: cellUser!)
+////        }
+//        
+////        if (node.indexPath!.row == cellPhotos.count - 1 ) { //it's your last cell
+////            print("Load more data & reload your collection view")
+////        }
+//    }
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let w:UserPhotoObject = self.userPhotosArray[indexPath.row]

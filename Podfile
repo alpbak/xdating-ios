@@ -17,4 +17,5 @@ target 'xDating' do
   pod 'SVProgressHUD'
   pod 'TTTAttributedLabel', '~> 2.0.0'
   pod 'SDWebImage', '~> 4.4.7'
+  pod 'ParseLiveQuery'
 end
