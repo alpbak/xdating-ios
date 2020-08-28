@@ -28,9 +28,19 @@
 		2B83416324F0542000B74673 /* DialogsNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83416224F0542000B74673 /* DialogsNewViewController.swift */; };
 		2B83416624F1400300B74673 /* DialogCellNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83416424F1400300B74673 /* DialogCellNew.swift */; };
 		2B83416724F1400300B74673 /* DialogCellNew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B83416524F1400300B74673 /* DialogCellNew.xib */; };
-		2B83416A24F14EC100B74673 /* ChatNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83416824F14EC100B74673 /* ChatNewViewController.swift */; };
-		2B83416B24F14EC100B74673 /* ChatNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B83416924F14EC100B74673 /* ChatNewViewController.xib */; };
 		2B83417224F2FF6800B74673 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83417124F2FF6800B74673 /* ProfileView.swift */; };
+		2B8341A224F9853600B74673 /* ChatNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B83419E24F9853500B74673 /* ChatNewViewController.swift */; };
+		2B8341A324F9853600B74673 /* ChatNewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B83419F24F9853500B74673 /* ChatNewViewController.xib */; };
+		2B8341A424F9853600B74673 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341A024F9853500B74673 /* Chat.storyboard */; };
+		2B8341A524F9853600B74673 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341A124F9853600B74673 /* ChatViewController.swift */; };
+		2B8341A824F9855200B74673 /* ChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341A724F9855200B74673 /* ChatDataSource.swift */; };
+		2B8341AD24F9856400B74673 /* ParentVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341AA24F9856400B74673 /* ParentVideoVC.swift */; };
+		2B8341AE24F9856400B74673 /* ZoomedAttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341AB24F9856400B74673 /* ZoomedAttachmentViewController.swift */; };
+		2B8341AF24F9856400B74673 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341AC24F9856400B74673 /* PDFViewController.swift */; };
+		2B8341B324F9857900B74673 /* ChatActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B124F9857900B74673 /* ChatActionCell.swift */; };
+		2B8341B424F9857900B74673 /* ChatPopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B224F9857900B74673 /* ChatPopVC.swift */; };
+		2B8341B824F9858D00B74673 /* SelectAssetsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B624F9858D00B74673 /* SelectAssetsVC.swift */; };
+		2B8341B924F9858D00B74673 /* SelectAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B724F9858D00B74673 /* SelectAssetCell.swift */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -124,16 +134,6 @@
 		2BC58A9624EFDBEB00EB3DB2 /* ChatCollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A8224EFDBEB00EB3DB2 /* ChatCollectionViewDelegateFlowLayout.swift */; };
 		2BC58A9724EFDBEB00EB3DB2 /* ChatCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A8324EFDBEB00EB3DB2 /* ChatCollectionViewDataSource.swift */; };
 		2BC58A9824EFDBEB00EB3DB2 /* ChatCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A8424EFDBEB00EB3DB2 /* ChatCollectionViewFlowLayout.swift */; };
-		2BC58AA824EFDC3A00EB3DB2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A9A24EFDC3A00EB3DB2 /* ChatViewController.swift */; };
-		2BC58AA924EFDC3A00EB3DB2 /* ChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A9C24EFDC3A00EB3DB2 /* ChatDataSource.swift */; };
-		2BC58AAA24EFDC3A00EB3DB2 /* SelectAssetsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A9E24EFDC3A00EB3DB2 /* SelectAssetsVC.swift */; };
-		2BC58AAB24EFDC3A00EB3DB2 /* SelectAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58A9F24EFDC3A00EB3DB2 /* SelectAssetCell.swift */; };
-		2BC58AAC24EFDC3A00EB3DB2 /* ChatActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58AA124EFDC3A00EB3DB2 /* ChatActionCell.swift */; };
-		2BC58AAD24EFDC3A00EB3DB2 /* ChatPopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58AA224EFDC3A00EB3DB2 /* ChatPopVC.swift */; };
-		2BC58AAE24EFDC3A00EB3DB2 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58AA424EFDC3A00EB3DB2 /* PDFViewController.swift */; };
-		2BC58AAF24EFDC3A00EB3DB2 /* ZoomedAttachmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58AA524EFDC3A00EB3DB2 /* ZoomedAttachmentViewController.swift */; };
-		2BC58AB024EFDC3A00EB3DB2 /* ParentVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC58AA624EFDC3A00EB3DB2 /* ParentVideoVC.swift */; };
-		2BC58AB124EFDC3A00EB3DB2 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BC58AA724EFDC3A00EB3DB2 /* Chat.storyboard */; };
 		2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */; };
 		2BE1896424C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */; };
 		2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */; };
@@ -164,9 +164,19 @@
 		2B83416224F0542000B74673 /* DialogsNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogsNewViewController.swift; sourceTree = "<group>"; };
 		2B83416424F1400300B74673 /* DialogCellNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogCellNew.swift; sourceTree = "<group>"; };
 		2B83416524F1400300B74673 /* DialogCellNew.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialogCellNew.xib; sourceTree = "<group>"; };
-		2B83416824F14EC100B74673 /* ChatNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNewViewController.swift; sourceTree = "<group>"; };
-		2B83416924F14EC100B74673 /* ChatNewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatNewViewController.xib; sourceTree = "<group>"; };
 		2B83417124F2FF6800B74673 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		2B83419E24F9853500B74673 /* ChatNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatNewViewController.swift; sourceTree = "<group>"; };
+		2B83419F24F9853500B74673 /* ChatNewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatNewViewController.xib; sourceTree = "<group>"; };
+		2B8341A024F9853500B74673 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		2B8341A124F9853600B74673 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		2B8341A724F9855200B74673 /* ChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDataSource.swift; sourceTree = "<group>"; };
+		2B8341AA24F9856400B74673 /* ParentVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentVideoVC.swift; sourceTree = "<group>"; };
+		2B8341AB24F9856400B74673 /* ZoomedAttachmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomedAttachmentViewController.swift; sourceTree = "<group>"; };
+		2B8341AC24F9856400B74673 /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		2B8341B124F9857900B74673 /* ChatActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatActionCell.swift; sourceTree = "<group>"; };
+		2B8341B224F9857900B74673 /* ChatPopVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPopVC.swift; sourceTree = "<group>"; };
+		2B8341B624F9858D00B74673 /* SelectAssetsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetsVC.swift; sourceTree = "<group>"; };
+		2B8341B724F9858D00B74673 /* SelectAssetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetCell.swift; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -262,16 +272,6 @@
 		2BC58A8224EFDBEB00EB3DB2 /* ChatCollectionViewDelegateFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewDelegateFlowLayout.swift; sourceTree = "<group>"; };
 		2BC58A8324EFDBEB00EB3DB2 /* ChatCollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		2BC58A8424EFDBEB00EB3DB2 /* ChatCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
-		2BC58A9A24EFDC3A00EB3DB2 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		2BC58A9C24EFDC3A00EB3DB2 /* ChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDataSource.swift; sourceTree = "<group>"; };
-		2BC58A9E24EFDC3A00EB3DB2 /* SelectAssetsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetsVC.swift; sourceTree = "<group>"; };
-		2BC58A9F24EFDC3A00EB3DB2 /* SelectAssetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetCell.swift; sourceTree = "<group>"; };
-		2BC58AA124EFDC3A00EB3DB2 /* ChatActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatActionCell.swift; sourceTree = "<group>"; };
-		2BC58AA224EFDC3A00EB3DB2 /* ChatPopVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPopVC.swift; sourceTree = "<group>"; };
-		2BC58AA424EFDC3A00EB3DB2 /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
-		2BC58AA524EFDC3A00EB3DB2 /* ZoomedAttachmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomedAttachmentViewController.swift; sourceTree = "<group>"; };
-		2BC58AA624EFDC3A00EB3DB2 /* ParentVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentVideoVC.swift; sourceTree = "<group>"; };
-		2BC58AA724EFDC3A00EB3DB2 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		2BE1895F24C8AF8800CFFA7A /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		2BE1896224C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileGalleryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BE1896324C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyProfileGalleryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -336,6 +336,57 @@
 				2B83416024F04F5A00B74673 /* UsersInfoTableViewController.swift */,
 			);
 			path = UsersInfoScreen;
+			sourceTree = "<group>";
+		};
+		2B83419D24F9851F00B74673 /* ChatScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341B524F9858500B74673 /* SelectAssetsScreen */,
+				2B8341B024F9856E00B74673 /* PopVCScreen */,
+				2B8341A924F9855B00B74673 /* MediaScreen */,
+				2B8341A624F9854900B74673 /* DataSource */,
+				2B8341A024F9853500B74673 /* Chat.storyboard */,
+				2B83419E24F9853500B74673 /* ChatNewViewController.swift */,
+				2B83419F24F9853500B74673 /* ChatNewViewController.xib */,
+				2B8341A124F9853600B74673 /* ChatViewController.swift */,
+			);
+			path = ChatScreen;
+			sourceTree = "<group>";
+		};
+		2B8341A624F9854900B74673 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341A724F9855200B74673 /* ChatDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		2B8341A924F9855B00B74673 /* MediaScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341AA24F9856400B74673 /* ParentVideoVC.swift */,
+				2B8341AC24F9856400B74673 /* PDFViewController.swift */,
+				2B8341AB24F9856400B74673 /* ZoomedAttachmentViewController.swift */,
+			);
+			path = MediaScreen;
+			sourceTree = "<group>";
+		};
+		2B8341B024F9856E00B74673 /* PopVCScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341B124F9857900B74673 /* ChatActionCell.swift */,
+				2B8341B224F9857900B74673 /* ChatPopVC.swift */,
+			);
+			path = PopVCScreen;
+			sourceTree = "<group>";
+		};
+		2B8341B524F9858500B74673 /* SelectAssetsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341B724F9858D00B74673 /* SelectAssetCell.swift */,
+				2B8341B624F9858D00B74673 /* SelectAssetsVC.swift */,
+			);
+			path = SelectAssetsScreen;
 			sourceTree = "<group>";
 		};
 		2B9E97E024C6FBDA00ED7A68 = {
@@ -467,9 +518,9 @@
 		2BC589D924EFD68D00EB3DB2 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				2B83419D24F9851F00B74673 /* ChatScreen */,
 				2B83415F24F04F5A00B74673 /* UsersInfoScreen */,
 				2B83415624F04EB700B74673 /* NewDialogScreen */,
-				2BC58A9924EFDC3A00EB3DB2 /* ChatScreen */,
 				2BC58A2B24EFDB1800EB3DB2 /* Classes */,
 				2BC58A2024EFD91500EB3DB2 /* Reachability */,
 				2BC589FE24EFD7E000EB3DB2 /* Utils */,
@@ -758,58 +809,6 @@
 			path = ChatAttachmentIncomingCell;
 			sourceTree = "<group>";
 		};
-		2BC58A9924EFDC3A00EB3DB2 /* ChatScreen */ = {
-			isa = PBXGroup;
-			children = (
-				2BC58A9A24EFDC3A00EB3DB2 /* ChatViewController.swift */,
-				2BC58AA724EFDC3A00EB3DB2 /* Chat.storyboard */,
-				2BC58A9B24EFDC3A00EB3DB2 /* DataSource */,
-				2BC58A9D24EFDC3A00EB3DB2 /* SelectAssetsScreen */,
-				2BC58AA024EFDC3A00EB3DB2 /* PopVCScreen */,
-				2BC58AA324EFDC3A00EB3DB2 /* MediaScreen */,
-				2B83416824F14EC100B74673 /* ChatNewViewController.swift */,
-				2B83416924F14EC100B74673 /* ChatNewViewController.xib */,
-			);
-			name = ChatScreen;
-			path = "../../../../../../../Downloads/quickblox-ios-sdk-master/sample-chat-swift/sample-chat-swift/Components/ChatScreen";
-			sourceTree = "<group>";
-		};
-		2BC58A9B24EFDC3A00EB3DB2 /* DataSource */ = {
-			isa = PBXGroup;
-			children = (
-				2BC58A9C24EFDC3A00EB3DB2 /* ChatDataSource.swift */,
-			);
-			path = DataSource;
-			sourceTree = "<group>";
-		};
-		2BC58A9D24EFDC3A00EB3DB2 /* SelectAssetsScreen */ = {
-			isa = PBXGroup;
-			children = (
-				2BC58A9E24EFDC3A00EB3DB2 /* SelectAssetsVC.swift */,
-				2BC58A9F24EFDC3A00EB3DB2 /* SelectAssetCell.swift */,
-			);
-			path = SelectAssetsScreen;
-			sourceTree = "<group>";
-		};
-		2BC58AA024EFDC3A00EB3DB2 /* PopVCScreen */ = {
-			isa = PBXGroup;
-			children = (
-				2BC58AA124EFDC3A00EB3DB2 /* ChatActionCell.swift */,
-				2BC58AA224EFDC3A00EB3DB2 /* ChatPopVC.swift */,
-			);
-			path = PopVCScreen;
-			sourceTree = "<group>";
-		};
-		2BC58AA324EFDC3A00EB3DB2 /* MediaScreen */ = {
-			isa = PBXGroup;
-			children = (
-				2BC58AA424EFDC3A00EB3DB2 /* PDFViewController.swift */,
-				2BC58AA524EFDC3A00EB3DB2 /* ZoomedAttachmentViewController.swift */,
-				2BC58AA624EFDC3A00EB3DB2 /* ParentVideoVC.swift */,
-			);
-			path = MediaScreen;
-			sourceTree = "<group>";
-		};
 		2BE1896124C8B19E00CFFA7A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,15 +895,15 @@
 				2B83415D24F04EB700B74673 /* UserTableViewCell.xib in Resources */,
 				2BC58A3F24EFDB3900EB3DB2 /* CoverTableView.xib in Resources */,
 				2B9E97F924C6FBDA00ED7A68 /* LaunchScreen.storyboard in Resources */,
-				2BC58AB124EFDC3A00EB3DB2 /* Chat.storyboard in Resources */,
 				2BC58A6524EFDBDE00EB3DB2 /* HeaderCollectionReusableView.xib in Resources */,
 				2B9E97F624C6FBDA00ED7A68 /* Assets.xcassets in Resources */,
 				2B76136524EAF78900063465 /* ImageViewerViewController.xib in Resources */,
 				2B2FD80C24DEABB40042BF6D /* MainScreenCollectionViewCell.xib in Resources */,
-				2B83416B24F14EC100B74673 /* ChatNewViewController.xib in Resources */,
 				2B9E980924C6FC6300ED7A68 /* SignUpViewController.xib in Resources */,
 				2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */,
 				2BC58A9124EFDBEB00EB3DB2 /* ChatAttachmentIncomingCell.xib in Resources */,
+				2B8341A324F9853600B74673 /* ChatNewViewController.xib in Resources */,
+				2B8341A424F9853600B74673 /* Chat.storyboard in Resources */,
 				2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */,
 				2BC58A5F24EFDBDE00EB3DB2 /* ToolbarContentView.xib in Resources */,
 				2BC58A6224EFDBDE00EB3DB2 /* AttachmentUploadBar.xib in Resources */,
@@ -980,7 +979,9 @@
 				2B9E981C24C70D4A00ED7A68 /* MainAppViewController.swift in Sources */,
 				2BC58A1A24EFD7FF00EB3DB2 /* ImageView+Extention.swift in Sources */,
 				2B9E981024C6FC7300ED7A68 /* Extensions.swift in Sources */,
+				2B8341A224F9853600B74673 /* ChatNewViewController.swift in Sources */,
 				2BC58A8824EFDBEB00EB3DB2 /* ChatAttachmentOutgoingCell.swift in Sources */,
+				2B8341B424F9857900B74673 /* ChatPopVC.swift in Sources */,
 				2B2FD80724C8D99E0042BF6D /* LoginViewController.swift in Sources */,
 				2BC58A6124EFDBDE00EB3DB2 /* InputToolbar.swift in Sources */,
 				2BC58A4324EFDB3900EB3DB2 /* VideoPlayerView.swift in Sources */,
@@ -992,7 +993,6 @@
 				2BC58A9624EFDBEB00EB3DB2 /* ChatCollectionViewDelegateFlowLayout.swift in Sources */,
 				2B9E980424C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift in Sources */,
 				2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */,
-				2BC58AAE24EFDC3A00EB3DB2 /* PDFViewController.swift in Sources */,
 				2B23E8C324EBF96100EC89AB /* WhoViewedYourProfileViewController.swift in Sources */,
 				2BC58A4E24EFDBC300EB3DB2 /* ChatResources.swift in Sources */,
 				2BC58A3D24EFDB3900EB3DB2 /* ChatPrivateTitleView.swift in Sources */,
@@ -1001,34 +1001,34 @@
 				2B3A35D924E042150014FF4B /* UserProfileViewController.swift in Sources */,
 				2BC58A1B24EFD7FF00EB3DB2 /* String+Extention.swift in Sources */,
 				2BC58A9224EFDBEB00EB3DB2 /* ChatAttachmentIncomingCell.swift in Sources */,
-				2BC58AAB24EFDC3A00EB3DB2 /* SelectAssetCell.swift in Sources */,
 				2BC58A6324EFDBDE00EB3DB2 /* AttachmentUploadBar.swift in Sources */,
 				2BC58A1024EFD7FF00EB3DB2 /* UIColor+Extention.swift in Sources */,
 				2BC589EB24EFD6EF00EB3DB2 /* DialogsViewController.swift in Sources */,
 				2BC58A5124EFDBC300EB3DB2 /* ChatContainerView.swift in Sources */,
+				2B8341AF24F9856400B74673 /* PDFViewController.swift in Sources */,
 				2BC589FD24EFD77200EB3DB2 /* AsyncOperation.swift in Sources */,
 				2BC58A1524EFD7FF00EB3DB2 /* UIImage+Extention.swift in Sources */,
 				2B9E982A24C7614100ED7A68 /* SignUpSecondViewController.swift in Sources */,
-				2BC58AAF24EFDC3A00EB3DB2 /* ZoomedAttachmentViewController.swift in Sources */,
 				2B83417224F2FF6800B74673 /* ProfileView.swift in Sources */,
 				2BC58A6024EFDBDE00EB3DB2 /* ToolbarContentView.swift in Sources */,
 				2BC589EC24EFD6EF00EB3DB2 /* DialogsSelectionVC.swift in Sources */,
 				2BC589FA24EFD76B00EB3DB2 /* AttachmentDownloadOperation.swift in Sources */,
+				2B8341A824F9855200B74673 /* ChatDataSource.swift in Sources */,
 				2BC589D224EE9D7E00EB3DB2 /* NotLoggedInView.swift in Sources */,
 				2BC58A9424EFDBEB00EB3DB2 /* ChatCellLayoutAttributes.swift in Sources */,
 				2BC58A2A24EFDAC900EB3DB2 /* Profile.swift in Sources */,
 				2BC58A1624EFD7FF00EB3DB2 /* UITextField+Extention.swift in Sources */,
 				2BC58A4024EFDB3900EB3DB2 /* CoverTableView.swift in Sources */,
 				2BC58A1924EFD7FF00EB3DB2 /* Double+Extention.swift in Sources */,
-				2B83416A24F14EC100B74673 /* ChatNewViewController.swift in Sources */,
 				2BC58A8D24EFDBEB00EB3DB2 /* ChatDateCell.swift in Sources */,
 				2BC589F424EFD76000EB3DB2 /* ChatManager.swift in Sources */,
 				2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */,
 				2BC58A3C24EFDB3900EB3DB2 /* TitleView.swift in Sources */,
-				2BC58AAC24EFDC3A00EB3DB2 /* ChatActionCell.swift in Sources */,
 				2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */,
+				2B8341B924F9858D00B74673 /* SelectAssetCell.swift in Sources */,
 				2BC58A4224EFDB3900EB3DB2 /* DialogTableViewCell.swift in Sources */,
 				2BC58A1724EFD7FF00EB3DB2 /* PHAsset+Extention.swift in Sources */,
+				2B8341B824F9858D00B74673 /* SelectAssetsVC.swift in Sources */,
 				2BC58A8924EFDBEB00EB3DB2 /* ChatCell.swift in Sources */,
 				2BC58A9324EFDBEB00EB3DB2 /* ChatCollectionView.swift in Sources */,
 				2B83416124F04F5B00B74673 /* UsersInfoTableViewController.swift in Sources */,
@@ -1037,16 +1037,15 @@
 				2BC58A1324EFD7FF00EB3DB2 /* UILabel+Extention.swift in Sources */,
 				2BC589FB24EFD76B00EB3DB2 /* CacheManager.swift in Sources */,
 				2B83416624F1400300B74673 /* DialogCellNew.swift in Sources */,
+				2B8341AE24F9856400B74673 /* ZoomedAttachmentViewController.swift in Sources */,
 				2BE1896924C8C7AC00CFFA7A /* PlayerView.swift in Sources */,
 				2BC58A3E24EFDB3900EB3DB2 /* ActionCell.swift in Sources */,
 				2BC58A6624EFDBDE00EB3DB2 /* HeaderCollectionReusableView.swift in Sources */,
 				2B9E980E24C6FC7300ED7A68 /* ParseUtilities.swift in Sources */,
+				2B8341AD24F9856400B74673 /* ParentVideoVC.swift in Sources */,
 				2BE1896724C8B32700CFFA7A /* UserPhotoObject.swift in Sources */,
 				2BC589F924EFD76B00EB3DB2 /* AttachmentDownloadManager.swift in Sources */,
 				2BC58A1224EFD7FF00EB3DB2 /* UIButton+Extention.swift in Sources */,
-				2BC58AA924EFDC3A00EB3DB2 /* ChatDataSource.swift in Sources */,
-				2BC58AAA24EFDC3A00EB3DB2 /* SelectAssetsVC.swift in Sources */,
-				2BC58AB024EFDC3A00EB3DB2 /* ParentVideoVC.swift in Sources */,
 				2BC58A2224EFD92000EB3DB2 /* Reachability.swift in Sources */,
 				2BC58A6424EFDBDE00EB3DB2 /* PlaceHolderTextView.swift in Sources */,
 				2BC58A9524EFDBEB00EB3DB2 /* CollectionViewFlowLayoutInvalidationContext.swift in Sources */,
@@ -1059,6 +1058,7 @@
 				2B76136124EAF75F00063465 /* ImageScrollView.swift in Sources */,
 				2BC589CF24ECFCD300EB3DB2 /* SearchViewController.swift in Sources */,
 				2B9E980F24C6FC7300ED7A68 /* Utilities.swift in Sources */,
+				2B8341A524F9853600B74673 /* ChatViewController.swift in Sources */,
 				2B9E980324C6FC4C00ED7A68 /* SKActivityIndicatorView.swift in Sources */,
 				2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */,
 				2B76135B24E96A5400063465 /* FeedCellNode.swift in Sources */,
@@ -1068,9 +1068,8 @@
 				2BC58A9824EFDBEB00EB3DB2 /* ChatCollectionViewFlowLayout.swift in Sources */,
 				2BC58A8E24EFDBEB00EB3DB2 /* ChatAttachmentCell.swift in Sources */,
 				2BC58A1E24EFD7FF00EB3DB2 /* URL+Extention.swift in Sources */,
-				2BC58AA824EFDC3A00EB3DB2 /* ChatViewController.swift in Sources */,
-				2BC58AAD24EFDC3A00EB3DB2 /* ChatPopVC.swift in Sources */,
 				2BC58A9024EFDBEB00EB3DB2 /* ChatOutgoingCell.swift in Sources */,
+				2B8341B324F9857900B74673 /* ChatActionCell.swift in Sources */,
 				2BC589ED24EFD6EF00EB3DB2 /* DialogCell.swift in Sources */,
 				2B83415E24F04EB700B74673 /* NewCreateNewDialogVC.swift in Sources */,
 				2BC58A4124EFDB3900EB3DB2 /* CircularProgressBar.swift in Sources */,
