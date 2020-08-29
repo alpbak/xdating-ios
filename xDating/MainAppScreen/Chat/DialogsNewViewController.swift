@@ -13,15 +13,18 @@ import Parse
 
 class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChatManagerDelegate, QBChatDelegate {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var notLoggedInView: NotLoggedInView!
     
     //MARK: - Properties
     private let chatManager = ChatManager.instance
     private var dialogs: [QBChatDialog] = []
     private var cancel = false
+    @IBOutlet weak var nodialogsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        notLoggedInView.isHidden = false
+        nodialogsLabel.text = NSLocalizedString("You have no dialogs at this time", comment: "")
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -60,6 +63,22 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         Reachability.instance.networkStatusBlock = { status in
             updateConnectionStatus?(status)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkForLoggedIn()
+    }
+    
+    func checkForLoggedIn(){
+        if isUserLoggedIn(){
+            notLoggedInView.isHidden = true
+        }
+        else{
+            notLoggedInView.isHidden = false
+            self.view.bringSubviewToFront(notLoggedInView)
         }
     }
     
@@ -212,6 +231,14 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
         dialogs = chatManager.storage.dialogsSortByUpdatedAt()
         chatManager.storage.setTotalUnreadMessageCount { (unreadMessageCount) in
             self.setUnreadBadge(unreadCount: unreadMessageCount)
+        }
+        if dialogs.count == 0 {
+            nodialogsLabel.isHidden = false
+            tableView.isHidden = true
+        }
+        else{
+            nodialogsLabel.isHidden = true
+            tableView.isHidden = false
         }
         tableView.reloadData()
     }

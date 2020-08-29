@@ -166,7 +166,7 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return {
-            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!)
+            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!, index: indexPath.row)
         }
     }
     

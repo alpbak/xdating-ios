@@ -178,6 +178,16 @@ func getUserNameAndAge(user:PFUser) -> String {
     return "\(name), \(age)"
 }
 
+func getUserName(user:PFUser) -> String {
+    let name:String = user["name"] as? String ?? ""
+    return "\(name)"
+}
+
+func getUserAge(user:PFUser) -> String {
+    let age:Int = user["age"] as? Int ?? 18
+    return "\(age)"
+}
+
 func getUserLocation(user:PFUser, completion: @escaping(_ str: String?) -> Void){
     guard let locationObject:PFObject = user["location"] as? PFObject else{ return }
     locationObject.fetchIfNeededInBackground { (object, error) in

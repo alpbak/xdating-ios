@@ -102,7 +102,14 @@ func getUserWithId(uid:Int) -> QBUUser {
 }
 
 func startChatWithUserQBId(uid:Int, parent:UIViewController?){
+    print("startChatWithUserQBId")
+    if !isUserLoggedIn() {
+        print("USER NOT LOGGED IN")
+        displayChatError(parent: parent, message: NSLocalizedString("Please login or register to start chatting", comment: ""))
+        return
+    }
     if uid == 0 {
+        displayChatError(parent: parent, message: NSLocalizedString("The user can not chat at the moment", comment: ""))
         return
     }
     
@@ -115,6 +122,18 @@ func startChatWithUserQBId(uid:Int, parent:UIViewController?){
         }
         openNewDialog(dialog, parent: parent)
     })
+}
+
+private func displayChatError(parent:UIViewController?, message:String){
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    let rootParent = appDelegate?.getRootVC()
+    
+    let mParent:UIViewController
+    mParent = parent ?? rootParent!
+    
+    displayAlert(alertTitle: NSLocalizedString("", comment: ""),
+                 alertMessage: message,
+                 parent: mParent)
 }
 
 private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?) {

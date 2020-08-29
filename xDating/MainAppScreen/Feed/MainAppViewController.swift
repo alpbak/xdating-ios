@@ -17,6 +17,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
     
+    @IBOutlet weak var registrationView: UIView!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var regisrationStackView: UIStackView!
@@ -49,6 +50,9 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         
         getInitialProfileViews()
         startProfileViewListener()
+        
+        registrationView.layer.borderColor = UIColor.systemBlue.cgColor
+        registrationView.layer.borderWidth = 1
         
         QBChat.instance.addDelegate(self)
         
@@ -125,14 +129,12 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         if isUserLoggedIn() {
             registerButton.isHidden = true
             loginButton.isHidden = true
-            regisrationStackView.isHidden = true
-            //registrationStackViewHeight.constant = 0
+            registrationView.isHidden = true
         }
         else{
             registerButton.isHidden = false
             loginButton.isHidden = false
-            regisrationStackView.isHidden = false
-            //registrationStackViewHeight.constant = 70
+            registrationView.isHidden = false
         }
         
     }
@@ -154,7 +156,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         collectionNodeMain?.view.isScrollEnabled = true
         self.view.addSubnode(collectionNodeMain!)
         collectionNodeMain?.view.refreshControl = refreshControl
-        self.view.bringSubviewToFront(self.regisrationStackView)
+        self.view.bringSubviewToFront(self.registrationView)
         getFeed()
     }
     
@@ -185,6 +187,25 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let x:NSDictionary = feedArray[indexPath.row]  as! NSDictionary
         openUserProfile(cellDict: x)
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("main-scrollViewWillBeginDragging")
+        registrationView.fadeOut()
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.stoppedScrolling()
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.stoppedScrolling()
+        }
+    }
+
+    func stoppedScrolling() {
+        registrationView.fadeIn()
     }
     
     func setUnreadMessageCount(){
@@ -259,8 +280,6 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
                 self.profilesUptading = false
             }
         }
-        
-        
     }
     
     func setProfileViewVadge(unseenProfileViewCount:Int){

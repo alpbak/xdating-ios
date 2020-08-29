@@ -18,10 +18,12 @@ class ImageCellNode: ASCellNode, ASVideoNodeDelegate {
     var mCellUser:PFUser? = nil
     var mUserPhotoObject:UserPhotoObject?
     var isForVideo = false
+    var cellIndex:Int = 0
     
-    required init(userPhotoObject:UserPhotoObject, cellUser:PFUser) {
+    required init(userPhotoObject:UserPhotoObject, cellUser:PFUser, index:Int) {
         super.init()
         
+        cellIndex = index
         mCellUser = cellUser
         mUserPhotoObject = userPhotoObject
         
@@ -57,6 +59,10 @@ class ImageCellNode: ASCellNode, ASVideoNodeDelegate {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: photoVideoStack())
+    }
+
+    func photoVideoStack() -> ASStackLayoutSpec {
         let imageRatio: CGFloat = 1.0
         var imagePlace:ASRatioLayoutSpec
         if isForVideo {
@@ -71,12 +77,11 @@ class ImageCellNode: ASCellNode, ASVideoNodeDelegate {
         stackLayout.alignItems = .start
         stackLayout.children = [imagePlace]
         
-        return  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+        return stackLayout
     }
     
     func didTap(_ videoNode: ASVideoNode) {
         print("TAP: ")
         videoNode.muted = !(videoNode.muted )
     }
-    
 }

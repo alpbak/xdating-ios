@@ -41,6 +41,8 @@
 		2B8341B424F9857900B74673 /* ChatPopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B224F9857900B74673 /* ChatPopVC.swift */; };
 		2B8341B824F9858D00B74673 /* SelectAssetsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B624F9858D00B74673 /* SelectAssetsVC.swift */; };
 		2B8341B924F9858D00B74673 /* SelectAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B724F9858D00B74673 /* SelectAssetCell.swift */; };
+		2B8341BD24FA8DDD00B74673 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341BB24FA8DDD00B74673 /* EditProfileViewController.swift */; };
+		2B8341BE24FA8DDD00B74673 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341BC24FA8DDD00B74673 /* EditProfileViewController.xib */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -177,6 +179,8 @@
 		2B8341B224F9857900B74673 /* ChatPopVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPopVC.swift; sourceTree = "<group>"; };
 		2B8341B624F9858D00B74673 /* SelectAssetsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetsVC.swift; sourceTree = "<group>"; };
 		2B8341B724F9858D00B74673 /* SelectAssetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetCell.swift; sourceTree = "<group>"; };
+		2B8341BB24FA8DDD00B74673 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		2B8341BC24FA8DDD00B74673 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +393,15 @@
 			path = SelectAssetsScreen;
 			sourceTree = "<group>";
 		};
+		2B8341BA24FA8DC400B74673 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341BB24FA8DDD00B74673 /* EditProfileViewController.swift */,
+				2B8341BC24FA8DDD00B74673 /* EditProfileViewController.xib */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
 		2B9E97E024C6FBDA00ED7A68 = {
 			isa = PBXGroup;
 			children = (
@@ -466,6 +479,7 @@
 		2B9E981124C7056900ED7A68 /* MainAppScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2B8341BA24FA8DC400B74673 /* EditProfile */,
 				2BC58A2824EFDAC100EB3DB2 /* UserPorfile */,
 				2BC589D924EFD68D00EB3DB2 /* Chat */,
 				2BC589D024EE9D6800EB3DB2 /* NotLoggedInView */,
@@ -889,6 +903,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B8341BE24FA8DDD00B74673 /* EditProfileViewController.xib in Resources */,
 				2BC589EE24EFD6EF00EB3DB2 /* Dialogs.storyboard in Resources */,
 				2BC58A8F24EFDBEB00EB3DB2 /* ChatOutgoingCell.xib in Resources */,
 				2B83416724F1400300B74673 /* DialogCellNew.xib in Resources */,
@@ -1052,6 +1067,7 @@
 				2BC58A1D24EFD7FF00EB3DB2 /* UIView+Extention.swift in Sources */,
 				2BC58A4624EFDB3900EB3DB2 /* DarkenedHoleView.swift in Sources */,
 				2BC58A1F24EFD7FF00EB3DB2 /* UITableView+EmptyAlert.swift in Sources */,
+				2B8341BD24FA8DDD00B74673 /* EditProfileViewController.swift in Sources */,
 				2BC58A9724EFDBEB00EB3DB2 /* ChatCollectionViewDataSource.swift in Sources */,
 				2BC58A4D24EFDBC300EB3DB2 /* UIView+Pins.swift in Sources */,
 				2B2FD80B24DEABB40042BF6D /* MainScreenCollectionViewCell.swift in Sources */,

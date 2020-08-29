@@ -16,48 +16,6 @@ import SDWebImage
 import PDFKit
 import Quickblox
 import SVProgressHUD
-//var messageTimeDateFormatter: DateFormatter {
-//    struct Static {
-//        static let instance : DateFormatter = {
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "HH:mm"
-//            return formatter
-//        }()
-//    }
-//    return Static.instance
-//}
-//
-//enum MessageStatus: Int {
-//    case sent
-//    case sending
-//    case notSent
-//}
-//
-//enum ChatActions: String {
-//    case LeaveChat
-//    case ChatInfo
-//    case Edit
-//    case Delete
-//    case Forward
-//    case DeliveredTo
-//    case ViewedBy
-//    case SaveAttachment
-//}
-//
-//struct ChatViewControllerConstant {
-//    static let leaveChat = "Leave_Chat"
-//    static let groupInfo = "Group_Info"
-//    static let forwardedFrom = "Forwarded from "
-//    static let messagePadding: CGFloat = 40.0
-//    static let attachmentBarHeight: CGFloat = 100.0
-//    static let chatDidReadMessageNotification = Notification.Name(rawValue: "chatDidReadMessage")
-//    static let chatDidDeliverMessageNotification = Notification.Name(rawValue: "chatDidDeliverMessage")
-//}
-//
-//struct ActionMessage {
-//    let messageID: String
-//    let action: ChatActions
-//}
 
 class ChatViewController: UIViewController {
     

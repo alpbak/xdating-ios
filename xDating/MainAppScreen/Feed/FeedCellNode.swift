@@ -284,11 +284,13 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     }
     
     @objc func handleMessageClick(sender: UIButton){
-        print("CHAT: ", cellUser?["name"] ?? "")
-        
+        print("CHAT1: ", cellUser?["name"] ?? "")
         if cellUser?["qbUserId"] != nil {
             let userQBId = (cellUser?["qbUserId"])! as? Int
             startChatWithUserQBId(uid: userQBId ?? 0, parent: nil)
+        }
+        else{
+            startChatWithUserQBId(uid: 0, parent: nil)
         }
     }
     
@@ -311,7 +313,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return {
-            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!)
+            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!, index: indexPath.row)
         }
     }
     
@@ -322,11 +324,17 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
      
     func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
         //print("willDisplayItemWith: ", node.indexPath)
-        
         if node.indexPath!.row > 0 {
             sendProfileView(viewedUser: cellUser!)
         }
     }
+    
+//    func collectionNode(_ collectionNode: ASCollectionNode, didEndDisplayingItemWith node: ASCellNode) {
+//        //print("didEndDisplayingItemWith: ", node.indexPath)
+////        let x:Int = node.indexPath!.row
+////        let w:String = "\(x+1) of \(cellPhotos.count)"
+////        print("imgs: ", w)
+//    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleSwipeForMore()

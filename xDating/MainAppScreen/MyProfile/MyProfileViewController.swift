@@ -27,6 +27,10 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     @IBOutlet weak var setDefaultPhotoButton: UIButton!
     @IBOutlet weak var notLoggedInView: NotLoggedInView!
     
+    @IBAction func editButtonAction(_ sender: Any) {
+        let vc = EditProfileViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
     
     @IBAction func setDefaultPhotoButtonAction(_ sender: Any) {
         let selectedCell:ImageCellNode = currentDisplayedCell as! ImageCellNode
@@ -70,7 +74,6 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         PFUser.logOutInBackground { (error) in
             print("LOGGED OUT")
             self.tabBarController?.selectedIndex = 0
-
         }
     }
     
@@ -80,17 +83,15 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         setupNode()
         
         notLoggedInView.isHidden = false
-        
         editLabel.text = NSLocalizedString("Edit", comment: "")
         addMediaLabel.text = NSLocalizedString("Add", comment: "")
         profilePhotoLabel.text = NSLocalizedString("This is your profile photo", comment: "")
         setDefaultPhotoButton.setTitle(NSLocalizedString("Make this your pfofile photo", comment: ""), for: .normal)
-        
-        
         profilePhotoContainer.isHidden = true
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(refreshAction(_:)), name: Notification.Name("NewMediaAdded"), object: nil)
+        
         
         if isUserLoggedIn(){
             getUserDetails()
@@ -180,7 +181,7 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         return {
-            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: PFUser.current()!)
+            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: PFUser.current()!, index: indexPath.row)
         }
     }
     
