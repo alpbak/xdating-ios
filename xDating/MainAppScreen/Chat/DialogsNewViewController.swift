@@ -27,6 +27,7 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
         nodialogsLabel.text = NSLocalizedString("You have no dialogs at this time", comment: "")
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
         
         self.tableView.register(UINib(nibName: "DialogCellNew", bundle: nil), forCellReuseIdentifier: "DialogCellNew")
         

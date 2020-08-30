@@ -43,6 +43,10 @@
 		2B8341B924F9858D00B74673 /* SelectAssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341B724F9858D00B74673 /* SelectAssetCell.swift */; };
 		2B8341BD24FA8DDD00B74673 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341BB24FA8DDD00B74673 /* EditProfileViewController.swift */; };
 		2B8341BE24FA8DDD00B74673 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341BC24FA8DDD00B74673 /* EditProfileViewController.xib */; };
+		2B8341D224FBA86500B74673 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341D024FBA86500B74673 /* SettingsViewController.swift */; };
+		2B8341D324FBA86500B74673 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341D124FBA86500B74673 /* SettingsViewController.xib */; };
+		2B8341D624FBAB4B00B74673 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341D424FBAB4B00B74673 /* SettingsTableViewCell.swift */; };
+		2B8341D724FBAB4B00B74673 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341D524FBAB4B00B74673 /* SettingsTableViewCell.xib */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -181,6 +185,10 @@
 		2B8341B724F9858D00B74673 /* SelectAssetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAssetCell.swift; sourceTree = "<group>"; };
 		2B8341BB24FA8DDD00B74673 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		2B8341BC24FA8DDD00B74673 /* EditProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
+		2B8341D024FBA86500B74673 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		2B8341D124FBA86500B74673 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		2B8341D424FBAB4B00B74673 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		2B8341D524FBAB4B00B74673 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -402,6 +410,17 @@
 			path = EditProfile;
 			sourceTree = "<group>";
 		};
+		2B8341BF24FBA81F00B74673 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				2B8341D024FBA86500B74673 /* SettingsViewController.swift */,
+				2B8341D124FBA86500B74673 /* SettingsViewController.xib */,
+				2B8341D424FBAB4B00B74673 /* SettingsTableViewCell.swift */,
+				2B8341D524FBAB4B00B74673 /* SettingsTableViewCell.xib */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
 		2B9E97E024C6FBDA00ED7A68 = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +498,7 @@
 		2B9E981124C7056900ED7A68 /* MainAppScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2B8341BF24FBA81F00B74673 /* SettingsView */,
 				2B8341BA24FA8DC400B74673 /* EditProfile */,
 				2BC58A2824EFDAC100EB3DB2 /* UserPorfile */,
 				2BC589D924EFD68D00EB3DB2 /* Chat */,
@@ -914,6 +934,7 @@
 				2B9E97F624C6FBDA00ED7A68 /* Assets.xcassets in Resources */,
 				2B76136524EAF78900063465 /* ImageViewerViewController.xib in Resources */,
 				2B2FD80C24DEABB40042BF6D /* MainScreenCollectionViewCell.xib in Resources */,
+				2B8341D724FBAB4B00B74673 /* SettingsTableViewCell.xib in Resources */,
 				2B9E980924C6FC6300ED7A68 /* SignUpViewController.xib in Resources */,
 				2BE1896524C8B1BD00CFFA7A /* MyProfileGalleryCollectionViewCell.xib in Resources */,
 				2BC58A9124EFDBEB00EB3DB2 /* ChatAttachmentIncomingCell.xib in Resources */,
@@ -927,6 +948,7 @@
 				2BC58A8B24EFDBEB00EB3DB2 /* ChatNotificationCell.xib in Resources */,
 				2B3A35DA24E042150014FF4B /* UserProfileViewController.xib in Resources */,
 				2BC58A3A24EFDB3900EB3DB2 /* DarkenedHoleView.xib in Resources */,
+				2B8341D324FBA86500B74673 /* SettingsViewController.xib in Resources */,
 				2B2FD80824C8D99E0042BF6D /* LoginViewController.xib in Resources */,
 				2BC58A4524EFDB3900EB3DB2 /* ActionCell.xib in Resources */,
 				2BC58A8524EFDBEB00EB3DB2 /* ChatIncomingCell.xib in Resources */,
@@ -1005,6 +1027,7 @@
 				2BC58A1424EFD7FF00EB3DB2 /* UISearchBar+Extention.swift in Sources */,
 				2BC58A8624EFDBEB00EB3DB2 /* ChatIncomingCell.swift in Sources */,
 				2B83416324F0542000B74673 /* DialogsNewViewController.swift in Sources */,
+				2B8341D224FBA86500B74673 /* SettingsViewController.swift in Sources */,
 				2BC58A9624EFDBEB00EB3DB2 /* ChatCollectionViewDelegateFlowLayout.swift in Sources */,
 				2B9E980424C6FC4C00ED7A68 /* SKActivityIndicatorViewStyle.swift in Sources */,
 				2BE1896024C8AF8800CFFA7A /* MyProfileViewController.swift in Sources */,
@@ -1083,6 +1106,7 @@
 				2BC58A1824EFD7FF00EB3DB2 /* UIViewController+Extention.swift in Sources */,
 				2BC58A9824EFDBEB00EB3DB2 /* ChatCollectionViewFlowLayout.swift in Sources */,
 				2BC58A8E24EFDBEB00EB3DB2 /* ChatAttachmentCell.swift in Sources */,
+				2B8341D624FBAB4B00B74673 /* SettingsTableViewCell.swift in Sources */,
 				2BC58A1E24EFD7FF00EB3DB2 /* URL+Extention.swift in Sources */,
 				2BC58A9024EFDBEB00EB3DB2 /* ChatOutgoingCell.swift in Sources */,
 				2B8341B324F9857900B74673 /* ChatActionCell.swift in Sources */,

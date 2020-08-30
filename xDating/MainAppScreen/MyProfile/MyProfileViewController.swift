@@ -13,6 +13,7 @@ import NewYorkAlert
 
 class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLayout, ASCollectionDataSource, ASCollectionDelegate {
 
+    @IBOutlet weak var settingsLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var bioView: UIView!
     @IBOutlet weak var headerNameLabel: UILabel!
@@ -26,6 +27,11 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     @IBOutlet weak var profilePhotoLabel: UILabel!
     @IBOutlet weak var setDefaultPhotoButton: UIButton!
     @IBOutlet weak var notLoggedInView: NotLoggedInView!
+    
+    @IBAction func settingsButtonAction(_ sender: Any) {
+        let vc = SettingsViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
     
     @IBAction func editButtonAction(_ sender: Any) {
         let vc = EditProfileViewController()
@@ -84,6 +90,7 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         
         notLoggedInView.isHidden = false
         editLabel.text = NSLocalizedString("Edit", comment: "")
+        settingsLabel.text = NSLocalizedString("Settings", comment: "")
         addMediaLabel.text = NSLocalizedString("Add", comment: "")
         profilePhotoLabel.text = NSLocalizedString("This is your profile photo", comment: "")
         setDefaultPhotoButton.setTitle(NSLocalizedString("Make this your pfofile photo", comment: ""), for: .normal)
