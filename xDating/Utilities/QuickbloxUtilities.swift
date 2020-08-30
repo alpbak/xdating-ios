@@ -147,3 +147,11 @@ private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?) 
     vc.dialogID = newDialog.id
     mParent.present(vc, animated: true, completion: nil)
 }
+
+func chatLogout(){
+    
+    QBChat.instance.disconnect { (error) in
+        print("CHAT DISCONNECTED-error: ", error);
+    }
+    
+}

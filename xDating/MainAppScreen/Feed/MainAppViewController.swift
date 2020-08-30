@@ -100,6 +100,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     @objc func userLoggedOut(){
         print("userLoggedOut() - MAIN FEED")
         handleStartup()
+        self.tabBarController?.tabBar.items?[3].badgeValue = nil
         
     }
     

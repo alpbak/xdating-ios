@@ -230,6 +230,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func dologout(){
         PFUser.logOutInBackground { (error) in
+            chatLogout()
             let nc = NotificationCenter.default
             nc.post(name: Notification.Name("UserLoggedOut"), object: nil)
             self.dismiss(animated: false) {

@@ -48,6 +48,7 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         else{
             print("DialogsNewViewController - QBChat.instance.isNOT connected")
+            self.tabBarController?.tabBar.items?[3].badgeValue = nil
         }
         
         let tapGestureDelete = UILongPressGestureRecognizer(target: self, action: #selector(tapEdit(_:)))
@@ -229,6 +230,9 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // MARK: - Helpers
     private func reloadContent() {
+        if !isUserLoggedIn() {
+            return
+        }
         dialogs = chatManager.storage.dialogsSortByUpdatedAt()
         chatManager.storage.setTotalUnreadMessageCount { (unreadMessageCount) in
             self.setUnreadBadge(unreadCount: unreadMessageCount)
