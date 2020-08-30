@@ -59,6 +59,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(newUserBlock), name: Notification.Name("UserBlockedNotification"), object: nil)
+        nc.addObserver(self, selector: #selector(userLoggedOut), name: Notification.Name("UserLoggedOut"), object: nil)
         
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
         //setupNode()
@@ -94,6 +95,12 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         print("NEW BLOCK")
         feedArray = cleanUpBlockedUsers(arrayToCheck: feedArray) as NSArray
         collectionNodeMain?.reloadData()
+    }
+    
+    @objc func userLoggedOut(){
+        print("userLoggedOut() - MAIN FEED")
+        handleStartup()
+        
     }
     
     @objc

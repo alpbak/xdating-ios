@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import NewYorkAlert
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
@@ -38,7 +39,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return 3
         }
         else{
-            return 2
+            return 3
         }
     }
     
@@ -69,7 +70,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                cell.cellLabel.text = "New profile views"
+                cell.cellLabel.text = NSLocalizedString("New profile views", comment: "")
                 cell.cellSwitch.tag = SettingsChoices.newprofile.rawValue
                 let newprofileNotification:Bool = UserDefaults.standard.bool(forKey: "newprofileNotification")
                 print("newprofileNotification: ", newprofileNotification)
@@ -77,7 +78,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
             }
             else if indexPath.row == 1{
-                cell.cellLabel.text = "New messages"
+                cell.cellLabel.text = NSLocalizedString("New messages", comment: "")
                 cell.cellSwitch.tag = SettingsChoices.newmessage.rawValue
                 let newmessageNotification:Bool = UserDefaults.standard.bool(forKey: "newmessageNotification")
                 print("newmessageNotification: ", newmessageNotification)
@@ -103,12 +104,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         if indexPath.section == 2 {
             if indexPath.row == 0 {
-                cell.cellLabel.text = "Terms of service"
+                cell.cellLabel.text = NSLocalizedString("Terms of service", comment: "")
                 cell.cellSwitch.isHidden = true
                 cell.cellSwitch.tag = 5
             }
             else if indexPath.row == 1{
-                cell.cellLabel.text = "Privacy policy"
+                cell.cellLabel.text = NSLocalizedString("Privacy policy", comment: "")
+                cell.cellSwitch.isHidden = true
+                cell.cellSwitch.tag = 6
+            }
+            else if indexPath.row == 2{
+                cell.cellLabel.text = NSLocalizedString("Log out", comment: "")
+                cell.cellLabel.textColor = .red
                 cell.cellSwitch.isHidden = true
                 cell.cellSwitch.tag = 6
             }
@@ -122,6 +129,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You tapped cell number \(indexPath.row).")
         tableView.deselectRow(at: indexPath, animated: false)
+        
+        if indexPath.section == 2 {
+            if indexPath.row == 0 {
+                print("TERMS")
+            }
+            else if indexPath.row == 1 {
+                print("PRIVACY")
+            }
+            else if indexPath.row == 2 {
+                logout()
+            }
+        }
         
     }
     
@@ -188,6 +207,36 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                            }
                        }
                    }
+    }
+    
+    func logout(){
+        let alert = NewYorkAlertController(title: NSLocalizedString("Logout?", comment: ""),
+                                           message: NSLocalizedString("Are you suer you want to logout?", comment: ""),
+                                           style: .alert)
+        
+        let ok = NewYorkButton(title: NSLocalizedString("YES", comment: ""), style: .default) { _ in
+            self.dologout()
+        }
+        
+        let cancel = NewYorkButton(title: NSLocalizedString("NO", comment: ""), style: .preferred) { _ in
+            
+        }
+        
+        alert.addButton(ok)
+        alert.addButton(cancel)
+        
+        self.present(alert, animated: true)
+    }
+    
+    func dologout(){
+        PFUser.logOutInBackground { (error) in
+            let nc = NotificationCenter.default
+            nc.post(name: Notification.Name("UserLoggedOut"), object: nil)
+            self.dismiss(animated: false) {
+                
+            }
+            
+        }
     }
     
 }

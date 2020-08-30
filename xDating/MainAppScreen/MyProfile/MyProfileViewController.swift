@@ -74,13 +74,19 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     @IBAction func refreshAction(_ sender: Any) {
         hideLoadingView()
         getUserDetails()
+        checkForLoggedIn()
+    }
+    
+    @IBAction func userLoggedOut(_ sender: Any) {
+        print("userLoggedOut ACTION")
+        hideLoadingView()
+        getUserDetails()
+        checkForLoggedIn()
+        self.tabBarController?.selectedIndex = 0
     }
     
     @IBAction func logoutAction(_ sender: Any) {
-        PFUser.logOutInBackground { (error) in
-            print("LOGGED OUT")
-            self.tabBarController?.selectedIndex = 0
-        }
+
     }
     
     override func viewDidLoad() {
@@ -98,7 +104,7 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(refreshAction(_:)), name: Notification.Name("NewMediaAdded"), object: nil)
-        
+        nc.addObserver(self, selector: #selector(userLoggedOut(_:)), name: Notification.Name("UserLoggedOut"), object: nil)
         
         if isUserLoggedIn(){
             getUserDetails()
