@@ -15,6 +15,14 @@ import Photos
 import Parse
 import NewYorkAlert
 
+enum SettingsChoices: Int {
+    case newprofile
+    case newmessage
+    case setting1
+    case setting2
+    case setting3
+}
+
 struct LoginConstant {
     static let notSatisfyingDeviceToken = "Invalid parameter not satisfying: deviceToken != nil"
     static let enterToChat = NSLocalizedString("Enter to chat", comment: "")
@@ -42,7 +50,7 @@ func displayAlert(alertTitle:String, alertMessage:String, parent:UIViewControlle
     let alert = NewYorkAlertController(title: alertTitle,
                                        message: alertMessage,
                                        style: .alert)
-
+    
     let ok = NewYorkButton(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
         
     }
@@ -62,7 +70,7 @@ func displayAlertWithCompletion(alertTitle:String, alertMessage:String, parent:U
     let alert = NewYorkAlertController(title: alertTitle,
                                        message: alertMessage,
                                        style: .alert)
-
+    
     let ok = NewYorkButton(title: NSLocalizedString("OK", comment: ""), style: .default) { _ in
         completion(true)
     }
@@ -129,7 +137,7 @@ func showPhotoVideoPicker(parent:UIViewController) {
         selectedItems = items
         handleSelectedMedia(selectedItems: selectedItems)
         picker.dismiss(animated: true, completion: nil)
-
+        
     }
     
     parent.present(picker, animated: true, completion: nil)
@@ -149,7 +157,7 @@ func handleSelectedMedia(selectedItems:[YPMediaItem]){
             catch{
                 print(error)
             }
-
+            
             print(video)
         }
     }
@@ -190,15 +198,54 @@ func getUserAge(user:PFUser) -> String {
 
 func getUserLocation(user:PFUser, completion: @escaping(_ str: String?) -> Void){
     guard let locationObject:PFObject = user["location"] as? PFObject else{ return }
-    locationObject.fetchIfNeededInBackground { (object, error) in
-        let countryObject:PFObject = locationObject["country"] as! PFObject
-        countryObject.fetchIfNeededInBackground { (cObject, error) in
-            let location:String = locationObject["name"] as? String ?? ""
-            let country:String = cObject?["name"] as? String ?? ""
-            let locationString:String = "\(location), \(country)"
-            completion(locationString)
+    let location:String = locationObject["name"] as? String ?? ""
+    
+    let countryObject:PFObject = locationObject["country"] as! PFObject
+    let country:String = getCountryName(objId: countryObject.objectId ?? "")
+    let locationString:String = "\(location), \(country)"
+    completion(locationString)
+    /*
+     locationObject.fetchIfNeededInBackground { (object, error) in
+     let countryObject:PFObject = locationObject["country"] as! PFObject
+     countryObject.fetchIfNeededInBackground { (cObject, error) in
+     let location:String = locationObject["name"] as? String ?? ""
+     let country:String = cObject?["name"] as? String ?? ""
+     let locationString:String = "\(location), \(country)"
+     completion(locationString)
+     }
+     }
+     */
+}
+
+func getCountryName(objId:String) -> String {
+    var countryName:String = ""
+    let countriesArray:NSArray = readjson()["results"] as! NSArray
+    if let swiftArray = countriesArray.mutableCopy() as? Array<Dictionary<String, AnyObject>> {
+        //print("swiftArray: ", swiftArray)
+        
+        for w:Dictionary<String, AnyObject> in swiftArray {
+            let tempObjId:String = w["objectId"] as! String
+            if tempObjId == objId {
+                countryName = w["name"] as! String
+            }
         }
     }
+    return countryName
+}
+
+func readjson() -> NSDictionary{
+    if let filePath = Bundle.main.path(forResource: "countries", ofType: "json"), let data = NSData(contentsOfFile: filePath) {
+        
+        do {
+            let json = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.allowFragments)
+            return json as! NSDictionary
+        }
+        catch {
+            return NSDictionary()
+        }
+    }
+    return NSDictionary()
+    
 }
 
 func reportUser(user:PFUser, parent:UIViewController?){
@@ -210,15 +257,15 @@ func reportUser(user:PFUser, parent:UIViewController?){
     let mParent:UIViewController
     mParent = parent ?? rootParent!
     
-//    if parent == nil {
-//        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
-//        let rootParent = appDelegate?.getRootVC()
-//    }
+    //    if parent == nil {
+    //        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    //        let rootParent = appDelegate?.getRootVC()
+    //    }
     
     let actionSheet = NewYorkAlertController(title: NSLocalizedString("REPORT USER", comment: ""),
                                              message: NSLocalizedString("Please select the subject for your report.", comment: ""),
                                              style: .actionSheet)
-
+    
     
     let buttons = [
         NewYorkButton(title: ReportReason.inappropriateContent, style: .default, handler: { (button) in
@@ -258,15 +305,15 @@ func reportUser(user:PFUser, parent:UIViewController?){
 
 func displayReportAlert(parent:UIViewController?){
     displayAlert(alertTitle: NSLocalizedString("Thank You", comment: ""),
-    alertMessage: NSLocalizedString("We have received your report.", comment: ""),
-    parent: parent)
+                 alertMessage: NSLocalizedString("We have received your report.", comment: ""),
+                 parent: parent)
 }
 
 func displayBlockAlert(parent:UIViewController, completion: @escaping(_ success: Bool) -> Void){
     let alert = NewYorkAlertController(title: NSLocalizedString("Block", comment: ""),
                                        message: NSLocalizedString("Are you sure you want to block this user", comment: ""),
                                        style: .alert)
-
+    
     let ok = NewYorkButton(title: NSLocalizedString("YES", comment: ""), style: .default) { _ in
         completion(true)
     }
@@ -302,4 +349,8 @@ func setupDate(_ dateSent: Date) -> String {
     }
     
     return dateString
+}
+
+func isKeyPresentInUserDefaults(key: String) -> Bool {
+    return UserDefaults.standard.object(forKey: key) != nil
 }

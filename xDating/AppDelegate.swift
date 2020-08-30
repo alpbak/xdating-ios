@@ -12,10 +12,10 @@ import CommonKeyboard
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     var mApplication: UIApplication!
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         CommonKeyboard.shared.enabled = true
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
             return
         }
-
+        
         window.rootViewController = vc
         window.makeKeyAndVisible()
         UIView.transition(with: window,
@@ -85,20 +85,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func saveInstallationObject(){
-            if let installation = PFInstallation.current(){
-                installation.saveInBackground {
-                    (success: Bool, error: Error?) in
-                    if (success) {
-                        //print("You have successfully connected your app to Back4App!")
-                    } else {
-                        if let myError = error{
-                            print(myError.localizedDescription)
-                        }else{
-                            print("Uknown error")
-                        }
+        if let installation = PFInstallation.current(){
+            
+            let userdefaults = UserDefaults.standard
+            if isKeyPresentInUserDefaults(key: "newprofileNotification"){
+                installation["newprofileNotification"] = userdefaults.bool(forKey: "newprofileNotification")
+            } else {
+                userdefaults.set(true, forKey: "newprofileNotification")
+                installation["newprofileNotification"] = true
+            }
+            
+            if isKeyPresentInUserDefaults(key: "newmessageNotification"){
+                installation["newmessageNotification"] = userdefaults.bool(forKey: "newmessageNotification")
+            } else {
+                userdefaults.set(true, forKey: "newmessageNotification")
+                installation["newmessageNotification"] = true
+            }
+            
+            installation.saveInBackground {
+                (success: Bool, error: Error?) in
+                if (success) {
+                    print("Installation saved!!!")
+                } else {
+                    if let myError = error{
+                        print(myError.localizedDescription)
+                    }else{
+                        print("Uknown error")
                     }
                 }
             }
+        }
     }
     
     func checkAnonymousUser(){
@@ -130,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             checkQBAccountExists(userEmail: currentUserEmail())
         }
     }
-
-
+    
+    
 }
 

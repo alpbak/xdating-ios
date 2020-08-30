@@ -96,6 +96,10 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
             self.postLocationNode.attributedText = str
         }
         
+//        let lcat:PFObject = cellUser!["location"] as! PFObject
+//        let str = NSAttributedString(string: lcat["name"] as! String, attributes: locationStringAttribute as [NSAttributedString.Key : Any])
+//        self.postLocationNode.attributedText = str
+        
         lastOnlineNode.attributedText = lastOnlineString
     }
     

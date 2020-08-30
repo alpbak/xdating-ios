@@ -146,13 +146,19 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         self.userPhotoObjectsArray.removeAll()
         guard let user = PFUser.current() else { return }
         
-        user.fetchInBackground { (userObject, error) in
-            self.setupuser()
+        let query = PFQuery(className:"_User")
+        query.includeKey("location")
+        query.getObjectInBackground(withId: user.objectId!) { (retreiveduser, error) in
+            self.setupuser(user: retreiveduser as! PFUser)
         }
+        
+//        user.fetchInBackground { (userObject, error) in
+//            self.setupuser()
+//        }
     }
     
-    func setupuser(){
-        guard let user = PFUser.current() else { return }
+    func setupuser(user:PFUser){
+        //guard let user = PFUser.current() else { return }
         defaultUserPhotoObject = user["defaultUserPhoto"] as? PFObject
                 
                 guard let photoRelation:PFRelation<PFObject> = user["userPhotos"] as? PFRelation<PFObject> else { return }

@@ -47,6 +47,7 @@
 		2B8341D324FBA86500B74673 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341D124FBA86500B74673 /* SettingsViewController.xib */; };
 		2B8341D624FBAB4B00B74673 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8341D424FBAB4B00B74673 /* SettingsTableViewCell.swift */; };
 		2B8341D724FBAB4B00B74673 /* SettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341D524FBAB4B00B74673 /* SettingsTableViewCell.xib */; };
+		2B8341D924FBDDCE00B74673 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B8341D824FBDDCE00B74673 /* countries.json */; };
 		2B9E97ED24C6FBDA00ED7A68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */; };
 		2B9E97F124C6FBDA00ED7A68 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */; };
 		2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B9E97F224C6FBDA00ED7A68 /* Main.storyboard */; };
@@ -189,6 +190,7 @@
 		2B8341D124FBA86500B74673 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		2B8341D424FBAB4B00B74673 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		2B8341D524FBAB4B00B74673 /* SettingsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsTableViewCell.xib; sourceTree = "<group>"; };
+		2B8341D824FBDDCE00B74673 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		2B9E97E924C6FBDA00ED7A68 /* XD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B9E97EC24C6FBDA00ED7A68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B9E97F024C6FBDA00ED7A68 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 		2B9E980A24C6FC6C00ED7A68 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				2B8341D824FBDDCE00B74673 /* countries.json */,
 				2B9E980D24C6FC7200ED7A68 /* Extensions.swift */,
 				2B9E980B24C6FC7200ED7A68 /* ParseUtilities.swift */,
 				2B9E980C24C6FC7200ED7A68 /* Utilities.swift */,
@@ -941,6 +944,7 @@
 				2B8341A324F9853600B74673 /* ChatNewViewController.xib in Resources */,
 				2B8341A424F9853600B74673 /* Chat.storyboard in Resources */,
 				2B9E97F424C6FBDA00ED7A68 /* Main.storyboard in Resources */,
+				2B8341D924FBDDCE00B74673 /* countries.json in Resources */,
 				2BC58A5F24EFDBDE00EB3DB2 /* ToolbarContentView.xib in Resources */,
 				2BC58A6224EFDBDE00EB3DB2 /* AttachmentUploadBar.xib in Resources */,
 				2BC58A8724EFDBEB00EB3DB2 /* ChatAttachmentOutgoingCell.xib in Resources */,

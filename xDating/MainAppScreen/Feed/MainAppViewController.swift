@@ -42,6 +42,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     @IBAction func topButtonAction(_ sender: Any) {
         print("topButtonAction")
+        
         collectionNodeMain?.setContentOffset(CGPoint.zero, animated: true)
     }
     
@@ -191,7 +192,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print("main-scrollViewWillBeginDragging")
-        registrationView.fadeOut()
+        if !isUserLoggedIn() {
+            registrationView.fadeOut()
+        }
+        
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -205,7 +209,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     }
 
     func stoppedScrolling() {
-        registrationView.fadeIn()
+        if !isUserLoggedIn() {
+            registrationView.fadeIn()
+        }
+        
     }
     
     func setUnreadMessageCount(){
