@@ -68,7 +68,10 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     
     @IBAction func addPhotoVideo(_ sender: Any) {
         displayLoadingView()
-        showPhotoVideoPicker(parent: self)
+        //showPhotoVideoPicker(parent: self)
+        showPhotoVideoPicker(parent: self) { (image) in
+            
+        }
     }
     
     @IBAction func refreshAction(_ sender: Any) {

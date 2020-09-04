@@ -99,7 +99,7 @@ func hideWaitIndicator(){
     SKActivityIndicator.dismiss()
 }
 
-func showPhotoVideoPicker(parent:UIViewController) {
+func showPhotoVideoPicker(parent:UIViewController, completion: @escaping(_ success: UIImage?) -> Void) {
     
     var selectedItems = [YPMediaItem]()
     
@@ -135,7 +135,10 @@ func showPhotoVideoPicker(parent:UIViewController) {
         }
         
         selectedItems = items
-        handleSelectedMedia(selectedItems: selectedItems)
+        //handleSelectedMedia(selectedItems: selectedItems, completion: )
+        handleSelectedMedia(selectedItems: selectedItems) { (image) in
+            completion(image)
+        }
         picker.dismiss(animated: true, completion: nil)
         
     }
@@ -143,11 +146,12 @@ func showPhotoVideoPicker(parent:UIViewController) {
     parent.present(picker, animated: true, completion: nil)
 }
 
-func handleSelectedMedia(selectedItems:[YPMediaItem]){
+func handleSelectedMedia(selectedItems:[YPMediaItem], completion: @escaping(_ success: UIImage?) -> Void){
     for item in selectedItems {
         switch item {
         case .photo(let photo):
             uploadUserImage(image: photo.image)
+            completion(photo.image)
             print(photo)
         case .video(let video):
             do {
@@ -159,6 +163,7 @@ func handleSelectedMedia(selectedItems:[YPMediaItem]){
             }
             
             print(video)
+            completion(nil)
         }
     }
     print("ITEMS ARE UPLOADING")

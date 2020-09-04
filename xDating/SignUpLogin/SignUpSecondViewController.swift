@@ -23,9 +23,16 @@ class SignUpSecondViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var uploadPhotoButton: UIButton!
+    @IBOutlet weak var aboutView: UIView!
     
     @IBAction func photoButtonAction(_ sender: Any) {
-        showPhotoVideoPicker(parent: self)
+        //showPhotoVideoPicker(parent: self)
+        showPhotoVideoPicker(parent: self) { (image) in
+            self.selectedImageView.image = image
+            self.nextButton.isHidden = false
+            self.uploadPhotoButton.isHidden = true
+        }
     }
     
     @IBAction func nextButtonAction(_ sender: Any) {
@@ -54,12 +61,18 @@ class SignUpSecondViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        aboutView.layer.cornerRadius = 5
+        aboutView.layer.borderColor = UIColor.lightGray.cgColor
+        aboutView.layer.borderWidth = 1
+        
+        nextButton.isHidden = true
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
         locationLabel.text = NSLocalizedString("Location", comment: "")
-        nextButton.setTitle(NSLocalizedString("Save Bio & Location", comment: ""), for: .normal)
+        nextButton.setTitle(NSLocalizedString("Continue", comment: ""), for: .normal)
+        uploadPhotoButton.setTitle(NSLocalizedString("Upload Photo", comment: ""), for: .normal)
     }
     
     func resetTableData(){
