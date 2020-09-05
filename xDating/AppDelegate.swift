@@ -51,8 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func openSignUpScreen(){
         print("openSignUpScreen")
-        openSignUpSecondScreen()
-        //setRootViewController(SignUpViewController())
+        setRootViewController(SignUpViewController())
     }
     
     func openSignUpSecondScreen(){
