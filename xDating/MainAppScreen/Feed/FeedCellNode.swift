@@ -114,7 +114,6 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         relativeSpec.style.maxWidth = ASDimensionMakeWithPoints(UIScreen.main.bounds.width)
         relativeSpec.style.minHeight = ASDimensionMakeWithPoints(60.0)
         
-        
         let headerLayoutSpec = ASBackgroundLayoutSpec(child: relativeSpec, background: getNameLocationStack())
         
         let insets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
@@ -146,8 +145,6 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         else{
             return stackToReturn
         }
-
-        
     }
     
     func getMorePhotosStack() -> ASInsetLayoutSpec {
@@ -332,14 +329,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
             sendProfileView(viewedUser: cellUser!)
         }
     }
-    
-//    func collectionNode(_ collectionNode: ASCollectionNode, didEndDisplayingItemWith node: ASCellNode) {
-//        //print("didEndDisplayingItemWith: ", node.indexPath)
-////        let x:Int = node.indexPath!.row
-////        let w:String = "\(x+1) of \(cellPhotos.count)"
-////        print("imgs: ", w)
-//    }
-    
+        
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleSwipeForMore()
     }

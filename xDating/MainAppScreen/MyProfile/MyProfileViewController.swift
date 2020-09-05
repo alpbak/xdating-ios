@@ -213,9 +213,8 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-        //print("willDisplayItemWith: ", node.indexPath)
         currentDisplayedCell = node
-        handleProfileViewContainer(node: node)
+        handleDefaultUserPhotoView()
         
         if node.indexPath!.row > 0 {
             sendProfileView(viewedUser: PFUser.current()!)
@@ -226,15 +225,35 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
 //        }
     }
     
-    func collectionNode(_ collectionNode: ASCollectionNode, didEndDisplayingItemWith node: ASCellNode) {
-        //print("didEndDisplayingItemWith: ", node.indexPath)
-    }
-    
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let w:UserPhotoObject = self.userPhotosArray[indexPath.row]
         let vc = ImageViewerViewController()
         vc.imageUrl = w.imageFile.url ?? ""
         self.present(vc, animated: true, completion: nil)
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.stoppedScrolling()
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.stoppedScrolling()
+        }
+    }
+
+    func stoppedScrolling() {
+        handleDefaultUserPhotoView()
+    }
+    
+    func handleDefaultUserPhotoView(){
+        let center = self.view.convert((self.collectionNodeMain?.view.center)!, to: self.collectionNodeMain?.view)
+        let index = self.collectionNodeMain!.indexPathForItem(at: center)
+        //print(index ?? "index not found")
+        
+        let centerCell:ImageCellNode = collectionNodeMain?.nodeForItem(at: index!) as! ImageCellNode
+        
+        handleProfileViewContainer(node: centerCell)
     }
     
     func handleProfileViewContainer(node:ASCellNode){

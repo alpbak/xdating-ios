@@ -220,7 +220,6 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         if !isUserLoggedIn() {
             registrationView.fadeIn()
         }
-        
     }
     
     func setUnreadMessageCount(){
