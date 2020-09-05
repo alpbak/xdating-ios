@@ -176,7 +176,6 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         return {
             let x:NSDictionary = self.feedArray[indexPath.row]  as! NSDictionary
             return FeedCellNode(with: x)
-            
         }
     }
     

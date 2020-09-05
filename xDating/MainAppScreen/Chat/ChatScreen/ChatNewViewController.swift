@@ -234,6 +234,8 @@ class ChatNewViewController: UIViewController {
        private var isOpenPopVC = false
        
        private var attachmentDownloadManager = AttachmentDownloadManager()
+    
+       var userNameToDisplay:String = ""
 
     //MARK: - Life Cycle
         override func viewDidLoad() {
@@ -446,11 +448,16 @@ class ChatNewViewController: UIViewController {
         
         //MARK: - Setup
         fileprivate func setupTitleView() {
+            
+            
+            navbar.title = userNameToDisplay
+            
             if dialog.type == .private {
                 guard let userID = dialog.occupantIDs?.filter({$0.uintValue != self.senderID}).first as? UInt,
                     let opponentUser = chatManager.storage.user(withID: userID) else {
                         return
                 }
+                print("opponentUser1: ", opponentUser)
                 navbar.title = opponentUser.fullName
                 chatPrivateTitleView.setupPrivateChatTitleView(opponentUser)
                 navigationItem.titleView = chatPrivateTitleView

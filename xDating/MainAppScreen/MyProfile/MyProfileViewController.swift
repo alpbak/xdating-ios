@@ -253,6 +253,8 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
         
         let centerCell:ImageCellNode = collectionNodeMain?.nodeForItem(at: index!) as! ImageCellNode
         
+        print("xxphoto: \(index) of \(self.userPhotosArray.count)")
+        
         handleProfileViewContainer(node: centerCell)
     }
     

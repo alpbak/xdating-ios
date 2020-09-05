@@ -37,8 +37,9 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         print("CHAT: ", cellUser?["name"] ?? "")
         
         if cellUser?["qbUserId"] != nil {
+            let un:String = cellUser?["name"] as! String
             let userQBId = (cellUser?["qbUserId"])! as? Int
-            startChatWithUserQBId(uid: userQBId ?? 0, parent: self)
+            startChatWithUserQBId(uid: userQBId ?? 0, parent: self, userNameToDisplay: un)
         }
     }
     
@@ -174,16 +175,6 @@ class UserProfileViewController: UIViewController, UICollectionViewDelegateFlowL
         let width = UIScreen.main.bounds.width
         return ASSizeRange(min: CGSize(width: width, height: width*1.1), max: CGSize(width: width, height: width*1.1))
     }
-    
-//    func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
-////        if node.indexPath!.row > 0 {
-////            sendProfileView(viewedUser: cellUser!)
-////        }
-//        
-////        if (node.indexPath!.row == cellPhotos.count - 1 ) { //it's your last cell
-////            print("Load more data & reload your collection view")
-////        }
-//    }
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let w:UserPhotoObject = self.userPhotosArray[indexPath.row]

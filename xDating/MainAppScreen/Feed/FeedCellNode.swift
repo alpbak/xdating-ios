@@ -23,6 +23,8 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     var shouldHideMorePhotoNode:Bool = false
     var isForProfileView:Bool = false
     
+    let morePhotosTextNode = ASTextNode()
+    
     required init(with cellDict:NSDictionary) {
         super.init()
         
@@ -70,9 +72,9 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
             self._collectionNode?.view.isPagingEnabled = true
         }
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-//            self._collectionNode?.view.isPagingEnabled = true
-//        }
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+        //            self._collectionNode?.view.isPagingEnabled = true
+        //        }
     }
     
     func setupTextNodes(){
@@ -96,9 +98,9 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
             self.postLocationNode.attributedText = str
         }
         
-//        let lcat:PFObject = cellUser!["location"] as! PFObject
-//        let str = NSAttributedString(string: lcat["name"] as! String, attributes: locationStringAttribute as [NSAttributedString.Key : Any])
-//        self.postLocationNode.attributedText = str
+        //        let lcat:PFObject = cellUser!["location"] as! PFObject
+        //        let str = NSAttributedString(string: lcat["name"] as! String, attributes: locationStringAttribute as [NSAttributedString.Key : Any])
+        //        self.postLocationNode.attributedText = str
         
         lastOnlineNode.attributedText = lastOnlineString
     }
@@ -118,7 +120,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         
         let insets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
         let headerWithInset = ASInsetLayoutSpec(insets: insets, child: headerLayoutSpec)
-
+        
         let stackLayout = ASStackLayoutSpec.vertical()
         stackLayout.justifyContent = .start
         stackLayout.alignItems = .start
@@ -136,7 +138,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
             }
         }
         else{
-          stackToReturn =  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
+            stackToReturn =  ASInsetLayoutSpec(insets: UIEdgeInsets.zero, child: stackLayout)
         }
         
         if isForProfileView {
@@ -147,16 +149,33 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         }
     }
     
-    func getMorePhotosStack() -> ASInsetLayoutSpec {
-        let bColor:UIColor = UIColor.black.withAlphaComponent(0.2)
+    func handleMorePhotoView(isFirstCell:Bool, stringToDisplay:String){
+        print("handleMorePhotoView: ", stringToDisplay)
         let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 10.0),
         NSAttributedString.Key.foregroundColor: UIColor.white]
-        let str:String = "   " + NSLocalizedString("Swipe For More", comment: "") + " ➤  "
+        
+        var tailStr:String = "   "
+        if isFirstCell {
+            tailStr = " ➤  "
+        }
+        
+        let str:String = "   " + stringToDisplay + tailStr
+        
         let nameString = NSAttributedString(string: str, attributes: nameStringAttribute as [NSAttributedString.Key : Any])
-        let morePhotosTextNode = ASTextNode()
+        
         morePhotosTextNode.attributedText = nameString
+        
+    }
+    
+    func getMorePhotosStack() -> ASInsetLayoutSpec {
+        let bColor:UIColor = UIColor.black.withAlphaComponent(0.2)
         morePhotosTextNode.style.alignSelf = .center
         morePhotosTextNode.backgroundColor = bColor
+        
+        let str:String = "   " + NSLocalizedString("Swipe For More", comment: "") + " ➤  "
+        //handleMorePhotoView(isFirstCell: true, stringToDisplay: str)
+        
+        
         
         let topSeparator = ASImageNode()
         let bottomSeparator = ASImageNode()
@@ -167,17 +186,17 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         verticalStackSpec.spacing = 0
         verticalStackSpec.justifyContent = .center
         verticalStackSpec.children = [topSeparator, morePhotosTextNode, bottomSeparator]
-
+        
         return ASInsetLayoutSpec(insets:UIEdgeInsets(top: CGFloat.infinity, left: CGFloat.infinity, bottom: 40, right: 10), child: verticalStackSpec)
     }
     
     func getProfileViewStack() -> ASInsetLayoutSpec {
         let bColor:UIColor = UIColor.black.withAlphaComponent(0.7)
         let strAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 10.0),
-        NSAttributedString.Key.foregroundColor: UIColor.white]
+                            NSAttributedString.Key.foregroundColor: UIColor.white]
         
         let newStrAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 12.0),
-        NSAttributedString.Key.foregroundColor: UIColor.white]
+                               NSAttributedString.Key.foregroundColor: UIColor.white]
         
         let newString = NSAttributedString(string: NSLocalizedString("NEW", comment: ""), attributes: newStrAttribute as [NSAttributedString.Key : Any])
         
@@ -220,7 +239,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         verticalStackSpec.spacing = 0
         verticalStackSpec.justifyContent = .center
         verticalStackSpec.children = [topSeparator2, profileTextNode, bottomSeparator2]
-
+        
         return ASInsetLayoutSpec(insets:UIEdgeInsets(top: 60, left: CGFloat.infinity, bottom: CGFloat.infinity, right: 0), child: verticalStackSpec)
     }
     
@@ -286,12 +305,13 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     @objc func handleMessageClick(sender: UIButton){
         print("CHAT1: ", cellUser?["name"] ?? "")
+        let un:String = cellUser?["name"] as! String
         if cellUser?["qbUserId"] != nil {
             let userQBId = (cellUser?["qbUserId"])! as? Int
-            startChatWithUserQBId(uid: userQBId ?? 0, parent: nil)
+            startChatWithUserQBId(uid: userQBId ?? 0, parent: nil, userNameToDisplay: un)
         }
         else{
-            startChatWithUserQBId(uid: 0, parent: nil)
+            startChatWithUserQBId(uid: 0, parent: nil, userNameToDisplay: un)
         }
     }
     
@@ -322,20 +342,48 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         let width = UIScreen.main.bounds.width
         return ASSizeRange(min: CGSize(width: width, height: width), max: CGSize(width: width, height: width))
     }
-     
+    
     func collectionNode(_ collectionNode: ASCollectionNode, willDisplayItemWith node: ASCellNode) {
         //print("willDisplayItemWith: ", node.indexPath)
+        handleDefaultUserPhotoView()
         if node.indexPath!.row > 0 {
             sendProfileView(viewedUser: cellUser!)
         }
     }
-        
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleSwipeForMore()
+        self.stoppedScrolling()
     }
-        
+    
     func handleSwipeForMore(){
-        shouldHideMorePhotoNode = true
-        self.setNeedsLayout()
+//        shouldHideMorePhotoNode = true
+//        self.setNeedsLayout()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            self.stoppedScrolling()
+        }
+    }
+    
+    func stoppedScrolling() {
+        handleDefaultUserPhotoView()
+    }
+    
+    func handleDefaultUserPhotoView(){
+        let center = self.view.convert((self._collectionNode?.view.center)!, to: self._collectionNode?.view)
+        let index = self._collectionNode!.indexPathForItem(at: center)
+        let x:Int = index!.row + 1
+        //print("xxphoto: \(x) of \(userPhotosArray.count)")
+        
+        if x == 1 {
+            handleMorePhotoView(isFirstCell: true, stringToDisplay: NSLocalizedString("Swipe For More", comment: ""))
+        }
+        else{
+            handleMorePhotoView(isFirstCell: false, stringToDisplay: "\(x) / \(userPhotosArray.count)")
+        }
+        
+        
     }
 }

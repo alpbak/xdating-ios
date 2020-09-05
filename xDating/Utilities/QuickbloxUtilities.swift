@@ -101,7 +101,7 @@ func getUserWithId(uid:Int) -> QBUUser {
     return user
 }
 
-func startChatWithUserQBId(uid:Int, parent:UIViewController?){
+func startChatWithUserQBId(uid:Int, parent:UIViewController?, userNameToDisplay:String){
     print("startChatWithUserQBId")
     if !isUserLoggedIn() {
         print("USER NOT LOGGED IN")
@@ -120,7 +120,7 @@ func startChatWithUserQBId(uid:Int, parent:UIViewController?){
             }
             return
         }
-        openNewDialog(dialog, parent: parent)
+        openNewDialog(dialog, parent: parent, userNameToDisplay: userNameToDisplay)
     })
 }
 
@@ -136,7 +136,7 @@ private func displayChatError(parent:UIViewController?, message:String){
                  parent: mParent)
 }
 
-private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?) {
+private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?, userNameToDisplay:String) {
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     let rootParent = appDelegate?.getRootVC()
     
@@ -145,6 +145,7 @@ private func openNewDialog(_ newDialog: QBChatDialog, parent:UIViewController?) 
     
     let vc = ChatNewViewController()
     vc.dialogID = newDialog.id
+    vc.userNameToDisplay = userNameToDisplay
     mParent.present(vc, animated: true, completion: nil)
 }
 
