@@ -17,6 +17,11 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
     
+    @IBOutlet weak var missinDataWaitLabel: UILabel!
+    @IBOutlet weak var missingDataWaitView: UIView!
+    @IBOutlet weak var missingDataButton: UIButton!
+    @IBOutlet weak var missingDataLabel: UILabel!
+    @IBOutlet weak var missingDataView: UIView!
     @IBOutlet weak var registrationView: UIView!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
@@ -40,6 +45,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     var client : ParseLiveQuery.Client!
     var subscription : Subscription<ProfileView>!
     
+    @IBAction func missingDataAction(_ sender: Any) {
+        print("MISSING DATA")
+    }
+    
     @IBAction func topButtonAction(_ sender: Any) {
         print("topButtonAction")
         
@@ -52,6 +61,19 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         getInitialProfileViews()
         startProfileViewListener()
         
+        missinDataWaitLabel.text = NSLocalizedString("Please Wait", comment: "")
+        missingDataWaitView.isHidden = true
+        
+        
+        missingDataView.layer.cornerRadius = 10
+        missingDataView.layer.borderColor = UIColor.systemRed.withAlphaComponent(1.0).cgColor
+        missingDataView.layer.borderWidth = 1
+        missingDataView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.8)
+        
+        missingDataButton.layer.cornerRadius = 10
+        missingDataButton.layer.borderColor = UIColor.init(hex: "118040").cgColor
+        missingDataButton.layer.borderWidth = 1
+        
         registrationView.layer.borderColor = UIColor.systemBlue.cgColor
         registrationView.layer.borderWidth = 1
         
@@ -60,10 +82,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(newUserBlock), name: Notification.Name("UserBlockedNotification"), object: nil)
         nc.addObserver(self, selector: #selector(userLoggedOut), name: Notification.Name("UserLoggedOut"), object: nil)
+        nc.addObserver(self, selector: #selector(missingDataUpdated), name: Notification.Name("MissingDataUploaded"), object: nil)
+        
         
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-        //setupNode()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +96,8 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        missingDataView.isHidden = true
+        checkMissingData()
         
     }
     
@@ -102,6 +126,12 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         handleStartup()
         self.tabBarController?.tabBar.items?[3].badgeValue = nil
         
+    }
+    
+    @objc func missingDataUpdated(){
+        print("missingDataUpdated() - MAIN FEED")
+        missingDataView.isHidden = true
+        checkMissingData()
     }
     
     @objc
@@ -166,6 +196,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         self.view.addSubnode(collectionNodeMain!)
         collectionNodeMain?.view.refreshControl = refreshControl
         self.view.bringSubviewToFront(self.registrationView)
+        self.view.bringSubviewToFront(self.missingDataView)
         getFeed()
     }
     
@@ -303,6 +334,79 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         else{
             self.tabBarController?.tabBar.items?[1].badgeValue = "\(unseenProfileViewCount)"
         }
+    }
+    
+    func checkMissingData(){
+        if !isUserLoggedIn() {
+            return
+        }
+        missingDataWaitView.isHidden = true
+        var isPhotoMissing:Bool = true
+        var isLocationMissing:Bool = true
+        
+        guard let user = PFUser.current() else { return }
+        
+        let query = PFQuery(className:"_User")
+        query.includeKey("location")
+        query.getObjectInBackground(withId: user.objectId!) { (retreiveduser, error) in
+            
+            let quote = NSLocalizedString("You have some missing information in your profile:\n", comment: "")
+            let font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+            let attributes = [NSAttributedString.Key.font: font]
+            _ = NSAttributedString(string: quote, attributes: attributes as [NSAttributedString.Key : Any])
+
+            let stringToDisplay = NSMutableAttributedString(string: quote)
+
+            
+            if retreiveduser!["defaultUserPhoto"] == nil{
+                print("MISSING DATA -- USER PHOTO")
+                let attributedQuote = NSAttributedString(string: NSLocalizedString("\n- Missing Photo", comment: ""), attributes: attributes as [NSAttributedString.Key : Any])
+                stringToDisplay.append(attributedQuote)
+            }
+            else{
+                isPhotoMissing = false
+            }
+            
+            if retreiveduser!["location"] == nil{
+                print("MISSING DATA -- LOCATION")
+                let attributedQuote = NSAttributedString(string: NSLocalizedString("\n- Missing Location", comment: ""), attributes: attributes as [NSAttributedString.Key : Any])
+                stringToDisplay.append(attributedQuote)
+            }
+            else{
+                isLocationMissing = false
+            }
+            
+            if isPhotoMissing{
+                self.missingDataView.isHidden = false
+                self.missingDataButton.setTitle(NSLocalizedString("Add Profile Photo", comment: ""), for: .normal)
+                self.missingDataButton.addTarget(self, action: #selector(self.addPhotoAction(sender:)), for: .touchUpInside)
+            }
+            else{
+                if isLocationMissing {
+                    self.missingDataButton.removeTarget(self, action: #selector(self.addPhotoAction(sender:)), for: .touchUpInside)
+                    self.missingDataView.isHidden = false
+                    self.missingDataButton.setTitle(NSLocalizedString("Enter Your Location", comment: ""), for: .normal)
+                    self.missingDataButton.addTarget(self, action:#selector(self.addLocationAction(sender:)), for: .touchUpInside)
+                }
+            }
+            
+            self.missingDataLabel.attributedText = stringToDisplay
+            
+            
+        }
+    }
+    
+    @objc func addPhotoAction(sender: UIButton){
+        missingDataWaitView.isHidden = false
+        missingDataView.bringSubviewToFront(missingDataWaitView)
+        showPhotoVideoPicker(parent: self) { (image) in
+            print("PHOTO UPLOADED");
+        }
+    }
+    
+    @objc func addLocationAction(sender: UIButton){
+        let vc = EditProfileViewController()
+        self.present(vc, animated: true, completion: nil)
     }
 }
 

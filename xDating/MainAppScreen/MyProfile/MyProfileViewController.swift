@@ -46,7 +46,10 @@ class MyProfileViewController: UIViewController, UICollectionViewDelegateFlowLay
     }
     
     @IBAction func deleteButtonAction(_ sender: Any) {
-        let selectedCell:ImageCellNode = currentDisplayedCell as! ImageCellNode
+        
+        guard let selectedCell:ImageCellNode = currentDisplayedCell as? ImageCellNode else { return }
+        
+        //let selectedCell:ImageCellNode = currentDisplayedCell as! ImageCellNode
         let object:PFObject = self.userPhotoObjectsArray[selectedCell.indexPath!.row]
         let displayedPhotoUrl:String = (selectedCell.mUserPhotoObject?.imageFile.url)!
         if displayedPhotoUrl == defaultProfilePhotoFileUrl {

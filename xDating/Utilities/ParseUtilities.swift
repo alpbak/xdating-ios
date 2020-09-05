@@ -158,6 +158,8 @@ func saveDefaultUserPhoto(photoObject:PFObject){
     user["defaultUserPhoto"] = photoObject
     user.saveInBackground { (success, error) in
         print("DEFAULT USER PFOTO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name("MissingDataUploaded"), object: nil)
     }
 }
 

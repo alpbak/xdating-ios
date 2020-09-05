@@ -198,6 +198,14 @@ class EditProfileViewController: UIViewController, UITableViewDelegate, UITableV
         PFUser.current()!["location"] = selectedLocationObject
         PFUser.current()?.saveInBackground(block: { (success, error) in
             print("USER LOCATION SAVED: - error: ", (error?.localizedDescription ?? "") as String)
+            let nc = NotificationCenter.default
+            nc.post(name: Notification.Name("MissingDataUploaded"), object: nil)
+            
+            guard let bioStr = self.aboutYouTextView.text, !bioStr.isEmpty else {
+                hideWaitIndicator()
+                displayAlert(alertTitle: NSLocalizedString("Success", comment: ""), alertMessage: NSLocalizedString("Your profile is updated", comment: ""), parent: self)
+                return
+            }
             self.saveBio()
         })
     }
@@ -212,7 +220,7 @@ class EditProfileViewController: UIViewController, UITableViewDelegate, UITableV
         user.saveInBackground { (success, error) in
             print("USER BIO SAVED: - error: ", (error?.localizedDescription ?? "") as String)
             hideWaitIndicator()
-            displayAlert(alertTitle: NSLocalizedString("Success", comment: ""), alertMessage: NSLocalizedString("You profile is updated", comment: ""), parent: self)
+            displayAlert(alertTitle: NSLocalizedString("Success", comment: ""), alertMessage: NSLocalizedString("Your profile is updated", comment: ""), parent: self)
             
         }
     }

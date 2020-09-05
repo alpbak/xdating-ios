@@ -150,7 +150,6 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     }
     
     func handleMorePhotoView(isFirstCell:Bool, stringToDisplay:String){
-        print("handleMorePhotoView: ", stringToDisplay)
         let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 10.0),
         NSAttributedString.Key.foregroundColor: UIColor.white]
         
@@ -172,7 +171,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         morePhotosTextNode.style.alignSelf = .center
         morePhotosTextNode.backgroundColor = bColor
         
-        let str:String = "   " + NSLocalizedString("Swipe For More", comment: "") + " ➤  "
+        //let str:String = "   " + NSLocalizedString("Swipe For More", comment: "") + " ➤  "
         //handleMorePhotoView(isFirstCell: true, stringToDisplay: str)
         
         
