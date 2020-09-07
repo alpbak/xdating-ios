@@ -147,16 +147,63 @@ func showPhotoVideoPicker(parent:UIViewController, completion: @escaping(_ succe
 }
 
 func handleSelectedMedia(selectedItems:[YPMediaItem], completion: @escaping(_ success: UIImage?) -> Void){
+//    for item in selectedItems {
+//        switch item {
+//        case .photo(let photo):
+//            uploadUserImage(image: photo.image)
+//            completion(photo.image)
+//            print(photo)
+//        case .video(let video):
+//            do {
+//                let videoData = try NSData(contentsOf: video.url, options: .mappedIfSafe)
+//                uploadUserVideo(videoData: videoData)
+//            }
+//            catch{
+//                print(error)
+//            }
+//
+//            print(video)
+//            completion(nil)
+//        }
+//    }
+    
+    let totalPhotoCount:Int = selectedItems.count
+    var pIndex = 0
+    
+    displayWaitIndicator(message: NSLocalizedString("Media Uploading", comment: ""))
+    let dispatchGroup = DispatchGroup()
+    
     for item in selectedItems {
+        dispatchGroup.enter()
+        
         switch item {
         case .photo(let photo):
             uploadUserImage(image: photo.image)
+            uploadUserImageWithCompletion(image: photo.image) { (success) in
+                print("IMAGE UPLOADED")
+                pIndex = pIndex + 1
+                
+                if pIndex == totalPhotoCount{
+                    print("ALL IMAGES UPLOADED")
+                    hideWaitIndicator()
+                }
+            }
             completion(photo.image)
-            print(photo)
+            
         case .video(let video):
             do {
                 let videoData = try NSData(contentsOf: video.url, options: .mappedIfSafe)
-                uploadUserVideo(videoData: videoData)
+                //uploadUserVideo(videoData: videoData)
+                
+                uploadUserVideoWithCompletion(videoData: videoData) { (success) in
+                    print("VIDEO UPLOADED")
+                    pIndex = pIndex + 1
+                    
+                    if pIndex == totalPhotoCount{
+                        print("ALL VIDEOS UPLOADED")
+                        hideWaitIndicator()
+                    }
+                }
             }
             catch{
                 print(error)
@@ -165,7 +212,18 @@ func handleSelectedMedia(selectedItems:[YPMediaItem], completion: @escaping(_ su
             print(video)
             completion(nil)
         }
+
+//        performGeoCoding { address in
+//            dispatchGroup.leave()
+//        }
     }
+
+    dispatchGroup.notify(queue: .main) {
+        //completionHandler()
+        print("UPLOADS DONE")
+    }
+    
+    
     print("ITEMS ARE UPLOADING")
 }
 

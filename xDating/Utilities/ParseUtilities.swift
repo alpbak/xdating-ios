@@ -102,6 +102,39 @@ func uploadUserVideo(videoData:NSData){
     }
 }
 
+func uploadUserVideoWithCompletion(videoData:NSData, completion: @escaping(_ success: Bool) -> Void){
+    print("uploadUserVideo")
+    if let imageFile = PFFileObject(name: "video.mp4", data: videoData as Data){
+        let userPhoto = PFObject(className:"UserPhoto")
+        userPhoto["imageFile"] = imageFile
+        userPhoto["user"] = PFUser.current()
+        userPhoto["isVideo"] = true
+        userPhoto.saveInBackground { (success, error) in
+            print("USER VIDEO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
+            addPhotoRelation(photoObject: userPhoto)
+            completion(true)
+        }
+        return
+    }
+}
+
+func uploadUserImageWithCompletion(image:UIImage, completion: @escaping(_ success: Bool) -> Void){
+    guard let imageData = image.jpegData(compressionQuality: 0.6) else { return }
+    if let imageFile = PFFileObject(name: "image.jpg", data: imageData){
+        let userPhoto = PFObject(className:"UserPhoto")
+        userPhoto["imageFile"] = imageFile
+        userPhoto["user"] = PFUser.current()
+        userPhoto["isVideo"] = false
+        userPhoto.saveInBackground { (success, error) in
+            print("USER PFOTO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
+            addPhotoRelation(photoObject: userPhoto)
+            addPhotoToUserPhotosArray(photoObject: userPhoto)
+            completion(true)
+        }
+        return
+    }
+}
+
 func uploadUserImage(image:UIImage){
     guard let imageData = image.jpegData(compressionQuality: 0.6) else { return }
     if let imageFile = PFFileObject(name: "image.jpg", data: imageData){

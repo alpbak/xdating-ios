@@ -139,6 +139,8 @@ class SignUpSecondViewController: UIViewController, UITableViewDelegate, UITable
     
     func saveBio(){
         guard let bioStr = aboutYouTextView.text, !bioStr.isEmpty else {
+            hideWaitIndicator()
+            self.returnToMainApp()
             return
         }
         
