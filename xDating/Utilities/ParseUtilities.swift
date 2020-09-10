@@ -87,20 +87,20 @@ func getLocation(str:String, completion: @escaping(_ success: Bool, _ objects: [
     }
 }
 
-func uploadUserVideo(videoData:NSData){
-    print("uploadUserVideo")
-    if let imageFile = PFFileObject(name: "video.mp4", data: videoData as Data){
-        let userPhoto = PFObject(className:"UserPhoto")
-        userPhoto["imageFile"] = imageFile
-        userPhoto["user"] = PFUser.current()
-        userPhoto["isVideo"] = true
-        userPhoto.saveInBackground { (success, error) in
-            print("USER VIDEO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
-            addPhotoRelation(photoObject: userPhoto)
-        }
-        return
-    }
-}
+//func uploadUserVideo(videoData:NSData){
+//    print("uploadUserVideo")
+//    if let imageFile = PFFileObject(name: "video.mp4", data: videoData as Data){
+//        let userPhoto = PFObject(className:"UserPhoto")
+//        userPhoto["imageFile"] = imageFile
+//        userPhoto["user"] = PFUser.current()
+//        userPhoto["isVideo"] = true
+//        userPhoto.saveInBackground { (success, error) in
+//            print("USER VIDEO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
+//            addPhotoRelation(photoObject: userPhoto)
+//        }
+//        return
+//    }
+//}
 
 func uploadUserVideoWithCompletion(videoData:NSData, completion: @escaping(_ success: Bool) -> Void){
     print("uploadUserVideo")
@@ -120,13 +120,14 @@ func uploadUserVideoWithCompletion(videoData:NSData, completion: @escaping(_ suc
 
 func uploadUserImageWithCompletion(image:UIImage, completion: @escaping(_ success: Bool) -> Void){
     guard let imageData = image.jpegData(compressionQuality: 0.6) else { return }
+    print("uploadUserImageWithCompletion")
     if let imageFile = PFFileObject(name: "image.jpg", data: imageData){
         let userPhoto = PFObject(className:"UserPhoto")
         userPhoto["imageFile"] = imageFile
         userPhoto["user"] = PFUser.current()
         userPhoto["isVideo"] = false
         userPhoto.saveInBackground { (success, error) in
-            print("USER PFOTO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
+            print("USER PFOTO SAVED1! - error: ", (error?.localizedDescription ?? "") as String)
             addPhotoRelation(photoObject: userPhoto)
             addPhotoToUserPhotosArray(photoObject: userPhoto)
             completion(true)
@@ -135,21 +136,21 @@ func uploadUserImageWithCompletion(image:UIImage, completion: @escaping(_ succes
     }
 }
 
-func uploadUserImage(image:UIImage){
-    guard let imageData = image.jpegData(compressionQuality: 0.6) else { return }
-    if let imageFile = PFFileObject(name: "image.jpg", data: imageData){
-        let userPhoto = PFObject(className:"UserPhoto")
-        userPhoto["imageFile"] = imageFile
-        userPhoto["user"] = PFUser.current()
-        userPhoto["isVideo"] = false
-        userPhoto.saveInBackground { (success, error) in
-            print("USER PFOTO SAVED! - error: ", (error?.localizedDescription ?? "") as String)
-            addPhotoRelation(photoObject: userPhoto)
-            addPhotoToUserPhotosArray(photoObject: userPhoto)
-        }
-        return
-    }
-}
+//func uploadUserImage(image:UIImage){
+//    guard let imageData = image.jpegData(compressionQuality: 0.6) else { return }
+//    if let imageFile = PFFileObject(name: "image.jpg", data: imageData){
+//        let userPhoto = PFObject(className:"UserPhoto")
+//        userPhoto["imageFile"] = imageFile
+//        userPhoto["user"] = PFUser.current()
+//        userPhoto["isVideo"] = false
+//        userPhoto.saveInBackground { (success, error) in
+//            print("USER PFOTO SAVED2! - error: ", (error?.localizedDescription ?? "") as String)
+//            addPhotoRelation(photoObject: userPhoto)
+//            addPhotoToUserPhotosArray(photoObject: userPhoto)
+//        }
+//        return
+//    }
+//}
 
 func addPhotoToUserPhotosArray(photoObject:PFObject){
     guard let user = PFUser.current() else { return }
@@ -376,7 +377,19 @@ func setProfileObjectSeen(profileObject:PFObject){
 func deletePhotoObject(objectToDelete:PFObject, completion: @escaping(_ success: Bool) -> Void){
     objectToDelete.deleteInBackground { (success, error) in
         print("PHOTO DELETE-success: ", success)
+        removePhotoRelation(photoObject: objectToDelete)
         completion(success)
+    }
+}
+
+func removePhotoRelation(photoObject:PFObject){
+    guard let user = PFUser.current() else { return }
+    let relation = user.relation(forKey: "userPhotos")
+    relation.remove(photoObject)
+    user.saveInBackground { (sucess, error) in
+        print("USER PFOTO RELATION REMOVED! - error: ", (error?.localizedDescription ?? "") as String)
+        checkDefaultUserPhoto(photoObject: photoObject)
+        sendNewMediaNotification()
     }
 }
 

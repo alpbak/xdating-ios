@@ -191,3 +191,93 @@ extension UIView {
         return constraint
     }
 }
+
+extension UIImage {
+
+    func resized(withPercentage percentage: CGFloat) -> UIImage? {
+        let canvasSize = CGSize(width: size.width * percentage, height: size.height * percentage)
+        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(origin: .zero, size: canvasSize))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+
+    func resizedTo1MB() -> UIImage? {
+        guard let imageData = self.pngData() else { return nil }
+        let megaByte = 1000.0
+
+        var resizingImage = self
+        var imageSizeKB = Double(imageData.count) / megaByte // ! Or devide for 1024 if you need KB but not kB
+
+        while imageSizeKB > megaByte { // ! Or use 1024 if you need KB but not kB
+            guard let resizedImage = resizingImage.resized(withPercentage: 0.5),
+            let imageData = resizedImage.pngData() else { return nil }
+
+            resizingImage = resizedImage
+            imageSizeKB = Double(imageData.count) / megaByte // ! Or devide for 1024 if you need KB but not kB
+        }
+
+        return resizingImage
+    }
+    
+    func resizedTo600KB() -> UIImage? {
+        guard let imageData = self.pngData() else { return nil }
+        let megaByte = 1000.0
+
+        var resizingImage = self
+        var imageSizeKB = Double(imageData.count) / megaByte // ! Or devide for 1024 if you need KB but not kB
+
+        while imageSizeKB > megaByte { // ! Or use 1024 if you need KB but not kB
+            guard let resizedImage = resizingImage.resized(withPercentage: 0.5),
+            let imageData = resizedImage.pngData() else { return nil }
+
+            resizingImage = resizedImage
+            imageSizeKB = Double(imageData.count) / megaByte // ! Or devide for 1024 if you need KB but not kB
+        }
+
+        return resizingImage
+    }
+    
+    var highestQualityJPEGNSData: Data { return self.jpegData(compressionQuality: 1.0)! }
+    var highQualityJPEGNSData: Data    { return self.jpegData(compressionQuality: 0.75)!}
+    var mediumQualityJPEGNSData: Data  { return self.jpegData(compressionQuality: 0.5)! }
+    var lowQualityJPEGNSData: Data     { return self.jpegData(compressionQuality: 0.25)!}
+    var lowestQualityJPEGNSData: Data  { return self.jpegData(compressionQuality: 0.0)! }
+    
+    func resized(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
+        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
+        let format = imageRendererFormat
+        format.opaque = isOpaque
+        return UIGraphicsImageRenderer(size: canvas, format: format).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
+    }
+
+    func compress(to kb: Int, allowedMargin: CGFloat = 0.2) -> Data {
+        let bytes = kb * 1024
+        var compression: CGFloat = 1.0
+        let step: CGFloat = 0.05
+        var holderImage = self
+        var complete = false
+        while(!complete) {
+            if let data = holderImage.jpegData(compressionQuality: 1.0) {
+                let ratio = data.count / bytes
+                if data.count < Int(CGFloat(bytes) * (1 + allowedMargin)) {
+                    complete = true
+                    return data
+                } else {
+                    let multiplier:CGFloat = CGFloat((ratio / 5) + 1)
+                    compression -= (step * multiplier)
+                }
+            }
+            
+            guard let newImage = holderImage.resized(withPercentage: compression) else { break }
+            holderImage = newImage
+        }
+        return Data()
+    }
+
+
+}
+
+

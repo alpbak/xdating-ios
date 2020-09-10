@@ -178,8 +178,10 @@ func handleSelectedMedia(selectedItems:[YPMediaItem], completion: @escaping(_ su
         
         switch item {
         case .photo(let photo):
-            uploadUserImage(image: photo.image)
-            uploadUserImageWithCompletion(image: photo.image) { (success) in
+            
+            let i:UIImage = UIImage(data: photo.image.compress(to: 900))!
+            //uploadUserImageWithCompletion(image: photo.image.resizedTo600KB()!) { (success) in
+            uploadUserImageWithCompletion(image: i) { (success) in
                 print("IMAGE UPLOADED")
                 pIndex = pIndex + 1
                 
