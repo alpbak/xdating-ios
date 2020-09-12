@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import CommonKeyboard
 import UserNotifications
+import Quickblox
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectQuickBlox()
         connectParse()
         openMainScreen()
-        getNotificationPermission()
         return true
     }
     
@@ -52,6 +52,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         createInstallationOnParse(deviceTokenData: deviceToken)
+        
+        ///QuickBlox Push Registration
+        guard let identifierForVendor = UIDevice.current.identifierForVendor else {
+            return
+        }
+        let deviceIdentifier = identifierForVendor.uuidString
+        let subscription = QBMSubscription()
+        subscription.notificationChannel = .APNS
+        subscription.deviceUDID = deviceIdentifier
+        subscription.deviceToken = deviceToken
+        QBRequest.createSubscription(subscription, successBlock: { (response, objects) in
+            print("QB Push Subscription response: ", response)
+        }, errorBlock: { (response) in
+            debugPrint("[AppDelegate] createSubscription error: \(String(describing: response.error))")
+        })
     }
 
     func application(_ application: UIApplication,
@@ -76,8 +91,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
+
+    // MARK: - AppDelegate
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        print("didReceiveRemoteNotification: ", userInfo)
+    }
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], didReceiveRemoteNotification completionHandler: @escaping (UIBackgroundFetchResult) -> Swift.Void) {
+        
+        print("didReceiveRemoteNotification-didReceiveRemoteNotification: ", userInfo)
+        
+    }
     /// NOTIFICATION END
+    
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        QBChat.instance.disconnect { (error) in
+            print("applicationDidEnterBackground-chat did disconnect: error: ", error)
+        }
+       }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+       QBChat.instance.disconnect { (error) in
+           print("applicationDidEnterBackground-chat did disconnect: error: ", error)
+       }
+       }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        checkChat()
+       }
     
     func openMainScreen(){
         let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()

@@ -126,7 +126,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         
         let headerLayoutSpec = ASBackgroundLayoutSpec(child: relativeSpec, background: getNameLocationStack())
         
-        let insets = UIEdgeInsets(top: 0.0, left: 5.0, bottom: 0.0, right: 5.0)
+        let insets = UIEdgeInsets(top: 20.0, left: 5.0, bottom: 0.0, right: 5.0)
         let headerWithInset = ASInsetLayoutSpec(insets: insets, child: headerLayoutSpec)
         
         let stackLayout = ASStackLayoutSpec.vertical()

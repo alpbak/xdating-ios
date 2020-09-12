@@ -116,6 +116,10 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         missingDataView.isHidden = true
         checkMissingData()
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+            self.askForNotificationPermission()
+        })
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,6 +134,11 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         print("willTransition")
+    }
+    
+    func askForNotificationPermission(){
+        let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.getNotificationPermission()
     }
     
     @objc func newUserBlock(){
