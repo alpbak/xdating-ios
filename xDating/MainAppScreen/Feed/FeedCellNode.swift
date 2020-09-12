@@ -10,11 +10,19 @@ import UIKit
 import AsyncDisplayKit
 import Parse
 
+protocol FeedCellNodeDelegate {
+    func didButtonPressed(selectedCell:ImageCellNode)
+}
+
 class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
+    
+    var delegate: FeedCellNodeDelegate?
+    
     var cellPhotos:NSArray = []
     var cellUser:PFUser?
     var userPhotosArray:[UserPhotoObject] = []
     var profileViewObject:PFObject?
+    var parentVC:UIViewController?
     
     let userNameNode = ASTextNode()
     let postLocationNode = ASTextNode()
@@ -25,9 +33,9 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     let morePhotosTextNode = ASTextNode()
     
-    required init(with cellDict:NSDictionary) {
+    required init(with cellDict:NSDictionary, parent:UIViewController) {
         super.init()
-        
+        parentVC = parent
         shouldHideMorePhotoNode = false
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -151,7 +159,7 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     func handleMorePhotoView(isFirstCell:Bool, stringToDisplay:String){
         let nameStringAttribute = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: 10.0),
-        NSAttributedString.Key.foregroundColor: UIColor.white]
+                                   NSAttributedString.Key.foregroundColor: UIColor.white]
         
         var tailStr:String = "   "
         if isFirstCell {
@@ -332,8 +340,19 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     }
     
     func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+        
         return {
-            return ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!, index: indexPath.row)
+            let toReturn:ImageCellNode = ImageCellNode(userPhotoObject: self.userPhotosArray[indexPath.row], cellUser: self.cellUser!, index: indexPath.row)
+            
+            let buttonLongGesture = CustomLongPressGesture(target: self, action: #selector(self.buttonPressedLong(_:)))
+            buttonLongGesture.cellNode = toReturn
+            buttonLongGesture.minimumPressDuration = 0.5
+            
+            DispatchQueue.main.async {
+                toReturn.view.addGestureRecognizer(buttonLongGesture)
+            }
+            
+            return toReturn
         }
     }
     
@@ -350,14 +369,19 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         }
     }
     
+    func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        let selectedCell:ImageCellNode = collectionNode.nodeForItem(at: indexPath) as! ImageCellNode
+        delegate?.didButtonPressed(selectedCell: selectedCell)
+    }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleSwipeForMore()
         self.stoppedScrolling()
     }
     
     func handleSwipeForMore(){
-//        shouldHideMorePhotoNode = true
-//        self.setNeedsLayout()
+        //        shouldHideMorePhotoNode = true
+        //        self.setNeedsLayout()
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -382,7 +406,73 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         else{
             handleMorePhotoView(isFirstCell: false, stringToDisplay: "\(x) / \(userPhotosArray.count)")
         }
+    }
+    
+    @objc func longPressCell(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        print("LONG PRESS")
         
+        let controller = PreviewViewController()
+        //controller.cellImage = cell.imageNode.image
+        
+        // you can set different frame for each peek view here
+        let frame = CGRect(x: 15, y: (screenHeight - 300)/2, width: screenWidth - 30, height: 300)
+        
+        let options = [
+            PeekViewAction(title: "Option 1", style: .destructive),
+            PeekViewAction(title: "Option 2", style: .default),
+            PeekViewAction(title: "Option 3", style: .selected) ]
+        PeekView().viewForController(parentViewController: parentVC!, contentViewController: controller, expectedContentViewFrame: frame, fromGesture: gestureRecognizer, shouldHideStatusBar: true, menuOptions: options, completionHandler: { optionIndex in
+            switch optionIndex {
+            case 0:
+                print("Option 1 selected")
+            case 1:
+                print("Option 2 selected")
+            case 2:
+                print("Option 3 selected")
+            default:
+                break
+            }
+        }, dismissHandler: {
+            print("Peekview dismissed!")
+        })
         
     }
+    
+    @objc func buttonPressedLong(_ sender: CustomLongPressGesture) {
+        let controller = PreviewViewController()
+        controller.cellImage = sender.cellNode.imageNode.image
+        
+        // you can set different frame for each peek view here
+        let frame = CGRect(x: 15, y: (screenHeight - 300)/2, width: screenWidth - 30, height: 300)
+        
+        let options = [
+            PeekViewAction(title: "Send Message", style: .destructive),
+            PeekViewAction(title: "Report", style: .default),
+            PeekViewAction(title: "Option 3", style: .selected) ]
+        PeekView().viewForController(parentViewController: parentVC!,
+                                     contentViewController: controller,
+                                     expectedContentViewFrame: frame,
+                                     fromGesture: sender,
+                                     shouldHideStatusBar: true,
+                                     menuOptions: options,
+                                     completionHandler: {
+                                        optionIndex in
+                                        switch optionIndex {
+                                        case 0:
+                                            print("Option 1 selected")
+                                        case 1:
+                                            print("Option 2 selected")
+                                        case 2:
+                                            print("Option 3 selected")
+                                        default:
+                                            break
+                                        }
+        }, dismissHandler: {
+            print("Peekview dismissed!")
+        })
+    }
+}
+
+class CustomLongPressGesture: UILongPressGestureRecognizer {
+    var cellNode: ImageCellNode!
 }

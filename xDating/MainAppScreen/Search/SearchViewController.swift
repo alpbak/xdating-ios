@@ -159,7 +159,7 @@ class SearchViewController: ASViewController<ASDisplayNode>, UITableViewDelegate
         
         return {
             let x:NSDictionary = self.feedArray[indexPath.row]  as! NSDictionary
-            return FeedCellNode(with: x)
+            return FeedCellNode(with: x, parent: self)
             
         }
     }

@@ -12,7 +12,24 @@ import AsyncDisplayKit
 import Quickblox
 import ParseLiveQuery
 
-class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate {
+class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSource, ASCollectionDelegate, FeedCellNodeDelegate {
+    
+    func didButtonPressed(selectedCell: ImageCellNode) {
+        print("YEEYYY")
+        selectedCellImageViewSnapshot = selectedCell.imageNode.view.snapshotView(afterScreenUpdates: false)
+
+        let secondViewController = PreviewViewController()
+        secondViewController.transitioningDelegate = self
+
+        secondViewController.modalPresentationStyle = .overCurrentContext
+        secondViewController.modalPresentationStyle = .popover
+        secondViewController.cellImage = selectedCell.imageNode.image
+        present(secondViewController, animated: true)
+    }
+    
+    var selectedCellImageViewSnapshot: UIView?
+    var animator: Animator?
+    var selectedCell: ImageCellNode?
     
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
@@ -206,7 +223,9 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         
         return {
             let x:NSDictionary = self.feedArray[indexPath.row]  as! NSDictionary
-            return FeedCellNode(with: x)
+            let fd:FeedCellNode = FeedCellNode(with: x, parent: self)
+            fd.delegate = self
+            return fd
         }
     }
     
@@ -427,5 +446,39 @@ extension MainAppViewController : QBChatDelegate {
     }
     func chatDidNotConnectWithError(_ error: Error) {
         //print("ALPP - chatDidNotConnectWithError")
+    }
+}
+
+extension MainAppViewController: UIViewControllerTransitioningDelegate {
+    // 2
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        print("UIViewControllerTransitioningDelegate 01")
+        print("selectedCellImageViewSnapshot: ", selectedCellImageViewSnapshot)
+        print("presented: ", presented)
+        print("presenting: ", presenting)
+        print("source: ", source)
+        
+        // 16
+        guard let firstViewController = source as? MainAppViewController,
+            let secondViewController = presented as? PreviewViewController,
+            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+            else { return nil }
+
+        print("UIViewControllerTransitioningDelegate 02")
+        animator = Animator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+        return animator
+    }
+
+    // 3
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        // 17
+        print("UIViewControllerTransitioningDelegate 03")
+        guard let secondViewController = dismissed as? PreviewViewController,
+            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
+            else { return nil }
+        
+        print("UIViewControllerTransitioningDelegate 04")
+        animator = Animator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
+        return animator
     }
 }
