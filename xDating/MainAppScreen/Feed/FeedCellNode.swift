@@ -424,9 +424,9 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         let frame = CGRect(x: 15, y: (screenHeight - 300)/2, width: screenWidth - 30, height: 300)
         
         let options = [
-            PeekViewAction(title: "Send Message", style: .destructive),
-            PeekViewAction(title: "Report", style: .default),
-            PeekViewAction(title: "Option 3", style: .selected) ]
+            PeekViewAction(title: NSLocalizedString("Send Message", comment: ""), style: .default),
+            PeekViewAction(title: NSLocalizedString("Open User Profile", comment: ""), style: .default),
+             ]
         PeekView().viewForController(parentViewController: parentVC!,
                                      contentViewController: controller,
                                      expectedContentViewFrame: frame,
@@ -437,11 +437,9 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
                                         optionIndex in
                                         switch optionIndex {
                                         case 0:
-                                            print("Option 1 selected")
+                                            self.handleMessageClick(sender: UIButton())
                                         case 1:
-                                            print("Option 2 selected")
-                                        case 2:
-                                            print("Option 3 selected")
+                                            openUserProfileForUser(user: self.cellUser!)
                                         default:
                                             break
                                         }
