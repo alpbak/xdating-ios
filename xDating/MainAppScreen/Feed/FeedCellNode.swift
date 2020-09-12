@@ -371,6 +371,10 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
     
     func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
         let selectedCell:ImageCellNode = collectionNode.nodeForItem(at: indexPath) as! ImageCellNode
+        
+        if selectedCell.isForVideo {
+            return
+        }
         delegate?.didButtonPressed(selectedCell: selectedCell)
     }
     
@@ -408,37 +412,11 @@ class FeedCellNode: ASCellNode, ASCollectionDelegate, ASCollectionDataSource {
         }
     }
     
-    @objc func longPressCell(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        print("LONG PRESS")
-        
-        let controller = PreviewViewController()
-        //controller.cellImage = cell.imageNode.image
-        
-        // you can set different frame for each peek view here
-        let frame = CGRect(x: 15, y: (screenHeight - 300)/2, width: screenWidth - 30, height: 300)
-        
-        let options = [
-            PeekViewAction(title: "Option 1", style: .destructive),
-            PeekViewAction(title: "Option 2", style: .default),
-            PeekViewAction(title: "Option 3", style: .selected) ]
-        PeekView().viewForController(parentViewController: parentVC!, contentViewController: controller, expectedContentViewFrame: frame, fromGesture: gestureRecognizer, shouldHideStatusBar: true, menuOptions: options, completionHandler: { optionIndex in
-            switch optionIndex {
-            case 0:
-                print("Option 1 selected")
-            case 1:
-                print("Option 2 selected")
-            case 2:
-                print("Option 3 selected")
-            default:
-                break
-            }
-        }, dismissHandler: {
-            print("Peekview dismissed!")
-        })
-        
-    }
-    
     @objc func buttonPressedLong(_ sender: CustomLongPressGesture) {
+        
+        if sender.cellNode.isForVideo {
+            return
+        }
         let controller = PreviewViewController()
         controller.cellImage = sender.cellNode.imageNode.image
         

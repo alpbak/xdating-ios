@@ -12,9 +12,6 @@ class PreviewViewController: UIViewController, ImageScrollViewDelegate {
     
     @IBOutlet weak var imageScrollView: ImageScrollView!
 
-    @IBOutlet weak var locationImageView: UIImageView!
-    @IBOutlet private(set) var locationLabel: UILabel!
-    @IBOutlet private(set) var closeButton: UIButton!
     var cellImage:UIImage?
     
     override func viewDidLoad() {

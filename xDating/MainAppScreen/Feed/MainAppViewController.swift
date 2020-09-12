@@ -16,20 +16,19 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     
     func didButtonPressed(selectedCell: ImageCellNode) {
         print("YEEYYY")
-        selectedCellImageViewSnapshot = selectedCell.imageNode.view.snapshotView(afterScreenUpdates: false)
-
         let secondViewController = PreviewViewController()
-        secondViewController.transitioningDelegate = self
-
         secondViewController.modalPresentationStyle = .overCurrentContext
         secondViewController.modalPresentationStyle = .popover
         secondViewController.cellImage = selectedCell.imageNode.image
-        present(secondViewController, animated: true)
+        
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.type = .fade
+        //transition.subtype = .fromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(secondViewController, animated: false, completion: nil)
+
     }
-    
-    var selectedCellImageViewSnapshot: UIView?
-    var animator: Animator?
-    var selectedCell: ImageCellNode?
     
     @IBOutlet weak var asCollectionView: ASCollectionView!
     var collectionNodeMain: ASCollectionNode?
@@ -449,36 +448,4 @@ extension MainAppViewController : QBChatDelegate {
     }
 }
 
-extension MainAppViewController: UIViewControllerTransitioningDelegate {
-    // 2
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        print("UIViewControllerTransitioningDelegate 01")
-        print("selectedCellImageViewSnapshot: ", selectedCellImageViewSnapshot)
-        print("presented: ", presented)
-        print("presenting: ", presenting)
-        print("source: ", source)
-        
-        // 16
-        guard let firstViewController = source as? MainAppViewController,
-            let secondViewController = presented as? PreviewViewController,
-            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
-            else { return nil }
 
-        print("UIViewControllerTransitioningDelegate 02")
-        animator = Animator(type: .present, firstViewController: firstViewController, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-        return animator
-    }
-
-    // 3
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        // 17
-        print("UIViewControllerTransitioningDelegate 03")
-        guard let secondViewController = dismissed as? PreviewViewController,
-            let selectedCellImageViewSnapshot = selectedCellImageViewSnapshot
-            else { return nil }
-        
-        print("UIViewControllerTransitioningDelegate 04")
-        animator = Animator(type: .dismiss, firstViewController: self, secondViewController: secondViewController, selectedCellImageViewSnapshot: selectedCellImageViewSnapshot)
-        return animator
-    }
-}

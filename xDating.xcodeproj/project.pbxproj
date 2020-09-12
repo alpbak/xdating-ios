@@ -20,7 +20,6 @@
 		2B76136124EAF75F00063465 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76136024EAF75F00063465 /* ImageScrollView.swift */; };
 		2B76136424EAF78900063465 /* ImageViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76136224EAF78900063465 /* ImageViewerViewController.swift */; };
 		2B76136524EAF78900063465 /* ImageViewerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B76136324EAF78900063465 /* ImageViewerViewController.xib */; };
-		2B7B168B250C0AB200588F1F /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7B168A250C0AB200588F1F /* Animator.swift */; };
 		2B7B168E250C0AE200588F1F /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7B168C250C0AE200588F1F /* PreviewViewController.swift */; };
 		2B7B168F250C0AE200588F1F /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B7B168D250C0AE200588F1F /* PreviewViewController.xib */; };
 		2B7B1693250CA8E800588F1F /* PeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7B1692250CA8E800588F1F /* PeekView.swift */; };
@@ -171,7 +170,6 @@
 		2B76136024EAF75F00063465 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		2B76136224EAF78900063465 /* ImageViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerViewController.swift; sourceTree = "<group>"; };
 		2B76136324EAF78900063465 /* ImageViewerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageViewerViewController.xib; sourceTree = "<group>"; };
-		2B7B168A250C0AB200588F1F /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		2B7B168C250C0AE200588F1F /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		2B7B168D250C0AE200588F1F /* PreviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
 		2B7B1692250CA8E800588F1F /* PeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeekView.swift; sourceTree = "<group>"; };
@@ -556,7 +554,6 @@
 		2BAA937224E9363E0022338A /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				2B7B168A250C0AB200588F1F /* Animator.swift */,
 				2B76135E24EA688400063465 /* ImageCellNode.swift */,
 				2BE1896624C8B32700CFFA7A /* UserPhotoObject.swift */,
 				2B9E981B24C70D4A00ED7A68 /* MainAppViewController.swift */,
@@ -1152,7 +1149,6 @@
 				2B3A35D524DF1A630014FF4B /* TimeAgo.swift in Sources */,
 				2B76135B24E96A5400063465 /* FeedCellNode.swift in Sources */,
 				2B76135F24EA688500063465 /* ImageCellNode.swift in Sources */,
-				2B7B168B250C0AB200588F1F /* Animator.swift in Sources */,
 				2BC58A5024EFDBC300EB3DB2 /* KVOView.swift in Sources */,
 				2BC58A1824EFD7FF00EB3DB2 /* UIViewController+Extention.swift in Sources */,
 				2BC58A9824EFDBEB00EB3DB2 /* ChatCollectionViewFlowLayout.swift in Sources */,
