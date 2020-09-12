@@ -25,15 +25,34 @@
                         <constraint firstAttribute="width" secondItem="m9F-Mt-Y0U" secondAttribute="height" multiplier="1:1" id="4Ra-pN-tYF"/>
                     </constraints>
                 </view>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B3j-qC-53d">
+                    <rect key="frame" x="20" y="64" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="3q7-59-JEP"/>
+                        <constraint firstAttribute="width" secondItem="B3j-qC-53d" secondAttribute="height" multiplier="1:1" id="V0d-ga-yGe"/>
+                        <constraint firstAttribute="height" constant="40" id="vS2-rN-dCn"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="15" maxY="15"/>
+                    <state key="normal" image="closeicon"/>
+                    <connections>
+                        <action selector="dismissButton:" destination="-1" eventType="touchUpInside" id="3wi-pO-GZp"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.30693493150684931" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="m9F-Mt-Y0U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="LQA-JK-pI4"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="m9F-Mt-Y0U" secondAttribute="trailing" id="SDC-mf-XOj"/>
+                <constraint firstItem="B3j-qC-53d" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="a0e-qx-Tf0"/>
+                <constraint firstItem="B3j-qC-53d" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="u5p-t5-HlJ"/>
                 <constraint firstItem="m9F-Mt-Y0U" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="zTm-9T-Qsz"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="139" y="147"/>
         </view>
     </objects>
+    <resources>
+        <image name="closeicon" width="128" height="128"/>
+    </resources>
 </document>

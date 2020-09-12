@@ -26,6 +26,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         transition.type = .fade
         //transition.subtype = .fromRight
         view.window!.layer.add(transition, forKey: kCATransition)
+        
         present(secondViewController, animated: false, completion: nil)
 
     }

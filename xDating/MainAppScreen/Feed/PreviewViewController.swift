@@ -11,7 +11,10 @@ import UIKit
 class PreviewViewController: UIViewController, ImageScrollViewDelegate {
     
     @IBOutlet weak var imageScrollView: ImageScrollView!
-
+    @IBAction func dismissButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     var cellImage:UIImage?
     
     override func viewDidLoad() {
