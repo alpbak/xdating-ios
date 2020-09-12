@@ -177,6 +177,7 @@
 		2B7B1695250CA8F000588F1F /* checked@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@3x.png"; sourceTree = "<group>"; };
 		2B7B1696250CA8F000588F1F /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
 		2B7B1697250CA8F000588F1F /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		2B7B169C250D014000588F1F /* XD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XD.entitlements; sourceTree = "<group>"; };
 		2B83415724F04EB700B74673 /* EnterChatNameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterChatNameVC.swift; sourceTree = "<group>"; };
 		2B83415824F04EB700B74673 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		2B83415924F04EB700B74673 /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
@@ -478,6 +479,7 @@
 		2B9E97EB24C6FBDA00ED7A68 /* xDating */ = {
 			isa = PBXGroup;
 			children = (
+				2B7B169C250D014000588F1F /* XD.entitlements */,
 				2B9E980024C6FC4500ED7A68 /* Classes */,
 				2B9E980A24C6FC6C00ED7A68 /* Utilities */,
 				2B9E980524C6FC5B00ED7A68 /* SignUpLogin */,
@@ -1305,6 +1307,7 @@
 			baseConfigurationReference = CC58E61424C686AE36153FB4 /* Pods-xDating.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = xDating/XD.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M5M82FRXC2;
 				INFOPLIST_FILE = xDating/Info.plist;
@@ -1324,6 +1327,7 @@
 			baseConfigurationReference = 49D3EDEC7FB61351C0C15913 /* Pods-xDating.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = xDating/XD.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M5M82FRXC2;
 				INFOPLIST_FILE = xDating/Info.plist;

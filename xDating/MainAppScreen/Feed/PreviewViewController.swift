@@ -12,7 +12,12 @@ class PreviewViewController: UIViewController, ImageScrollViewDelegate {
     
     @IBOutlet weak var imageScrollView: ImageScrollView!
     @IBAction func dismissButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = .fade
+        //transition.subtype = .fromRight
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.dismiss(animated: false, completion: nil)
     }
     
     var cellImage:UIImage?

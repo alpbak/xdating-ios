@@ -22,7 +22,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
         secondViewController.cellImage = selectedCell.imageNode.image
         
         let transition = CATransition()
-        transition.duration = 0.5
+        transition.duration = 0.3
         transition.type = .fade
         //transition.subtype = .fromRight
         view.window!.layer.add(transition, forKey: kCATransition)
@@ -248,7 +248,7 @@ class MainAppViewController: ASViewController<ASDisplayNode>, ASCollectionDataSo
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print("main-scrollViewWillBeginDragging")
+        //print("main-scrollViewWillBeginDragging")
         if !isUserLoggedIn() {
             registrationView.fadeOut()
         }

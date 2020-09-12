@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import CommonKeyboard
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,8 +25,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         connectQuickBlox()
         connectParse()
         openMainScreen()
+        getNotificationPermission()
         return true
     }
+    
+    /// NOTIFICATION START
+    func getNotificationPermission(){
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge, .carPlay ]) {
+            (granted, error) in
+            print("NOTIFICATION-Permission granted: \(granted)")
+            guard granted else { return }
+            self.getNotificationSettings()
+        }
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            print("NOTIFICATION- settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        createInstallationOnParse(deviceTokenData: deviceToken)
+    }
+
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("NOTIFICATION-Failed to register: \(error)")
+    }
+
+    func createInstallationOnParse(deviceTokenData:Data){
+        if let installation = PFInstallation.current(){
+            installation.setDeviceTokenFrom(deviceTokenData)
+            installation.saveInBackground {
+                (success: Bool, error: Error?) in
+                if (success) {
+                    print("NOTIFICATION-You have successfully saved your push installation to Back4App!")
+                } else {
+                    if let myError = error{
+                        print("NOTIFICATION-Error saving parse installation \(myError.localizedDescription)")
+                    }else{
+                        print("Uknown error")
+                    }
+                }
+            }
+        }
+    }
+    
+    /// NOTIFICATION END
     
     func openMainScreen(){
         let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
