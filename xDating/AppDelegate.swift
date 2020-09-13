@@ -180,7 +180,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func saveInstallationObject(){
         if let installation = PFInstallation.current(){
-            
+            installation["user"] = PFUser.current()
             let userdefaults = UserDefaults.standard
             if isKeyPresentInUserDefaults(key: "newprofileNotification"){
                 installation["newprofileNotification"] = userdefaults.bool(forKey: "newprofileNotification")

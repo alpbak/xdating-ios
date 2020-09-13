@@ -528,7 +528,7 @@ class ChatNewViewController: UIViewController {
                 let offsetY = collectionView.contentOffset.y + constraintValue - toolbarBottomLayoutGuide.constant
                 collectionView.contentOffset = CGPoint(x: collectionView.contentOffset.x, y: offsetY)
             }
-            toolbarBottomLayoutGuide.constant = constraintValue
+            toolbarBottomLayoutGuide.constant = constraintValue + 35
             if animated {
                 view.layoutIfNeeded()
             }

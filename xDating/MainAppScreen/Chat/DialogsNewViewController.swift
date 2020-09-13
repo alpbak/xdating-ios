@@ -337,15 +337,15 @@ class DialogsNewViewController: UIViewController, UITableViewDelegate, UITableVi
     func chatDidConnect() {
         if QBChat.instance.isConnected == true {
             chatManager.updateStorage()
-            SVProgressHUD.showSuccess(withStatus: "SA_STR_CONNECTED".localized)
+            //SVProgressHUD.showSuccess(withStatus: "SA_STR_CONNECTED".localized)
         }
     }
     
     func chatDidReconnect() {
-        SVProgressHUD.show(withStatus: "SA_STR_CONNECTED".localized)
+        //SVProgressHUD.show(withStatus: "SA_STR_CONNECTED".localized)
         if QBChat.instance.isConnected == true {
             chatManager.updateStorage()
-            SVProgressHUD.showSuccess(withStatus: "SA_STR_CONNECTED".localized)
+            //SVProgressHUD.showSuccess(withStatus: "SA_STR_CONNECTED".localized)
         }
     }
 }
